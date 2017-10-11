@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_cacaca"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="117dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                app:canLoop="true" />
+            <!--   app:canLoop="true"  //控制循环与否-->
+
+            <!--会诊/转诊 start-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="会诊/转诊"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/tuwen"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="图文"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/dianhua"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="电话"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/shipin"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="视频"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!--会诊/转诊 end-->
+
+            <!--医生工作台 start-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="医生工作台"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/daibanshixiang"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="待办事项"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/diaochawenjuan"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="调查问卷"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/muban"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="模板"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!--医生工作台 end-->
+
+            <!--大数据 start-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="大数据"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/shujucaiji"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="数据采集"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/binglijiansuo"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="病例检索"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/suifang"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="随访"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!--大数据 end-->
+
+            <!--医学培训 start-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="医学培训"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/wenxian"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="文献"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/xueyuan"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="在线学院"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/zhuanjiajiangtan"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="专家讲坛"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!--医学培训 end-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="11dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/zixun"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="  资讯" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:text="00:00"
+                    android:textColor="@color/color_a1a1a1"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="展开》"
+                        android:textColor="@color/color_819bdd"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

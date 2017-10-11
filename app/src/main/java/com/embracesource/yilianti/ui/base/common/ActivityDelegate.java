@@ -17,7 +17,7 @@ import com.embracesource.yilianti.core.log.AppLog;
  */
 class ActivityDelegate<T extends ViewDataBinding, A extends CommonActivity<T>, F extends Fragment> {
 
-    private static final int FRAGMENT_CONTAINER = R.id.fmFragmentContainer;
+    private static final int FRAGMENT_CONTAINER = R.id.framelayout;
 
     private A activity;
     private F commonFragment;

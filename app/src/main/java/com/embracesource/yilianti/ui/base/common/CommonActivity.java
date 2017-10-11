@@ -22,7 +22,7 @@ public class CommonActivity<T extends ViewDataBinding> extends AacBaseActivity<T
 
     @Override
     protected int getLayoutId() {
-        return R.layout.act_common_fm;
+        return R.layout.activity_main;
     }
 
     protected ActivityDelegate<T, CommonActivity<T>, CommonFragment> getActivityDelegate() {

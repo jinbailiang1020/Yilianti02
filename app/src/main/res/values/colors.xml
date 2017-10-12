@@ -11,6 +11,8 @@
     <color name="color_cacaca">#cacaca</color>
     <color name="color_a1a1a1">#a1a1a1</color>
     <color name="color_819bdd">#819bdd</color>
+    <color name="common_label_text_color">#000000</color>
+    <color name="common_text_color">#666666</color>
 
 </resources>
 

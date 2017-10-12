@@ -31,18 +31,20 @@
                 android:textSize="13sp" />
 
             <LinearLayout
+                android:id="@+id/ll_diagnosis_picture"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:background="@color/white">
 
                 <TextView
+                    android:id="@+id/tv_diagnosis_picture"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/tuwen"
                     android:gravity="center_horizontal"
                     android:paddingTop="15dp"
-                    android:text="图文"
+                    android:text="@string/diagnosis_picture"
                     android:textSize="12sp" />
 
                 <include layout="@layout/vertical_line" />
@@ -54,7 +56,7 @@
                     android:drawableTop="@drawable/dianhua"
                     android:gravity="center_horizontal"
                     android:paddingTop="15dp"
-                    android:text="电话"
+                    android:text="@string/phone"
                     android:textSize="12sp" />
 
                 <include layout="@layout/vertical_line" />
@@ -66,7 +68,7 @@
                     android:drawableTop="@drawable/shipin"
                     android:gravity="center_horizontal"
                     android:paddingTop="15dp"
-                    android:text="视频"
+                    android:text="@string/video"
                     android:textSize="12sp" />
 
             </LinearLayout>

@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import com.embracesource.yilianti.app.ViewModelSubComponent;
 import com.embracesource.yilianti.ui.MainViewModel;
+import com.embracesource.yilianti.ui.homepage.HomeViewModel;
 
 /**
  * ViewModelFactory <br/>
@@ -24,11 +25,19 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     @Inject
     public ViewModelFactory(final ViewModelSubComponent component) {
+        //// TODO: 2017/10/12 0012  每次创建viewmodel都需要在这添加。
         creators = new ArrayMap<>();
         creators.put(MainViewModel.class, new Callable<ViewModel>() {
             @Override
             public ViewModel call() throws Exception {
                 return component.mainViewModel();
+            }
+        });
+
+        creators.put(HomeViewModel.class, new Callable<ViewModel>() {
+            @Override
+            public ViewModel call() throws Exception {
+                return component.homeViewModel();
             }
         });
 

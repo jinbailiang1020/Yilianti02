@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.embracesource.yilianti"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.embracesource.yilianti">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -25,13 +25,15 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <application android:name=".app.AppContext"
+    <application
+        android:name=".app.AppContext"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.StartActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".ui.StartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle">
             <intent-filter>
@@ -40,12 +42,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"
+        <activity
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.base.common.CommonActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.base.common.CommonActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.homepage.diagnosis.DiagnosisPictureActivity" />
+        <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisActivity"></activity>
     </application>
 
 </manifest>

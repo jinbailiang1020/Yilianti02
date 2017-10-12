@@ -1,6 +1,7 @@
 package com.embracesource.yilianti.app;
 
 import com.embracesource.yilianti.ui.MainViewModel;
+import com.embracesource.yilianti.ui.homepage.HomeViewModel;
 
 import dagger.Subcomponent;
 
@@ -16,4 +17,5 @@ public interface ViewModelSubComponent {
         ViewModelSubComponent build();
     }
     MainViewModel mainViewModel();
+    HomeViewModel homeViewModel();//// TODO: 2017/10/12 0012  
 }

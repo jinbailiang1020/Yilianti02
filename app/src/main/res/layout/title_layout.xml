@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:background="@color/main_color"
-            android:drawableLeft="@drawable/dianhua"
+            android:drawableLeft="@drawable/back"
             android:paddingLeft="@dimen/padding_left_right"
             android:paddingRight="@dimen/padding_left_right"
             android:textColor="@color/white" />
@@ -34,12 +34,13 @@
         <TextView
             android:id="@+id/right"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@color/main_color"
             android:gravity="center"
             android:paddingLeft="@dimen/padding_left_right"
             android:paddingRight="@dimen/padding_left_right"
+            android:visibility="gone"
             android:text=""
             android:textColor="@color/white" />
 

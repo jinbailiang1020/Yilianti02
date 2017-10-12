@@ -45,7 +45,7 @@ public class StartActivity extends AacBaseActivity<ActivityStartBinding> {
                 startActivity(new Intent(getContext(), MainActivity.class));
                 finish();
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override

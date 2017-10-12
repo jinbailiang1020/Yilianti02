@@ -1,9 +1,13 @@
 package com.embracesource.yilianti.ui.base;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,24 +20,42 @@ import java.util.List;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.app.AppContext;
+import com.embracesource.yilianti.ui.base.common.permission.ActivityCollector;
+import com.embracesource.yilianti.ui.base.common.permission.PermissionListener;
 import com.embracesource.yilianti.util.StatusBarCompat;
 
 public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView {
 
     static final String LOADING_DIALOG_TAG = "loading_dialog";
+    private static PermissionListener mListener;
+    protected static Context mContext;
+    private static Activity activity;
 
     private DialogFragment loadingDialogFragment;
     protected Handler uiHandler;
+    public static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.compat(this,getResources().getColor(R.color.main_color));
+        StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
+        mContext = this.getApplicationContext();
+        activity = this;
         initContentView();
 
         initActionBar();
         uiHandler = new Handler(getMainLooper());
     }
+
+    protected void initView() {
+    }
+
+    ;
+
+    protected void initData() {
+    }
+
+    ;
 
     protected void initContentView() {
         setContentView(getLayoutId());
@@ -130,15 +152,13 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
 
 
     /**
-     *
      * @param titleName 标题
-     * @param rightName 右上角按钮名称
      * @return 标题view
      */
-    public List<View> initTitleLayout(String titleName, String rightName) {
+    public List<View> initTitleLayout(String titleName) {
         TextView left = (TextView) findViewById(R.id.left);
         TextView title = (TextView) findViewById(R.id.title);
-        TextView right = (TextView) findViewById(R.id.right);
+//        TextView right = (TextView) findViewById(R.id.right);
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,16 +168,78 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
 
         title.setText(titleName);
 
-        if (rightName != null) {
-            right.setText(rightName);
-        }
         List<View> viewList = new ArrayList<>();
         viewList.add(left);
         viewList.add(title);
-        viewList.add(right);
+//        viewList.add(right);
         return viewList;
     }
-    public void setTitleLeftViewGone(){
+
+    public void setTitleLeftViewGone() {
         findViewById(R.id.left).setVisibility(View.GONE);
     }
+
+    public void setTitleRightVisiable(String rightName, View.OnClickListener listener) {
+        TextView right = (TextView) findViewById(R.id.right);
+        right.setVisibility(View.VISIBLE);
+        right.setText(rightName);
+        right.setOnClickListener(listener);
+    }
+
+    public static void requestRuntimePermission(String[] permissions, PermissionListener listener) {
+        mListener = listener;
+        // 需要请求的权限列表
+        List<String> requestPermisssionList = new ArrayList<>();
+        // 检查权限  是否已被授权
+        for (String permission : permissions) {
+            if (ActivityCompat.checkSelfPermission(mContext, permission)
+                    != PackageManager.PERMISSION_GRANTED)
+                // 未授权时添加该权限
+                requestPermisssionList.add(permission);
+        }
+
+        if (requestPermisssionList.isEmpty())
+            // 所有权限已经被授权过 回调 Listener onGranted 方法 已授权
+            listener.onGranted();
+        else
+            // 进行请求权限操作
+            ActivityCompat.requestPermissions(activity,
+                    requestPermisssionList.toArray(new String[requestPermisssionList.size()]),
+                    REQUEST_CODE);
+
+    }
+
+    // 请求权限的回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_CODE: {
+
+                List<String> deniedPermissionList = new ArrayList<>();
+                // 检查返回授权结果不为空
+                if (grantResults.length > 0) {
+                    // 判断授权结果
+                    for (int i = 0; i < grantResults.length; i++) {
+                        int result = grantResults[i];
+                        if (result != PackageManager.PERMISSION_GRANTED)
+                            // 保存被用户拒绝的权限
+                            deniedPermissionList.add(permissions[i]);
+                    }
+                    if (deniedPermissionList.isEmpty())
+                        // 都被授权  回调 Listener onGranted 方法 已授权
+                        mListener.onGranted();
+                    else
+                        // 有权限被拒绝 回调 Listner onDeynied 方法
+                        mListener.onDenied(deniedPermissionList);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
 }

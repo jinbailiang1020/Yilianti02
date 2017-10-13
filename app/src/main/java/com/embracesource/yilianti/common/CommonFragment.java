@@ -1,4 +1,4 @@
-package com.embracesource.yilianti.ui.base.common;
+package com.embracesource.yilianti.common;
 
 import android.content.Context;
 import android.databinding.ViewDataBinding;

@@ -38,4 +38,9 @@
     <string name="hint_picture">患处图片</string>
     <string name="diagnosis_detail">会诊详情</string>
     <string name="submit">提交</string>
+    <string name="preliminary_diagnosis">初步诊断</string>
+    <string name="chief_complaint">主诉</string>
+    <string name="hint_vedio">患处视频</string>
+    <string name="emergent_degree">紧急程度</string>
+    <string name="next_step">下一步</string>
 </resources>

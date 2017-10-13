@@ -1,10 +1,8 @@
 package com.embracesource.yilianti.ui;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -14,10 +12,7 @@ import com.embracesource.yilianti.biz.api.impl.retrofit.IZhihuRetrofitApi;
 import com.embracesource.yilianti.biz.pojo.bean.ThemeItem;
 import com.embracesource.yilianti.databinding.ActivityMainBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
-import com.embracesource.yilianti.ui.base.common.permission.PermissionListener;
 import com.embracesource.yilianti.ui.homepage.HomeFragment;
-
-import java.util.List;
 
 public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
 

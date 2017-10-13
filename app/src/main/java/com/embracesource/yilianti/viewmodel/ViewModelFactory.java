@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import com.embracesource.yilianti.app.ViewModelSubComponent;
 import com.embracesource.yilianti.ui.MainViewModel;
 import com.embracesource.yilianti.ui.homepage.HomeViewModel;
+import com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisViewModel;
 
 /**
  * ViewModelFactory <br/>
@@ -40,7 +41,12 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                 return component.homeViewModel();
             }
         });
-
+        creators.put(ApplyDiagnosisViewModel.class, new Callable<ViewModel>() {
+            @Override
+            public ViewModel call() throws Exception {
+                return component.applyDiagnosisViewModel();
+            }
+        });
     }
 
     @Override

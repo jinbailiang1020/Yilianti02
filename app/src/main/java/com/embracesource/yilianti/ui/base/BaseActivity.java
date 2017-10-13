@@ -20,9 +20,12 @@ import java.util.List;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.app.AppContext;
-import com.embracesource.yilianti.ui.base.common.permission.ActivityCollector;
-import com.embracesource.yilianti.ui.base.common.permission.PermissionListener;
+import com.embracesource.yilianti.common.permission.PermissionListener;
 import com.embracesource.yilianti.util.StatusBarCompat;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView {
 
@@ -30,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     private static PermissionListener mListener;
     protected static Context mContext;
     private static Activity activity;
+    protected Disposable mDisposable;
 
     private DialogFragment loadingDialogFragment;
     protected Handler uiHandler;
@@ -142,7 +146,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     }
 
     @Override
-    public void showError(String message) {
+    public void showToast(String message) {
         Toast.makeText(BaseActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -242,4 +246,26 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         }
     }
 
+    public abstract class MyObserver<T> implements Observer<T> {
+        @Override
+        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+            mDisposable = d;
+        }
+        @Override
+        public void  onError(Throwable e){
+            showToast(e.getMessage());
+        }
+        @Override
+        public void onComplete() {
+        }
+
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDisposable != null) mDisposable.dispose();
+    }
 }

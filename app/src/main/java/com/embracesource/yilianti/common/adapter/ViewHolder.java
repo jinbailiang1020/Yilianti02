@@ -1,4 +1,4 @@
-package com.embracesource.yilianti.ui.base.common.adapter;
+package com.embracesource.yilianti.common.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -1,7 +1,10 @@
 package com.embracesource.yilianti.app;
 
+import android.arch.lifecycle.ViewModel;
+
 import com.embracesource.yilianti.ui.MainViewModel;
 import com.embracesource.yilianti.ui.homepage.HomeViewModel;
+import com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisViewModel;
 
 import dagger.Subcomponent;
 
@@ -11,11 +14,11 @@ import dagger.Subcomponent;
  */
 @Subcomponent
 public interface ViewModelSubComponent {
-
     @Subcomponent.Builder
     interface Builder {
         ViewModelSubComponent build();
     }
     MainViewModel mainViewModel();
-    HomeViewModel homeViewModel();//// TODO: 2017/10/12 0012  
+    HomeViewModel homeViewModel();
+    ApplyDiagnosisViewModel applyDiagnosisViewModel();
 }

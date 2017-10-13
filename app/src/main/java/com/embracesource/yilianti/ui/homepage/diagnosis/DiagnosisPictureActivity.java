@@ -11,8 +11,8 @@ import android.widget.RadioGroup;
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.databinding.ActivityDiagnosisPictureBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
-import com.embracesource.yilianti.ui.base.common.adapter.CommonAdapter;
-import com.embracesource.yilianti.ui.base.common.adapter.ViewHolder;
+import com.embracesource.yilianti.common.adapter.CommonAdapter;
+import com.embracesource.yilianti.common.adapter.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +46,14 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
                 }
             }
         });
+
         binding.rbMyLaunch.setChecked(true);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         int i = 10;
         List<Object> mList = new ArrayList<>();
         while (i-- > 0) {
-            mList.add("s"+i);
+            mList.add(i);
         }
         CommonAdapter mAdapter = new CommonAdapter(this, R.layout.diagnosis_item, mList) {
             @Override
@@ -72,7 +73,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
             @Override
             public void onClick(View v) {
                 //申请会诊
-                Intent intent = new Intent(mContext,ApplyDiagnosisActivity.class);
+                Intent intent = new Intent(mContext,ApplyDiagnosisActivity01.class);
                 startActivity(intent);
             }
         });

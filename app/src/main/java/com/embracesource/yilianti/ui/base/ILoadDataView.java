@@ -24,5 +24,5 @@ public interface ILoadDataView extends IView {
 
     void hideLoading(int loadingType);
 
-    void showError(String message);
+    void showToast(String message);
 }

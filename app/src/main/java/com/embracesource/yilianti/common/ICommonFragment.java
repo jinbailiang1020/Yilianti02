@@ -1,4 +1,4 @@
-package com.embracesource.yilianti.ui.base.common;
+package com.embracesource.yilianti.common;
 
 /**
  * Created by xiaqiulei on 14/11/20.

@@ -1,4 +1,4 @@
-package com.embracesource.yilianti.ui.base.common.permission;
+package com.embracesource.yilianti.common.permission;
 
 import java.util.List;
 

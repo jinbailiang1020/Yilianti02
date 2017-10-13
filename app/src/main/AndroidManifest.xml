@@ -44,13 +44,15 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
+            android:launchMode="singleTask"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.base.common.CommonActivity"
+            android:name=".common.CommonActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.homepage.diagnosis.DiagnosisPictureActivity" />
-        <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisActivity"></activity>
+        <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisActivity01"></activity>
+        <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisActivity02"></activity>
     </application>
 
 </manifest>

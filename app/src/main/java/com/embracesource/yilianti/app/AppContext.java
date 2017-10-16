@@ -24,12 +24,6 @@ public class AppContext extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-        initInject();
-    }
-
-    void initInject() {
-        InjectHelp.init(this);
     }
 
     public ViewModelProvider.Factory getViewModelFactory() {

@@ -1,27 +1,26 @@
 package com.embracesource.yilianti.ui;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.widget.LinearLayout;
 
-import javax.inject.Inject;
-
 import com.embracesource.yilianti.R;
-import com.embracesource.yilianti.app.InjectHelp;
-import com.embracesource.yilianti.biz.api.impl.retrofit.IZhihuRetrofitApi;
-import com.embracesource.yilianti.biz.pojo.bean.ThemeItem;
 import com.embracesource.yilianti.databinding.ActivityMainBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
 import com.embracesource.yilianti.ui.homepage.HomeFragment;
+
+import java.lang.reflect.Field;
 
 public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
 
     LinearLayout llMainMenuContainer;
 
-    @Inject
-    IZhihuRetrofitApi zhihuRetrofitApi;
-
-    ThemeItem currentThemeItem;
+//    @Inject
+//    YiliantiRetrofitApi zhihuRetrofitApi;
 
     @Override
     protected int getLayoutId() {
@@ -31,12 +30,49 @@ public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        InjectHelp.appComponent().inject(this);
+//        InjectHelp.appComponent().inject(this);
+        initBottom();
         setTitleLeftViewGone();
         updateFragment();
 /*        init();
         initSlideMenu();
         loadData();*/
+    }
+
+    private void initBottom() {
+        disableShiftMode(binding.navigation);//    链接：http://www.jianshu.com/p/eada0f16afd9
+
+        int[][] states = new int[][]{
+                new int[]{-android.R.attr.state_checked},
+                new int[]{android.R.attr.state_checked}
+        };
+
+        int[] colors = new int[]{getResources().getColor(R.color.main_color),
+                getResources().getColor(R.color.color_cacaca)
+        };
+        ColorStateList csl = new ColorStateList(states, colors);
+        binding.navigation.setItemTextColor(csl);
+        binding.navigation.setItemIconTintList(csl);
+    }
+
+    //底部菜单去掉动画
+    public static void disableShiftMode(BottomNavigationView view) {
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+        try {
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
+                item.setShiftingMode(false);
+                item.setChecked(item.getItemData().isChecked());
+            }
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     void updateFragment() {
@@ -47,7 +83,7 @@ public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
         } else {
             fragment = HomeFragment.newInstance();
         }*/
-        fragment = HomeFragment.newInstance(currentThemeItem);
+        fragment = HomeFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.framelayout, fragment, tag)

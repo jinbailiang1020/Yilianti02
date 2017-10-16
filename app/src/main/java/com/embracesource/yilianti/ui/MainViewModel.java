@@ -1,14 +1,10 @@
 package com.embracesource.yilianti.ui;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import javax.inject.Inject;
+import com.embracesource.yilianti.common.http.Api;
 
-import com.embracesource.yilianti.biz.api.ZhihuApi;
-import com.embracesource.yilianti.biz.pojo.request.ext.GetAllThemesRequest;
-import com.embracesource.yilianti.util.SimpleObserver;
+import javax.inject.Inject;
 
 /**
  * MainViewModel <br/>
@@ -16,11 +12,11 @@ import com.embracesource.yilianti.util.SimpleObserver;
  */
 public class MainViewModel extends ViewModel {
 
-    private ZhihuApi zhihuApi;
+    private Api zhihuApi;
 //    private final MutableLiveData<GetAllThemesResponse> allThemeResponse = new MutableLiveData<>();
 
     @Inject
-    MainViewModel(ZhihuApi zhihuApi) {
+    MainViewModel(Api zhihuApi) {
         this.zhihuApi = zhihuApi;
     }
 

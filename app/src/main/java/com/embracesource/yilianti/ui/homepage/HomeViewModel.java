@@ -1,24 +1,19 @@
 package com.embracesource.yilianti.ui.homepage;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.embracesource.yilianti.R;
-import com.embracesource.yilianti.biz.api.ZhihuApi;
-import com.embracesource.yilianti.biz.pojo.request.ext.GetThemeRequest;
-import com.embracesource.yilianti.biz.pojo.response.ext.GetThemeResponse;
+import com.embracesource.yilianti.common.http.Api;
 import com.embracesource.yilianti.util.SimpleObserver;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,11 +24,11 @@ import javax.inject.Inject;
  */
 public class HomeViewModel extends ViewModel {
 
-    private final ZhihuApi zhihuApi;
+    private final Api zhihuApi;
     private final MutableLiveData<Object> themeResponse = new MutableLiveData<>();
 
     @Inject
-    HomeViewModel(ZhihuApi zhihuApi) {
+    HomeViewModel(Api zhihuApi) {
         this.zhihuApi = zhihuApi;
     }
 

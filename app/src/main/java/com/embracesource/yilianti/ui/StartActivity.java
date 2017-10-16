@@ -1,14 +1,12 @@
 package com.embracesource.yilianti.ui;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.databinding.ActivityStartBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
+import com.embracesource.yilianti.ui.loginregister.LoginActivity;
 
 public class StartActivity extends AacBaseActivity<ActivityStartBinding> {
 
@@ -20,7 +18,6 @@ public class StartActivity extends AacBaseActivity<ActivityStartBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 //        init();
         gotoNext();
     }
@@ -42,7 +39,7 @@ public class StartActivity extends AacBaseActivity<ActivityStartBinding> {
         uiHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(getContext(), MainActivity.class));
+                startActivity(new Intent(getContext(), LoginActivity.class));
                 finish();
             }
         }, 1000);

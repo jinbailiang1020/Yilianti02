@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.embracesource.yilianti.R;
-import com.embracesource.yilianti.biz.pojo.bean.ThemeItem;
 import com.embracesource.yilianti.databinding.FragmentHomeBinding;
 import com.embracesource.yilianti.ui.base.AacFragment;
 import com.embracesource.yilianti.ui.homepage.diagnosis.DiagnosisPictureActivity;
 import com.embracesource.yilianti.util.BaseUtils;
-import com.embracesource.yilianti.viewmodel.ViewModelFactory;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,18 +23,14 @@ import javax.inject.Inject;
 public class HomeFragment extends AacFragment<FragmentHomeBinding> {
 
     private static final String EXTRA_ITEM = "themeItem";
-    @Inject
-    ViewModelFactory viewModelFactory;
 
-    public static HomeFragment newInstance(ThemeItem themeItem) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putSerializable(EXTRA_ITEM, themeItem);
+//        args.putSerializable(EXTRA_ITEM, themeItem);
         fragment.setArguments(args);
         return fragment;
     }
-
-    private ThemeItem themeItem;
 
 
     @Override
@@ -47,7 +40,7 @@ public class HomeFragment extends AacFragment<FragmentHomeBinding> {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        themeItem = (ThemeItem) getArguments().getSerializable(EXTRA_ITEM);
+//        themeItem = (ThemeItem) getArguments().getSerializable(EXTRA_ITEM);
 
         List localImages = new ArrayList();
         //获取本地的图片
@@ -64,9 +57,9 @@ public class HomeFragment extends AacFragment<FragmentHomeBinding> {
             }
         });
 
-        ViewModelProviders.of(getActivity(), viewModelFactory())
+      /*  ViewModelProviders.of(getActivity(), viewModelFactory())
                 .get(HomeViewModel.class)
-                .initConvenientBanner(binding.convenientBanner,localImages);
+                .initConvenientBanner(binding.convenientBanner,localImages);*/
 //        java.lang.IllegalArgumentException: unknown model class class com.embracesource.yilianti.ui.homepage.HomeViewModel
     }
 

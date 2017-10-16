@@ -65,9 +65,9 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     @Override
     protected void initView() {
         super.initView();
-        ApplyDiagnosisViewModel applyDiagnosisViewModel = ViewModelProviders.of(this, viewModelFactory()).get(ApplyDiagnosisViewModel.class);
+        ApplyDiagnosisViewModel01 ApplyDiagnosisViewModel01 = new ApplyDiagnosisViewModel01();
         imageLoader = new PicassoImageLoader();
-        applyDiagnosisViewModel.initBaseData(this)
+        ApplyDiagnosisViewModel01.initBaseData(this)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyObserver<List>() {
@@ -98,7 +98,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                             }
                         }*/
 
-        applyDiagnosisViewModel.initImagePicker(imageLoader);
+        ApplyDiagnosisViewModel01.initImagePicker(imageLoader);
 
         binding.ivSelectIdcard01.setOnClickListener(this);
         binding.ivSelectIdcard02.setOnClickListener(this);

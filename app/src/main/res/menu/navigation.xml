@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/person_center"
-        android:icon="@drawable/selector_home04_page"
+        android:icon="@drawable/gerenzhongxin_"
         android:title="@string/person_center" />
-
+    <!--android:icon="@drawable/selector_home04_page"-->
 </menu>

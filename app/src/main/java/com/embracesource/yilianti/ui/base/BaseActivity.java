@@ -1,6 +1,8 @@
 package com.embracesource.yilianti.ui.base;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -11,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,26 +25,30 @@ import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.app.AppContext;
 import com.embracesource.yilianti.common.permission.PermissionListener;
 import com.embracesource.yilianti.util.StatusBarCompat;
+import com.embracesource.yilianti.viewmodel.BaseViewModelCallBack;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView {
+public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView ,BaseViewModelCallBack{
 
     static final String LOADING_DIALOG_TAG = "loading_dialog";
     private static PermissionListener mListener;
     protected static Context mContext;
     private static Activity activity;
-    protected Disposable mDisposable;
+    protected static Disposable mDisposable;
 
     private DialogFragment loadingDialogFragment;
     protected Handler uiHandler;
     public static final int REQUEST_CODE = 1;
+    public static ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = new ProgressDialog(this);
         StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
         mContext = this.getApplicationContext();
         activity = this;
@@ -145,9 +152,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         }
     }
 
-    @Override
-    public void showToast(String message) {
-        Toast.makeText(BaseActivity.this, message, Toast.LENGTH_SHORT).show();
+    public static void showToast(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
     }
 
     protected final ViewModelProvider.Factory viewModelFactory() {
@@ -246,17 +252,30 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         }
     }
 
-    public abstract class MyObserver<T> implements Observer<T> {
+    public abstract static   class MyObserver<T> implements Observer<T> {
+        private  final String TAG = BaseActivity.class.getName();
+
         @Override
         public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
             mDisposable = d;
         }
         @Override
         public void  onError(Throwable e){
+            dialog.dismiss();
             showToast(e.getMessage());
+            Log.i(TAG, "onError: "+e.getMessage());
         }
+
+        @Override
+        public void onNext(@io.reactivex.annotations.NonNull T t) {
+            dialog.dismiss();
+            Log.i(TAG, "onError: "+t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
+        }
+
+
         @Override
         public void onComplete() {
+            dialog.dismiss();
         }
 
 

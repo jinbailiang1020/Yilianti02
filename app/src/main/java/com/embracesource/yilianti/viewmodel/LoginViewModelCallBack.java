@@ -7,5 +7,5 @@ import com.embracesource.yilianti.bean.LoginBean;
  */
 
 public interface LoginViewModelCallBack extends BaseViewModelCallBack {
-     void loginOK(LoginBean response) ;
+     void loginOK(LoginBean response, String name, String pwd) ;
 }

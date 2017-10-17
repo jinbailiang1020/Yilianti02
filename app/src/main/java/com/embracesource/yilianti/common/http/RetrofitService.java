@@ -2,20 +2,19 @@ package com.embracesource.yilianti.common.http;
 
 
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
+import com.embracesource.yilianti.bean.BaseBean;
 import com.embracesource.yilianti.bean.LoginBean;
+import com.embracesource.yilianti.bean.MyLaunchListBean;
 
 import org.json.JSONObject;
-
-import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -24,14 +23,29 @@ import retrofit2.http.Query;
 
 public interface RetrofitService {
 
-//    @FormUrlEncoded
+    //    @FormUrlEncoded
+//    @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
     @POST("login")
-    Observable<LoginBean> login(@Body String jsonObject);
+    Observable<LoginBean> login(@Body RequestBody jsonObject);
 
-//    http://localhost:8002/dict/selectListByCode?code={code}
+    //    http://localhost:8002/dict/selectListByCode?code={code}
     @GET("dict/selectListByCode")
     Observable<Response<ApplyDiagnosisGoalBean>> getBaseData(@Query("code") String code);
 
+    //我发起的会诊列表接口
+
+    //    @Headers("jsessionid":"D0924D8BD4C842AEAE4A25C320391169")
+    @GET("workbench/myConsultation/mysubmit/list")
+    Observable<MyLaunchListBean> getMyLaunchList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+
+    @GET("referralAndConsultation/detail/{id}")
+    Observable<Response<JSONObject>> getApplyDiagnosisDetail(@Path("id") String id, @Query("flag") String flag);//ApplyDiagnosisDetailBean
+
+    @POST("referralAndConsultation/submit")//会诊、转诊提交
+    Observable<BaseBean> submitApplyDiagnosis(@Body RequestBody body);
+
+
+//    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}
 
 
 //    Observable<LoginBean> login(@Query("username") String username, @Query("pwd") String pwd);

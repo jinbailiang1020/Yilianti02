@@ -7,15 +7,17 @@ import java.io.Serializable;
  */
 
 public class BaseBean implements Serializable {
-    private int code;
+//    BaseBean{code=1111, message='success', success=true}
+/*
+    private String code;
     private String message;
     private boolean success;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -43,4 +45,9 @@ public class BaseBean implements Serializable {
                 ", success=" + success +
                 '}';
     }
+*/
+
+
+
+
 }

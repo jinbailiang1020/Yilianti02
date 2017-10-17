@@ -30,18 +30,18 @@ public class LoginViewModel extends ViewModel {
     }
 
 
-    public void login(String name ,String pwd) {
+    public void login(final String name , final String pwd) {
         api.login( name , pwd).subscribe(new BaseActivity.MyObserver<LoginBean>() {
             @Override
             public void onNext(@NonNull LoginBean response) {
                 super.onNext(response);
-                callBack.loginOK(response);
+                callBack.loginOK(response,name,pwd);
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                callBack.loginOK(null);
+                callBack.loginOK(null, name, pwd);
             }
         });
     }

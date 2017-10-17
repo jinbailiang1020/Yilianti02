@@ -39,12 +39,13 @@
                         android:textSize="@dimen/common_label_textsize" />
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/sp_goal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:drawableRight="@drawable/down_blue_25"
                         android:focusable="false"
+                        android:gravity="center"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 
@@ -67,15 +68,39 @@
                         android:textSize="@dimen/common_label_textsize" />
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/sp_type"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:drawableRight="@drawable/down_blue_25"
                         android:focusable="false"
+                        android:gravity="center"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:text="@string/msg01"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <TextView
+                        android:id="@+id/cash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:text="@string/msg02"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,11 +122,12 @@
 
                     <TextView
                         android:id="@+id/sp_team"
-                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:drawableRight="@drawable/down_blue_25"
                         android:focusable="false"
+                        android:gravity="center"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 
@@ -124,17 +150,113 @@
                         android:textSize="@dimen/common_label_textsize" />
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/sp_emergency_degree"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:drawableRight="@drawable/down_blue_25"
                         android:focusable="false"
+                        android:gravity="center"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 
+                <!--///////////////////////-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/change_hospital"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/sp_change_hospital"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:drawableRight="@drawable/down_blue_25"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/change_doctor"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/sp_special_diagnosis"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:drawableRight="@drawable/down_blue_25"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/change_date"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/sp_bed_diagnosis"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:drawableRight="@drawable/down_blue_25"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+
         </ScrollView>
     </LinearLayout>
 </layout>

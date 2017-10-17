@@ -1,8 +1,6 @@
 package com.embracesource.yilianti.ui.base;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -18,26 +16,30 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.app.AppContext;
+import com.embracesource.yilianti.common.memory.MyPrefrences;
 import com.embracesource.yilianti.common.permission.PermissionListener;
 import com.embracesource.yilianti.util.StatusBarCompat;
 import com.embracesource.yilianti.viewmodel.BaseViewModelCallBack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observer;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView ,BaseViewModelCallBack{
 
     static final String LOADING_DIALOG_TAG = "loading_dialog";
+    public static  final  String Key_ID = "id";
     private static PermissionListener mListener;
     protected static Context mContext;
-    private static Activity activity;
+    private static BaseActivity activity;
     protected static Disposable mDisposable;
+
+    public MyPrefrences myPrefrences;
+
 
     private DialogFragment loadingDialogFragment;
     protected Handler uiHandler;
@@ -48,10 +50,12 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dialog = new ProgressDialog(this);
-        StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
         mContext = this.getApplicationContext();
         activity = this;
+        dialog = new ProgressDialog(this);
+        myPrefrences = new MyPrefrences(mContext);
+        StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
+
         initContentView();
 
         initActionBar();
@@ -60,8 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
 
     protected void initView() {
     }
-
-    ;
 
     protected void initData() {
     }
@@ -253,7 +255,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     }
 
     public abstract static   class MyObserver<T> implements Observer<T> {
-        private  final String TAG = BaseActivity.class.getName();
+        public   final String TAG = BaseActivity.class.getName();
 
         @Override
         public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
@@ -269,9 +271,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         @Override
         public void onNext(@io.reactivex.annotations.NonNull T t) {
             dialog.dismiss();
-            Log.i(TAG, "onError: "+t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
+            Log.i(TAG, "onNext: "+t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
         }
-
 
         @Override
         public void onComplete() {

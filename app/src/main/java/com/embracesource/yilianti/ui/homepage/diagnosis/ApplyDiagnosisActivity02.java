@@ -13,6 +13,8 @@ import android.widget.PopupWindow;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
+import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
+import com.embracesource.yilianti.bean.BaseBean;
 import com.embracesource.yilianti.common.dialog.DialogAdapter;
 import com.embracesource.yilianti.databinding.ActivityApplyDiagnosis02Binding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
@@ -35,20 +37,22 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     private int currentSelected_team;
     private int currentSelected_emergencyDegree;
 
-    private ApplyDiagnosisViewModel02 viewModel;
-
     private PopupWindow popupWindow;
     private DialogAdapter adapter;
+    //    @Inject
+    private ApplyDiagnosisViewModel02 viewModel;
+    private ApplyDiagnosisRequestBean bean = new ApplyDiagnosisRequestBean();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        DaggerAppComponent.builder().appModule(new AppModule()).build().inject(this); //注入
+        viewModel = new ApplyDiagnosisViewModel02(this);
         initTitleLayout(getString(R.string.diagnosis_detail));
         setTitleRightVisiable(getString(R.string.submit), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//submit();
-
+                submit();
             }
         });
         initView();
@@ -75,7 +79,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     @Override
     protected void initData() {
         super.initData();
-        viewModel = new ApplyDiagnosisViewModel02(this);
+        bean = (ApplyDiagnosisRequestBean) getIntent().getSerializableExtra(ApplyDiagnosisRequestBean.class.getName());
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.fragment_dialog_list, null, false);//container
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
@@ -88,6 +92,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                     case R.id.sp_goal:
                         currentSelected_goal = position;
                         binding.spGoal.setText(goalList.get(position).getDescription());
+                        showChangeDiagnosis(currentSelected_goal == 2);
                         break;
                     case R.id.sp_type:
                         currentSelected_type = position;
@@ -103,6 +108,15 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                         break;
                 }
                 popupWindow.dismiss();
+            }
+
+            private void showChangeDiagnosis(boolean b) {
+                if (b) {
+                    binding.llGone.setVisibility(View.VISIBLE);
+                } else {
+                    binding.llGone.setVisibility(View.GONE);
+                }
+
             }
         });
         recyclerView.setAdapter(adapter);
@@ -184,17 +198,34 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                 emergencyDegreeList.clear();
                 emergencyDegreeList.addAll(response.getData());
                 break;
+
         }
 //        spinearFragmentDialog.setList(response.getData());
         adapter.setList(response.getData());
         showFragmentDialog();
     }
 
-    //// TODO: 2017/10/16 0016
+    @Override
+    public void submitApplyDiagnosisOK(BaseBean response) {
+//        showToast(response.getMessage());
+    }
+
     private void submit() {
-        ApplyDiagnosisGoalBean.DataBean item = goalList.get(currentSelected_goal);
-        teamList.get(currentSelected_team);
-        emergencyDegreeList.get(currentSelected_emergencyDegree);
-        typeList.get(currentSelected_type);
+        try {
+            bean.getConsultationReferral().setConsultationObjective(goalList.get(currentSelected_goal).getId());//目的
+//        bean.getConsultationReferral().setConsultationType();//咨询类型// TODO: 2017/10/17 0017
+            bean.getConsultationReferral().setPriority(emergencyDegreeList.get(currentSelected_emergencyDegree).getId());//优先
+//        bean.getConsultationReferral().setSaveKey();// TODO: 2017/10/17 0017
+            bean.getConsultationReferral().setTeam(teamList.get(currentSelected_team).getId());
+            bean.getConsultationReferral().setType(typeList.get(currentSelected_type).getId());//
+
+//        bean.getConsultationReferral().setReferralDoctor();// TODO: 2017/10/17 0017
+//        bean.getConsultationReferral().setReferralHospital();// TODO: 2017/10/17 0017
+//        bean.getConsultationReferral().setReferralPlanDate();// TODO: 2017/10/17 0017
+            viewModel.submit(bean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

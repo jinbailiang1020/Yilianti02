@@ -48,4 +48,12 @@
     <string name="login_password_hint">请输入密码</string>
     <string name="remenber_pwd">记住密码</string>
     <string name="login">登录</string>
+    <string name="msg01">专家会诊团队由湘雅副教授，教授组成，该会诊</string>
+    <string name="msg02">收取0元</string>
+    <string name="professor_diagnosis">专家会诊</string>
+    <string name="special_diagnosis">特需会诊</string>
+    <string name="bed_diagnosis">床旁会诊</string>
+    <string name="change_hospital">转诊医院</string>
+    <string name="change_doctor">转诊医生</string>
+    <string name="change_date">转诊日期</string>
 </resources>

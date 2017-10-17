@@ -81,6 +81,7 @@
     <include layout="@layout/horizontal_line" />
 
     <CheckBox
+        android:id="@+id/cb_remember_pwd"
         android:layout_marginTop="10dp"
         android:layout_gravity="right"
         android:text="@string/remenber_pwd"

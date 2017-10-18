@@ -4,9 +4,11 @@ import android.util.Log;
 
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
-import com.embracesource.yilianti.bean.BaseBean;
+import com.embracesource.yilianti.bean.DiagnosisTeamBean;
+import com.embracesource.yilianti.bean.DoctorBean;
+import com.embracesource.yilianti.bean.HospitalBean;
 import com.embracesource.yilianti.bean.LoginBean;
-import com.embracesource.yilianti.bean.MyLaunchListBean;
+import com.embracesource.yilianti.bean.SimpleBean;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -21,6 +23,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 /**
@@ -58,15 +61,16 @@ public class Api implements ApiInterface {
 
 
     @Override
-    public Observable<MyLaunchListBean> getMyLaunchList(int pageNum,int pageSize) {
+    public Observable<ResponseBody> getMyLaunchList(int pageNum, int pageSize) {//MyLaunchListBean
         return RetrofitConfig.getInstance_afterLogin().getMyLaunchList(pageNum,pageSize)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())/*.map(new Function() {
+                .observeOn(AndroidSchedulers.mainThread()).map(new Function<ResponseBody, ResponseBody>() {
                     @Override
-                    public Object apply(@NonNull Object o) throws Exception {
-                        return o;
+                    public ResponseBody apply(@NonNull ResponseBody responseBody) throws Exception {
+                        responseBody.string();
+                        return null;
                     }
-                })*/;
+                });
     }
 
     @Override
@@ -83,7 +87,7 @@ public class Api implements ApiInterface {
     }
 
     @Override
-    public Observable<BaseBean> submitApplyDiagnosis(ApplyDiagnosisRequestBean bean) {
+    public Observable<SimpleBean> submitApplyDiagnosis(ApplyDiagnosisRequestBean bean) {
         String gsonStr = new Gson().toJson(bean);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gsonStr);//传递json需要加上这一句
         return RetrofitConfig.getInstance_afterLogin().submitApplyDiagnosis(body)
@@ -91,6 +95,21 @@ public class Api implements ApiInterface {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<DiagnosisTeamBean> getDiagnosisTeam() {
+        return RetrofitConfig.getInstance_afterLogin().getDiagnosisTeam()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<HospitalBean> changeHospitalList() {
+        return RetrofitConfig.getInstance_afterLogin().changeHospitalList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
     public Observable<ApplyDiagnosisGoalBean> getBaseData(String code) {
         return RetrofitConfig.getInstance().getBaseData(code)
                 .subscribeOn(Schedulers.io())
@@ -103,6 +122,10 @@ public class Api implements ApiInterface {
                 });
     }
 
-
-
+    @Override
+    public Observable<DoctorBean> changeDoctorList(int groupId) {
+        return RetrofitConfig.getInstance().changeDoctorList(groupId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

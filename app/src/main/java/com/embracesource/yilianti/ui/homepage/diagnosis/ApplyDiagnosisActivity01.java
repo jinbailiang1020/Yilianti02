@@ -2,33 +2,58 @@ package com.embracesource.yilianti.ui.homepage.diagnosis;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bumptech.glide.Glide;
 import com.embracesource.yilianti.R;
+import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
+import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.common.dialog.DialogAdapter;
+import com.embracesource.yilianti.common.http.RetrofitConfig;
 import com.embracesource.yilianti.common.imagepicker.PicassoImageLoader;
 import com.embracesource.yilianti.common.imagepicker.SelectDialog;
 import com.embracesource.yilianti.common.pickerview.JsonBean;
 import com.embracesource.yilianti.databinding.ActivityApplyDiagnosis01Binding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
+import com.embracesource.yilianti.util.ImageUtils;
+import com.embracesource.yilianti.util.PhoneUtils;
+import com.embracesource.yilianti.viewmodel.ApplyDiagnosis01CallBack;
+import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.orhanobut.logger.Logger;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Call;
+import okhttp3.Response;
 
-public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagnosis01Binding> implements View.OnClickListener {
+public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagnosis01Binding> implements View.OnClickListener, ApplyDiagnosis01CallBack {
 
     private static final int IMAGE_PICKER = 1004;//1004b不能改
     private ArrayList<JsonBean> options1Items = new ArrayList<>();
@@ -38,12 +63,17 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     //    private static final int ID_CARD_01 = 101;//身份证正面
 //    private static final int ID_CARD_02 = 102;//身份证反面
 //    private static final int SYMPTOMS  =103;//患处图片
-
+    private PopupWindow popupWindow;
     private boolean isLoaded;
     private PicassoImageLoader imageLoader;
     private ApplyDiagnosisRequestBean bean = new ApplyDiagnosisRequestBean();
     //    @Inject
-    ApplyDiagnosisViewModel01 ApplyDiagnosisViewModel01;
+    ApplyDiagnosisViewModel01 viewModel;
+    private DialogAdapter adapter;
+    private TextView popTitle;
+    private int currentSelected_medicalInsuranceType = -1;//当前选择的医保类型位置
+
+    private List<ApplyDiagnosisGoalBean.DataBean> medicalInsuranceTypeList = new ArrayList<>();//医保类型数据
 
     @Override
     protected int getLayoutId() {
@@ -61,7 +91,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                 nextStep();
             }
         });
-        ApplyDiagnosisViewModel01 = new ApplyDiagnosisViewModel01();
+        viewModel = new ApplyDiagnosisViewModel01(this);
         initView();
     }
 
@@ -75,51 +105,56 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         String age = binding.etAge.getText().toString();
         String jiguan = binding.etJiguan.getText().toString();
         String phone = binding.etPhone.getText().toString();
-//// TODO: 2017/10/17 0017  //还剩医保类型：
+
         String msg0 = "请填写";
         String msg = "";
-/*        if (preliminaryDiagnosis.isEmpty()) {
+        if (preliminaryDiagnosis.isEmpty()) {
             msg = "初步诊断";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
         }
         if (illnessDesc.isEmpty()) {
             msg = "病情描述";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
         }
         if (patientInfo.isEmpty()) {
             msg = "患者信息";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
         }
         if (idcardNumber.isEmpty()) {
             msg = "身份证号";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
         }
         if (name.isEmpty()) {
             msg = "名字";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
         }
         if (age.isEmpty()) {
             msg = "年龄";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
         }
         if (jiguan.isEmpty()) {
             msg = "籍贯";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
         }
         if (phone.isEmpty()) {
             msg = "手机号";
-            showToast( msg0+msg);
+            showToast(msg0 + msg);
             return;
-        }*/
+        }
+        if (medicalInsuranceTypeList.size() > 0 && currentSelected_medicalInsuranceType >= 0) {
+        } else {
+            msg = "医保类型";
+            showToast(msg0 + msg);
+            return;
+        }
 
-//       //todo// if(医保类型)
         int sex = 0;
         if (binding.rbMan.isChecked()) {// 性别
             sex = 0;//男
@@ -147,12 +182,12 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         bean.getPatientInfo().setAge(Integer.valueOf(age));
         bean.getPatientInfo().setFullname(name);
         bean.getPatientInfo().setIdnumber(idcardNumber);
-//        bean.getPatientInfo().setMedicareType();//医疗保险类型、、// TODO: 2017/10/17 0017
+        if (medicalInsuranceTypeList != null && !medicalInsuranceTypeList.isEmpty())
+            bean.getPatientInfo().setMedicareType(medicalInsuranceTypeList.get(currentSelected_medicalInsuranceType).getId());//医疗保险类型
         bean.getPatientInfo().setNativeplace(jiguan);
         bean.getPatientInfo().setPhonenum(phone);
         bean.getPatientInfo().setSex(sex);
         //patientInfo??
-
         Intent intent = new Intent(ApplyDiagnosisActivity01.this, ApplyDiagnosisActivity02.class);
         intent.putExtra(ApplyDiagnosisRequestBean.class.getName(), bean);
         startActivity(intent);
@@ -162,9 +197,10 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     @Override
     protected void initView() {
         super.initView();
+        initPopWindow();
         imageLoader = new PicassoImageLoader();
         binding.rbMan.setChecked(true);
-        ApplyDiagnosisViewModel01.initBaseData(this)
+        viewModel.initBaseData(this)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyObserver<List>() {
@@ -180,13 +216,14 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                     }
                 });
 
-        ApplyDiagnosisViewModel01.initImagePicker(imageLoader);
+        viewModel.initImagePicker(imageLoader);
 
         binding.ivSelectIdcard01.setOnClickListener(this);
         binding.ivSelectIdcard02.setOnClickListener(this);
         binding.ivSymptoms01.setOnClickListener(this);
         binding.ivSymptoms02.setOnClickListener(this);
         binding.etJiguan.setOnClickListener(this);
+        binding.spMedicalInsuranceType.setOnClickListener(this);
     }
 
 
@@ -207,8 +244,46 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                     showToast("数据未加载");
                 }
                 break;
+            case R.id.sp_medical_insurance_type://医保类型
+                //// TODO: 2017/10/18 0018
+                if (medicalInsuranceTypeList.isEmpty()) {
+                    showDialog();
+                    viewModel.getBaseData("medicare_type"); //medicare_type 医保类型
+                } else {
+                    adapter.setList(medicalInsuranceTypeList);
+                    showFragmentDialog(medicalInsuranceTypeList);
+                }
+                break;
         }
     }
+
+    private void initPopWindow() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.fragment_dialog_list, null, false);//container
+        popTitle = (TextView) view.findViewById(R.id.tv_title);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new DialogAdapter(this);
+        adapter.setPopwindowOnClickListener(new DialogAdapter.PopwindowOnClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                currentSelected_medicalInsuranceType = position;
+                binding.spMedicalInsuranceType.setText(medicalInsuranceTypeList.get(position).getDescription());
+                popupWindow.dismiss();
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        popupWindow = new PopupWindow(view, PhoneUtils.getPhoneWidth(this) * 2 / 3, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.GRAY));
+    }
+
+    private void showFragmentDialog(List<ApplyDiagnosisGoalBean.DataBean> data) {
+        if (data != null && !data.isEmpty())
+            popTitle.setText(data.get(0).getMark());
+        popupWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+//        popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+    }
+
 
     private void ShowPickerView() {// 弹出选择器
         OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
@@ -279,20 +354,61 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == IMAGE_PICKER) {
-                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                final ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
 //                MyAdapter adapter = new MyAdapter(images);
 //                gridView.setAdapter(adapter);
                 if (images == null || images.size() == 0) {
                     Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
                 } else {
-                    imageLoader.displayImage(ApplyDiagnosisActivity01.this,
-                            images.get(0).path,
-                            (ImageView) findViewById(currentSelectPhotoTypeId),
-                            binding.ivSelectIdcard01.getMeasuredWidth(),
-                            binding.ivSelectIdcard01.getMeasuredWidth());
+                    //上传
+                    showDialog();
+                    ImageUtils.compressBitmap(images.get(0).path,new File(images.get(0).path));
+                    Map<String, String> params = new HashMap<>();
+                    params.put("saveKey", "7a890690-52f7-454d-886f-7a71e12b107e");
+                    params.put("type", "2");
+                    params.put("submit", "上传");
+                    OkHttpUtils.post()//
+                            .addFile("mFile", images.get(0).name, new File(images.get(0).path))//
+//                            .addFile("mFile", "test1.txt", file2)//
+                            .url(RetrofitConfig.BASE_URL + "referralAndConsultation/upload")
+                            .params(params)//
+//                            .headers(headers)//
+                            .build()//
+                            .execute(new Callback() {
+                                @Override
+                                public Object parseNetworkResponse(Response response, int i) throws Exception {
+                                    Logger.d(response.body());//{"code":"0000","message":"type参数不正确","data":null,"traceInfo":["0026"],"sessionid":null,"fail":true,"success":false}
+                                    Logger.d(response.message());
+                                    SimpleBean simpleBean = new Gson().fromJson(response.body().string(), SimpleBean.class);
+                                    if (simpleBean.isSuccess()) {
+                                        imageLoader.displayImage(ApplyDiagnosisActivity01.this,
+                                                images.get(0).path,
+                                                (ImageView) findViewById(currentSelectPhotoTypeId),
+                                                binding.ivSelectIdcard01.getMeasuredWidth(),
+                                                binding.ivSelectIdcard01.getMeasuredWidth());
+                                    } else {
+                                        showToast(simpleBean.getMessage());
+                                        Glide.with(ApplyDiagnosisActivity01.this)//
+                                                .load(R.drawable.default_image)
+                                                .fitCenter()//
+                                                .into((ImageView) findViewById(currentSelectPhotoTypeId));
+                                    }
+                                    return null;
+                                }
 
+                                @Override
+                                public void onError(Call call, Exception e, int i) {
+                                    showToast(e.toString());
+                                    hideDialog();
+                                }
+
+                                @Override
+                                public void onResponse(Object o, int i) {
+                                    if (o != null) Logger.d(o.toString());
+                                    hideDialog();
+                                }
+                            });
                 }
-
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }
@@ -309,4 +425,11 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         return dialog;
     }
 
+    @Override
+    public void getBaseDataOK(ApplyDiagnosisGoalBean response) {
+        medicalInsuranceTypeList.clear();
+        medicalInsuranceTypeList.addAll(response.getData());
+        adapter.setList(response.getData());
+        showFragmentDialog(response.getData());
+    }
 }

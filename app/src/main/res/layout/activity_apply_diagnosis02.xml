@@ -84,21 +84,23 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/common_margin_label_and_content"
                         android:text="@string/msg01"
                         android:textColor="@color/common_label_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
+                        android:textSize="@dimen/common_little_textsize" />
 
                     <TextView
                         android:id="@+id/cash"
                         android:layout_width="wrap_content"
+                        android:paddingRight="10dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/common_margin_label_and_content"
                         android:text="@string/msg02"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/common_label_textsize" />
+                        android:textSize="@dimen/common_little_textsize" />
 
                 </LinearLayout>
 
@@ -216,7 +218,7 @@
                             android:textSize="@dimen/common_label_textsize" />
 
                         <TextView
-                            android:id="@+id/sp_special_diagnosis"
+                            android:id="@+id/sp_change_doctor"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
@@ -245,7 +247,7 @@
                             android:textSize="@dimen/common_label_textsize" />
 
                         <TextView
-                            android:id="@+id/sp_bed_diagnosis"
+                            android:id="@+id/sp_change_date"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"

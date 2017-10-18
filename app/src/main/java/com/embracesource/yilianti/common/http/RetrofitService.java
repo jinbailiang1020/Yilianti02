@@ -2,14 +2,17 @@ package com.embracesource.yilianti.common.http;
 
 
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
-import com.embracesource.yilianti.bean.BaseBean;
+import com.embracesource.yilianti.bean.DiagnosisTeamBean;
+import com.embracesource.yilianti.bean.DoctorBean;
+import com.embracesource.yilianti.bean.HospitalBean;
 import com.embracesource.yilianti.bean.LoginBean;
-import com.embracesource.yilianti.bean.MyLaunchListBean;
+import com.embracesource.yilianti.bean.SimpleBean;
 
 import org.json.JSONObject;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -35,14 +38,25 @@ public interface RetrofitService {
     //我发起的会诊列表接口
 
     //    @Headers("jsessionid":"D0924D8BD4C842AEAE4A25C320391169")
-    @GET("workbench/myConsultation/mysubmit/list")
-    Observable<MyLaunchListBean> getMyLaunchList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+    @GET("workbench/myConsultation/mysubmit/list")//pageNum={pageNum}&pageSize={pageSize}
+    Observable<ResponseBody> getMyLaunchList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);//MyLaunchListBean
 
     @GET("referralAndConsultation/detail/{id}")
     Observable<Response<JSONObject>> getApplyDiagnosisDetail(@Path("id") String id, @Query("flag") String flag);//ApplyDiagnosisDetailBean
 
-    @POST("referralAndConsultation/submit")//会诊、转诊提交
-    Observable<BaseBean> submitApplyDiagnosis(@Body RequestBody body);
+    //会诊、转诊提交
+    @POST("referralAndConsultation/submit")
+    Observable<SimpleBean> submitApplyDiagnosis(@Body RequestBody body);
+
+    @GET("referralAndConsultation/selectTeamList")
+    Observable<DiagnosisTeamBean> getDiagnosisTeam();
+
+    @GET("group/search")
+    Observable<HospitalBean> changeHospitalList();
+
+    //http://192.168.1.165:8002/referralAndConsultation/selectDoctorList?groupId={groupId}
+    @GET("referralAndConsultation/selectDoctorList")
+    Observable<DoctorBean> changeDoctorList(@Query("groupId") int groupId);
 
 
 //    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}

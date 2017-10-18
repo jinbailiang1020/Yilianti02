@@ -16,7 +16,9 @@
     <dimen name="padding_left_right">10dp</dimen>
     <dimen name="common_label_height">45dp</dimen>
     <dimen name="common_padding">5dp</dimen>
+    <dimen name="common_big_textsize">16sp</dimen>
     <dimen name="common_label_textsize">14sp</dimen>
+    <dimen name="common_little_textsize">12sp</dimen>
     <dimen name="common_layout_margin_top_height">10dp</dimen>
     <dimen name="common_margin_label_and_content">5dp</dimen>
 </resources>

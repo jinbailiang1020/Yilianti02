@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
-import com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisActivity02;
+import com.embracesource.yilianti.bean.DiagnosisTeamBean;
+import com.embracesource.yilianti.bean.DoctorBean;
+import com.embracesource.yilianti.bean.HospitalBean;
 
 import java.util.List;
 
@@ -24,45 +26,57 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.DialogView
 
     private PopwindowOnClickListener popwindowOnClickListener;
 
-    public void setList(List<ApplyDiagnosisGoalBean.DataBean> list) {
-            this.list = list;
-            notifyDataSetChanged();
+    public void setList(List list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    private List<Object> list;
+    private Context context;
+
+    public DialogAdapter(List<Object> list, Context context) {
+        this.list = list;
+        this.context = context;
+    }
+
+    public DialogAdapter(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public DialogAdapter.DialogViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        LayoutInflater inf = LayoutInflater.from(context);
+        return new DialogAdapter.DialogViewHolder(inf.inflate(R.layout.item_textview, null));//viewGroup 会报错
+    }
+
+    @Override
+    public void onBindViewHolder(DialogAdapter.DialogViewHolder viewHolder, final int position) {
+        Object entity = list.get(position);
+        TextView tv = (TextView) viewHolder.itemView.findViewById(R.id.tv);
+
+        if (entity instanceof ApplyDiagnosisGoalBean.DataBean) {
+            tv.setText(((ApplyDiagnosisGoalBean.DataBean) entity).getDescription());
+        } else if (entity instanceof HospitalBean.DataBean.ListBean) {
+            tv.setText(((HospitalBean.DataBean.ListBean) entity).getDescription());
+        } else if (entity instanceof DoctorBean.DataBean) {
+            tv.setText(((DoctorBean.DataBean) entity).getFullname());
+        } else if (entity instanceof DiagnosisTeamBean.DataBean) {
+            tv.setText(((DiagnosisTeamBean.DataBean) entity).getDescription());
         }
 
-        private List<ApplyDiagnosisGoalBean.DataBean> list;
-        private Context context;
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popwindowOnClickListener.onClick(v, position);
 
-        public DialogAdapter(List<ApplyDiagnosisGoalBean.DataBean> list, Context context) {
-            this.list = list;
-            this.context = context;
-        }
+            }
+        });
+    }
 
-        public DialogAdapter( Context context) {
-            this.context = context;
-        }
-        @Override
-        public DialogAdapter.DialogViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            LayoutInflater inf = LayoutInflater.from(context);
-            return new DialogAdapter.DialogViewHolder(inf.inflate(R.layout.item_textview, null));//viewGroup 会报错
-        }
-
-        @Override
-        public void onBindViewHolder(DialogAdapter.DialogViewHolder viewHolder, final int position) {
-            TextView tv = (TextView) viewHolder.itemView.findViewById(R.id.tv);
-            tv.setText(list.get(position).getDescription());
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popwindowOnClickListener.onClick(v,position);
-
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
 
 
     static class DialogViewHolder extends RecyclerView.ViewHolder {
@@ -72,7 +86,7 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.DialogView
         }
     }
 
-    public interface  PopwindowOnClickListener{
+    public interface PopwindowOnClickListener {
         void onClick(View v, int position);
     }
 }

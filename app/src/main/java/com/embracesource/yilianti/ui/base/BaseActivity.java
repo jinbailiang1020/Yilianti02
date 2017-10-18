@@ -13,14 +13,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.app.AppContext;
+import com.embracesource.yilianti.common.http.RetrofitConfig;
 import com.embracesource.yilianti.common.memory.MyPrefrences;
 import com.embracesource.yilianti.common.permission.PermissionListener;
 import com.embracesource.yilianti.util.StatusBarCompat;
+import com.embracesource.yilianti.util.StringUtils;
 import com.embracesource.yilianti.viewmodel.BaseViewModelCallBack;
 
 import java.util.ArrayList;
@@ -29,10 +32,10 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView ,BaseViewModelCallBack{
+public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView, BaseViewModelCallBack {
 
     static final String LOADING_DIALOG_TAG = "loading_dialog";
-    public static  final  String Key_ID = "id";
+    public static final String Key_ID = "id";
     private static PermissionListener mListener;
     protected static Context mContext;
     private static BaseActivity activity;
@@ -68,7 +71,23 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     protected void initData() {
     }
 
-    ;
+    public void showDialog() {
+        if (!isFinishing()) {
+            try {
+                dialog.show();
+            } catch (WindowManager.BadTokenException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    public void hideDialog(){
+        try {
+            dialog.dismiss();
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+    }
 
     protected void initContentView() {
         setContentView(getLayoutId());
@@ -254,24 +273,25 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         }
     }
 
-    public abstract static   class MyObserver<T> implements Observer<T> {
-        public   final String TAG = BaseActivity.class.getName();
+    public abstract static class MyObserver<T> implements Observer<T> {
+        public final String TAG = BaseActivity.class.getName();
 
         @Override
         public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
             mDisposable = d;
         }
+
         @Override
-        public void  onError(Throwable e){
+        public void onError(Throwable e) {
             dialog.dismiss();
             showToast(e.getMessage());
-            Log.i(TAG, "onError: "+e.getMessage());
+            Log.i(TAG, "onError: " + e.getMessage());
         }
 
         @Override
         public void onNext(@io.reactivex.annotations.NonNull T t) {
             dialog.dismiss();
-            Log.i(TAG, "onNext: "+t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
+            Log.i(TAG, "onNext: " + t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
         }
 
         @Override
@@ -282,6 +302,14 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String jsession = myPrefrences.getString(MyPrefrences.Key.sessionid);
+        if(!StringUtils.isNullorEmpty(jsession)){
+            RetrofitConfig.setJsessionid(jsession,this);
+        }
+    }
 
     @Override
     protected void onDestroy() {

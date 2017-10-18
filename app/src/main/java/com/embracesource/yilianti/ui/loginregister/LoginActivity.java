@@ -50,7 +50,7 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
             showToast(msg);
             return;
         }
-        dialog.show();
+        showDialog();
         new LoginViewModel(LoginActivity.this).login(userName, pwd);
 
     }

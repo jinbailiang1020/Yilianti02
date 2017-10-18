@@ -4,8 +4,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:background="@color/color_cacaca"
         android:layout_height="match_parent"
+        android:background="@color/color_cacaca"
         android:orientation="vertical"
         tools:context="com.embracesource.yilianti.ui.homepage.diagnosis.DiagnosisPictureActivity">
 
@@ -19,25 +19,25 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:background="@color/white"
                 android:id="@+id/rb_my_launch"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginRight="1dp"
                 android:layout_weight="1"
+                android:background="@color/white"
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/my_launch"
-                android:layout_marginRight="1dp"
                 android:textColor="@drawable/selector_home_text_color"
                 android:textSize="16sp" />
 
 
             <RadioButton
-                android:background="@color/white"
                 android:id="@+id/rb_my_participate"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@color/white"
                 android:button="@null"
                 android:drawableBottom="@color/color_cacaca"
                 android:gravity="center"
@@ -46,20 +46,28 @@
                 android:textSize="16sp" />
         </RadioGroup>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <com.embracesource.yilianti.common.recyclerview.SwipeRecyclerView
             android:background="@color/white"
-            android:layout_marginTop="1dp"
-            android:id="@+id/swipeRefreshLayout"
+            android:id="@+id/swipeRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        </com.embracesource.yilianti.common.recyclerview.SwipeRecyclerView>
 
-            </android.support.v7.widget.RecyclerView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <!--     <android.support.v4.widget.SwipeRefreshLayout
+                 android:background="@color/white"
+                 android:layout_marginTop="1dp"
+                 android:id="@+id/swipeRefreshLayout"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+                 <android.support.v7.widget.RecyclerView
+                     android:id="@+id/recyclerView"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent">
+
+                 </android.support.v7.widget.RecyclerView>
+             </android.support.v4.widget.SwipeRefreshLayout>-->
 
     </LinearLayout>
 

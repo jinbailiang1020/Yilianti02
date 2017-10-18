@@ -191,17 +191,17 @@ public class ApplyDiagnosisRequestBean implements Serializable {
             this.referralHospital = referralHospital;
         }
 
-        public int getReferralPlanDate() {
+        public String getReferralPlanDate() {
             return referralPlanDate;
         }
 
-        public void setReferralPlanDate(int referralPlanDate) {
+        public void setReferralPlanDate(String referralPlanDate) {
             this.referralPlanDate = referralPlanDate;
         }
 
         private int referralDoctor;
         private int referralHospital;
-        private int referralPlanDate;
+        private String referralPlanDate;
 
         public int getType() {
             return type;

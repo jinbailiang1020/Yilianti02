@@ -1,7 +1,10 @@
 package com.embracesource.yilianti.viewmodel;
 
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
-import com.embracesource.yilianti.bean.BaseBean;
+import com.embracesource.yilianti.bean.DiagnosisTeamBean;
+import com.embracesource.yilianti.bean.DoctorBean;
+import com.embracesource.yilianti.bean.HospitalBean;
+import com.embracesource.yilianti.bean.SimpleBean;
 import com.embracesource.yilianti.common.dragger.AppModule;
 
 import dagger.Component;
@@ -13,5 +16,11 @@ import dagger.Component;
 public interface ApplyDiagnosisViewModelCallBack extends BaseViewModelCallBack {
      void getBaseDataOK(ApplyDiagnosisGoalBean response);
 
-    void submitApplyDiagnosisOK(BaseBean response);
+    void submitApplyDiagnosisOK(SimpleBean response);
+
+    void getDiagnosisTeamOK(DiagnosisTeamBean response);
+
+    void changeHospitalListOK(HospitalBean response);
+
+    void changeDoctorListOK(DoctorBean response);
 }

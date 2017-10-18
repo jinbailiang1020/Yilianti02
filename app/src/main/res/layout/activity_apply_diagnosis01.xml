@@ -92,11 +92,11 @@
                         android:textSize="@dimen/common_label_textsize" />
 
                     <EditText
+                        android:paddingTop="5dp"
                         android:id="@+id/et_illness_desc"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:focusable="false"
                         android:gravity="start"
                         android:hint="@string/hint_illness_desc"
                         android:textColor="@color/common_text_color"
@@ -140,6 +140,7 @@
                     android:paddingLeft="@dimen/common_padding">
 
                     <ImageView
+                        android:clickable="false"
                         android:id="@+id/iv_Symptoms02"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
@@ -180,7 +181,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:focusable="false"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 
@@ -208,7 +208,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:focusable="false"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 
@@ -236,7 +235,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.8"
                         android:background="@null"
-                        android:focusable="false"
                         android:textColor="@color/common_text_color" />
 
                     <RadioGroup
@@ -288,7 +286,6 @@
                         android:layout_weight="3"
                         android:background="@null"
                         android:inputType="number"
-                        android:focusable="false"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
@@ -305,8 +302,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:background="@null"
                         android:focusable="false"
+                        android:background="@null"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 
@@ -334,7 +331,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:focusable="false"
+                        android:inputType="number"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
 <!--

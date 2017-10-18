@@ -3,9 +3,13 @@ package com.embracesource.yilianti.ui.homepage.diagnosis;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 
+import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.common.imagepicker.PicassoImageLoader;
 import com.embracesource.yilianti.common.pickerview.GetJsonDataUtil;
 import com.embracesource.yilianti.common.pickerview.JsonBean;
+import com.embracesource.yilianti.ui.base.BaseActivity;
+import com.embracesource.yilianti.viewmodel.ApplyDiagnosis01CallBack;
+import com.embracesource.yilianti.viewmodel.BaseViewModel;
 import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.loader.ImageLoader;
@@ -26,7 +30,9 @@ import io.reactivex.annotations.NonNull;
  * Created by Administrator on 2017/10/13 0013.
  */
 
-public class ApplyDiagnosisViewModel01 extends ViewModel {
+public class ApplyDiagnosisViewModel01 extends BaseViewModel {
+    private  ApplyDiagnosis01CallBack callBack;
+
     @Inject
     public ApplyDiagnosisViewModel01() {
     }
@@ -34,6 +40,10 @@ public class ApplyDiagnosisViewModel01 extends ViewModel {
     private ArrayList<JsonBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
+
+    public ApplyDiagnosisViewModel01(ApplyDiagnosis01CallBack callBack) {
+    this.callBack = callBack;
+    }
 
     void initImagePicker(ImageLoader imageLoader) {
         ImagePicker imagePicker = ImagePicker.getInstance();
@@ -131,6 +141,17 @@ public class ApplyDiagnosisViewModel01 extends ViewModel {
             public void subscribe(@NonNull ObservableEmitter<List> e) throws Exception {
                 initJsonData(context, e);
             }
+        });
+    }
+
+    public void getBaseData(String code) {
+        api.getBaseData(code).subscribe(new BaseActivity.MyObserver<ApplyDiagnosisGoalBean>() {
+            @Override
+            public void onNext(@NonNull ApplyDiagnosisGoalBean response) {
+                super.onNext(response);
+                callBack.getBaseDataOK(response);
+            }
+
         });
     }
 }

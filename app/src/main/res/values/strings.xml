@@ -57,4 +57,8 @@
     <string name="change_doctor">转诊医生</string>
     <string name="change_date">转诊日期</string>
     <string name="msg_no_data">暂无数据</string>
+    <string name="recyclerview_nomore">没有更多</string>
+    <string name="wait">请稍等...</string>
+    <string name="net_error">网络异常</string>
+    <string name="Max_Pic_Size">最多只能上传9张</string>
 </resources>

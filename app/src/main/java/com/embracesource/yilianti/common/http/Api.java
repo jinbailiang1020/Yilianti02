@@ -2,19 +2,19 @@ package com.embracesource.yilianti.common.http;
 
 import android.util.Log;
 
+import com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
 import com.embracesource.yilianti.bean.DiagnosisTeamBean;
 import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.HospitalBean;
 import com.embracesource.yilianti.bean.LoginBean;
+import com.embracesource.yilianti.bean.MyLaunchListBean;
 import com.embracesource.yilianti.bean.SimpleBean;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,7 +23,6 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 /**
@@ -39,7 +38,7 @@ import retrofit2.Response;
  */
 
 public class Api implements ApiInterface {
-    @Inject
+//    @Inject
     public Api() {
     }
 
@@ -61,29 +60,10 @@ public class Api implements ApiInterface {
 
 
     @Override
-    public Observable<ResponseBody> getMyLaunchList(int pageNum, int pageSize) {//MyLaunchListBean
-        return RetrofitConfig.getInstance_afterLogin().getMyLaunchList(pageNum,pageSize)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).map(new Function<ResponseBody, ResponseBody>() {
-                    @Override
-                    public ResponseBody apply(@NonNull ResponseBody responseBody) throws Exception {
-                        responseBody.string();
-                        return null;
-                    }
-                });
-    }
-
-    @Override
-    public Observable<Response<JSONObject>> getApplyDiagnosisDetail(String id, String flag) {//ApplyDiagnosisDetailBean
+    public Observable<ApplyDiagnosisDetailBean> getApplyDiagnosisDetail(int id, String flag) {//ApplyDiagnosisDetailBean
         return RetrofitConfig.getInstance_afterLogin().getApplyDiagnosisDetail(id, flag)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).map(new Function<Response<JSONObject>, Response<JSONObject>>() {
-                    @Override
-                    public Response<JSONObject> apply(@NonNull Response<JSONObject> applyDiagnosisDetailBean) throws Exception {
-                        applyDiagnosisDetailBean.toString();
-                        return applyDiagnosisDetailBean;
-                    }
-                });
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
@@ -128,4 +108,18 @@ public class Api implements ApiInterface {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<MyLaunchListBean> getMyParticipateList(int pageNum, int pageSize) {
+        return RetrofitConfig.getInstance_afterLogin().getMyParticipateList(pageNum,pageSize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    @Override
+    public Observable<MyLaunchListBean> getMyLaunchList(int pageNum, int pageSize) {//MyLaunchListBean
+        return RetrofitConfig.getInstance_afterLogin().getMyLaunchList(pageNum,pageSize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

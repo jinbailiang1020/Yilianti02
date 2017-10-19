@@ -1,15 +1,7 @@
 package com.embracesource.yilianti.common.dragger;
 
-import android.content.Context;
-
 import com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisActivity01;
-import com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisActivity02;
 import com.embracesource.yilianti.ui.homepage.diagnosis.DiagnosisPictureActivity;
-import com.embracesource.yilianti.viewmodel.ApplyDiagnosisViewModelCallBack;
-
-import javax.inject.Singleton;
-
-import dagger.Component;
 
 /**
  * http://blog.csdn.net/javine/article/details/52787990
@@ -17,8 +9,8 @@ import dagger.Component;
  * 我们将会在MainActivity中看到注入是通过DaggerAppComponent类来执行的，而这是一个我从来没有编写过的类..
  * .它就是dagger的插件给我们自动生成的，当然是根据AppComponet来生成的。
  */
-@Singleton
-@Component(dependencies = ApplyDiagnosisViewModelCallBack.class, modules = AppModule.class)
+//@Singleton
+//@Component(dependencies = ApplyDiagnosisViewModelCallBack.class, modules = AppModule.class)
 public interface AppComponent {
 
     void inject(DiagnosisPictureActivity activity);

@@ -1,15 +1,10 @@
 package com.embracesource.yilianti.common.dragger;
 
-import com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisViewModel01;
-
-import dagger.Module;
-import dagger.Provides;
-
 /**
  * http://blog.csdn.net/javine/article/details/52787990
  *  MyModule类 用来提供依赖，里面定义一些用@Provides注解的以provide开头的方法。MainActivity中使用的MyPresenter对象就是在此处被实例化的。
  */
-@Module
+//@Module
 public class AppModule {
     public AppModule() {
     }
@@ -24,10 +19,10 @@ public class AppModule {
     public DiagnosisPictureViewModel provideDiagnosisPictureViewModel(){
         return new DiagnosisPictureViewModel(this);
     }*/
-    @Provides
+  /*  @Provides
     public ApplyDiagnosisViewModel01 provideApplyDiagnosisViewModel01(){
         return new ApplyDiagnosisViewModel01();
-    }
+    }*/
 
 /*    @Provides
     public ApplyDiagnosisViewModel02 provideApplyDiagnosisViewModel02(ApplyDiagnosisViewModelCallBack applyDiagnosisViewModelCallBack){

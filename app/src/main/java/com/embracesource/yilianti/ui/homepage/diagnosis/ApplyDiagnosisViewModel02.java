@@ -13,8 +13,6 @@ import com.embracesource.yilianti.common.http.ApiInterface;
 import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosisViewModelCallBack;
 
-import javax.inject.Inject;
-
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -25,7 +23,7 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
 
     private final ApiInterface api;
     private  ApplyDiagnosisViewModelCallBack callBack;
-    @Inject
+//    @Inject
     public ApplyDiagnosisViewModel02(ApplyDiagnosisViewModelCallBack callBack) {
         this.callBack = callBack;
         api = new Api();

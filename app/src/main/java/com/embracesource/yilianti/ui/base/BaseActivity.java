@@ -1,7 +1,6 @@
 package com.embracesource.yilianti.ui.base;
 
 import android.app.ProgressDialog;
-import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,20 +10,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.embracesource.yilianti.R;
-import com.embracesource.yilianti.app.AppContext;
 import com.embracesource.yilianti.common.http.RetrofitConfig;
 import com.embracesource.yilianti.common.memory.MyPrefrences;
 import com.embracesource.yilianti.common.permission.PermissionListener;
+import com.embracesource.yilianti.util.PhoneUtils;
 import com.embracesource.yilianti.util.StatusBarCompat;
 import com.embracesource.yilianti.util.StringUtils;
 import com.embracesource.yilianti.viewmodel.BaseViewModelCallBack;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,14 +54,20 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         super.onCreate(savedInstanceState);
         mContext = this.getApplicationContext();
         activity = this;
-        dialog = new ProgressDialog(this);
+        initProgressDialog();
         myPrefrences = new MyPrefrences(mContext);
         StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
-
         initContentView();
-
         initActionBar();
         uiHandler = new Handler(getMainLooper());
+    }
+
+    private void initProgressDialog() {
+        dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.wait));
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = PhoneUtils.getPhoneWidth(this)/8;
+        dialog.getWindow().setAttributes(params);
     }
 
     protected void initView() {
@@ -81,7 +86,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
 
         }
     }
-    public void hideDialog(){
+
+    public void hideDialog() {
         try {
             dialog.dismiss();
         } catch (WindowManager.BadTokenException e) {
@@ -177,9 +183,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
     }
 
+/*
     protected final ViewModelProvider.Factory viewModelFactory() {
         return AppContext.getInstance().getViewModelFactory();
     }
+*/
 
 
     /**
@@ -285,13 +293,13 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         public void onError(Throwable e) {
             dialog.dismiss();
             showToast(e.getMessage());
-            Log.i(TAG, "onError: " + e.getMessage());
+            Logger.e(TAG, "onError: " + e.getMessage());
         }
 
         @Override
         public void onNext(@io.reactivex.annotations.NonNull T t) {
             dialog.dismiss();
-            Log.i(TAG, "onNext: " + t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
+            Logger.d(TAG, "onNext: " + t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
         }
 
         @Override
@@ -306,8 +314,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     protected void onResume() {
         super.onResume();
         String jsession = myPrefrences.getString(MyPrefrences.Key.sessionid);
-        if(!StringUtils.isNullorEmpty(jsession)){
-            RetrofitConfig.setJsessionid(jsession,this);
+        if (!StringUtils.isNullorEmpty(jsession)) {
+            RetrofitConfig.setJsessionid(jsession, this);
         }
     }
 

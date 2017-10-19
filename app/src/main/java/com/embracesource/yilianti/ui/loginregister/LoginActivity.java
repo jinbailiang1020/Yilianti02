@@ -37,7 +37,7 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
     }
 
     public void login(View view) {
-        String msg = null;
+        String msg;
         String pwd = binding.etPwd.getText().toString();
         String userName = binding.etPhone.getText().toString();
         if (userName.length() == 0) {

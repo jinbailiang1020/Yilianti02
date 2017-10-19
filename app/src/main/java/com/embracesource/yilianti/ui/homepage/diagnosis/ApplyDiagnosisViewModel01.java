@@ -1,6 +1,5 @@
 package com.embracesource.yilianti.ui.homepage.diagnosis;
 
-import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
@@ -19,12 +18,12 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
+
+import static com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisActivity01.Max_Pic_Size;
 
 /**
  * Created by Administrator on 2017/10/13 0013.
@@ -33,7 +32,7 @@ import io.reactivex.annotations.NonNull;
 public class ApplyDiagnosisViewModel01 extends BaseViewModel {
     private  ApplyDiagnosis01CallBack callBack;
 
-    @Inject
+//    @Inject
     public ApplyDiagnosisViewModel01() {
     }
 
@@ -67,6 +66,29 @@ public class ApplyDiagnosisViewModel01 extends BaseViewModel {
         imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
         imagePicker.setOutPutY(1000);//保存文件的高度。单位像素*/
     }
+    void initImagePicker_Mult(ImageLoader imageLoader) {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imageLoader = new PicassoImageLoader();
+/*        imagePicker.setImageLoader(new PicassoImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);  //显示拍照按钮
+        imagePicker.setCrop(true);        //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true); //是否按矩形区域保存
+        imagePicker.setSelectLimit(9);    //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);//保存文件的高度。单位像素*/
+
+        imagePicker.setImageLoader(imageLoader);   //设置图片加载器
+        imagePicker.setShowCamera(true);  //显示拍照按钮
+        imagePicker.setCrop(false);        //允许裁剪（单选才有效）
+        imagePicker.setSelectLimit(Max_Pic_Size);    //选中数量限制
+        imagePicker.setMultiMode(true);
+        imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);//保存文件的高度。单位像素*/
+    }
+
 
     private void initJsonData(Context context, ObservableEmitter<List> e) {//解析数据
         /**

@@ -8,8 +8,6 @@ import com.embracesource.yilianti.common.http.Api;
 import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.viewmodel.LoginViewModelCallBack;
 
-import javax.inject.Inject;
-
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -23,7 +21,7 @@ public class LoginViewModel extends ViewModel {
     public Api api;
     private final MutableLiveData<Object> themeResponse = new MutableLiveData<>();
 
-    @Inject
+//    @Inject
     LoginViewModel(LoginViewModelCallBack callBack) {
         this.callBack = callBack;
         api = new Api();

@@ -21,7 +21,9 @@ import com.bumptech.glide.Glide;
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
-import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.common.adapter.CommonAdapter;
+import com.embracesource.yilianti.common.adapter.MultiItemTypeAdapter;
+import com.embracesource.yilianti.common.adapter.ViewHolder;
 import com.embracesource.yilianti.common.dialog.DialogAdapter;
 import com.embracesource.yilianti.common.http.RetrofitConfig;
 import com.embracesource.yilianti.common.imagepicker.PicassoImageLoader;
@@ -29,29 +31,33 @@ import com.embracesource.yilianti.common.imagepicker.SelectDialog;
 import com.embracesource.yilianti.common.pickerview.JsonBean;
 import com.embracesource.yilianti.databinding.ActivityApplyDiagnosis01Binding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
-import com.embracesource.yilianti.util.ImageUtils;
 import com.embracesource.yilianti.util.PhoneUtils;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosis01CallBack;
-import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.convert.StringConvert;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.request.PostRequest;
+import com.lzy.okserver.OkUpload;
+import com.lzy.okserver.upload.UploadListener;
+import com.lzy.okserver.upload.UploadTask;
 import com.orhanobut.logger.Logger;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 
-import java.io.File;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.Response;
+
+import static android.R.attr.path;
 
 public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagnosis01Binding> implements View.OnClickListener, ApplyDiagnosis01CallBack {
 
@@ -74,6 +80,9 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     private int currentSelected_medicalInsuranceType = -1;//当前选择的医保类型位置
 
     private List<ApplyDiagnosisGoalBean.DataBean> medicalInsuranceTypeList = new ArrayList<>();//医保类型数据
+    private List<ImageItem> symptomsList = new ArrayList<>();//患处图片集合
+    private CommonAdapter symptomsAdapter;
+    public static final int Max_Pic_Size = 9;
 
     @Override
     protected int getLayoutId() {
@@ -224,6 +233,34 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         binding.ivSymptoms02.setOnClickListener(this);
         binding.etJiguan.setOnClickListener(this);
         binding.spMedicalInsuranceType.setOnClickListener(this);
+
+        //患处图片adapter
+        symptomsAdapter = new CommonAdapter(mContext, R.layout.image_item, symptomsList) {
+            @Override
+            protected void convert(ViewHolder holder, Object o, int position) {
+                ImageItem entity = (ImageItem) o;
+                imageLoader.displayImage(ApplyDiagnosisActivity01.this,
+                        entity.path,
+                        (ImageView) holder.itemView.findViewById(R.id.iv),
+                        binding.ivSelectIdcard01.getMeasuredWidth(),
+                        binding.ivSelectIdcard01.getMeasuredWidth());
+            }
+        };
+        symptomsAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                symptomsList.remove(position);
+                symptomsAdapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+        binding.recyclerView.setAdapter(symptomsAdapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
 
@@ -232,8 +269,12 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         switch (v.getId()) {
             case R.id.iv_select_idcard01:
             case R.id.iv_select_idcard02:
+                viewModel.initImagePicker(imageLoader);
+                showSelectPhotoDialog(v.getId());
+                break;
             case R.id.iv_Symptoms01:
             case R.id.iv_Symptoms02:
+                viewModel.initImagePicker_Mult(imageLoader);
                 showSelectPhotoDialog(v.getId());
                 break;
 
@@ -245,7 +286,6 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                 }
                 break;
             case R.id.sp_medical_insurance_type://医保类型
-                //// TODO: 2017/10/18 0018
                 if (medicalInsuranceTypeList.isEmpty()) {
                     showDialog();
                     viewModel.getBaseData("medicare_type"); //medicare_type 医保类型
@@ -283,7 +323,6 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         popupWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
 //        popupWindow.setAnimationStyle(R.style.popwin_anim_style);
     }
-
 
     private void ShowPickerView() {// 弹出选择器
         OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
@@ -344,7 +383,6 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                     default:
                         break;
                 }
-
             }
         }, names);
     }
@@ -360,59 +398,91 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                 if (images == null || images.size() == 0) {
                     Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
                 } else {
-                    //上传
-                    showDialog();
-                    ImageUtils.compressBitmap(images.get(0).path,new File(images.get(0).path));
-                    Map<String, String> params = new HashMap<>();
-                    params.put("saveKey", "7a890690-52f7-454d-886f-7a71e12b107e");
-                    params.put("type", "2");
-                    params.put("submit", "上传");
-                    OkHttpUtils.post()//
-                            .addFile("mFile", images.get(0).name, new File(images.get(0).path))//
-//                            .addFile("mFile", "test1.txt", file2)//
-                            .url(RetrofitConfig.BASE_URL + "referralAndConsultation/upload")
-                            .params(params)//
-//                            .headers(headers)//
-                            .build()//
-                            .execute(new Callback() {
-                                @Override
-                                public Object parseNetworkResponse(Response response, int i) throws Exception {
-                                    Logger.d(response.body());//{"code":"0000","message":"type参数不正确","data":null,"traceInfo":["0026"],"sessionid":null,"fail":true,"success":false}
-                                    Logger.d(response.message());
-                                    SimpleBean simpleBean = new Gson().fromJson(response.body().string(), SimpleBean.class);
-                                    if (simpleBean.isSuccess()) {
-                                        imageLoader.displayImage(ApplyDiagnosisActivity01.this,
-                                                images.get(0).path,
-                                                (ImageView) findViewById(currentSelectPhotoTypeId),
-                                                binding.ivSelectIdcard01.getMeasuredWidth(),
-                                                binding.ivSelectIdcard01.getMeasuredWidth());
-                                    } else {
-                                        showToast(simpleBean.getMessage());
-                                        Glide.with(ApplyDiagnosisActivity01.this)//
-                                                .load(R.drawable.default_image)
-                                                .fitCenter()//
-                                                .into((ImageView) findViewById(currentSelectPhotoTypeId));
-                                    }
-                                    return null;
-                                }
-
-                                @Override
-                                public void onError(Call call, Exception e, int i) {
-                                    showToast(e.toString());
-                                    hideDialog();
-                                }
-
-                                @Override
-                                public void onResponse(Object o, int i) {
-                                    if (o != null) Logger.d(o.toString());
-                                    hideDialog();
-                                }
-                            });
+                    for (int i = 0; i < images.size(); i++) {
+                        uploadFile(images.get(i));
+                    }
                 }
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void uploadFile(final ImageItem imageItem) {
+        PostRequest<String> postRequest = OkGo.<String>post(RetrofitConfig.BASE_URL + "referralAndConsultation/upload")//
+//                .headers("aaa", "111")//
+                .params("bbb", "222")//
+                .params("saveKey", "7a890690-52f7-454d-886f-7a71e12b107e")
+                .params("type", "2")
+                .params("file", path)
+                .params("submit", "上传")//" enctype="multipart/form-data"
+                .converter(new StringConvert());
+        final UploadTask<String> task = OkUpload.request(imageItem.path, postRequest)//
+                .priority(new Random().nextInt(100))//
+                .extra1(imageItem)//
+                .save();
+
+        task.register(new UploadListener<String>("tag") {
+            @Override
+            public void onStart(Progress progress) {
+                Logger.d("HAHA onStart" + progress);
+            }
+
+            @Override
+            public void onProgress(Progress progress) {
+                Logger.d("HAHA onProgress" + progress);
+            }
+
+            @Override
+            public void onError(Progress progress) {
+                Logger.d("HAHA onError" + progress);
+                task.remove();
+            }
+
+            @Override
+            public void onFinish(String s, Progress progress) {
+                // HAHA onFinish:{"code":"0000","message":"type参数不正确","data":null,"traceInfo":["0026"],"sessionid":null,"success":false,"fail":true}
+                Logger.d("HAHA onFinish:" + s + " ; " + progress);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    boolean success = jsonObject.getBoolean("success");
+                    String msg = jsonObject.getString("message");
+//                    if (success) {
+                    if (true) { //// TODO: 2017/10/19 0019
+                        if (currentSelectPhotoTypeId == R.id.iv_Symptoms01) {//患处图片，多选
+                            if(symptomsList.size()>Max_Pic_Size){
+                                showToast(getString(R.string.Max_Pic_Size));
+                                return;
+                            }
+                            symptomsList.add(imageItem);
+                            symptomsAdapter.notifyDataSetChanged();
+                        } else {
+                            imageLoader.displayImage(ApplyDiagnosisActivity01.this,
+                                    imageItem.path,
+                                    (ImageView) findViewById(currentSelectPhotoTypeId),
+                                    binding.ivSelectIdcard01.getMeasuredWidth(),
+                                    binding.ivSelectIdcard01.getMeasuredWidth());
+                        }
+                    } else {
+                        showToast(msg);
+                        Glide.with(ApplyDiagnosisActivity01.this)//
+                                .load(R.drawable.default_image)
+                                .centerCrop()//
+                                .into((ImageView) findViewById(currentSelectPhotoTypeId));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                task.remove();
+            }
+
+            @Override
+            public void onRemove(Progress progress) {
+
+            }
+        });
+        task.start();
     }
 
     private SelectDialog showDialog(SelectDialog.SelectDialogListener listener, List<String> names) {

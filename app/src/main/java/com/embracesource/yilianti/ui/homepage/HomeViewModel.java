@@ -11,12 +11,9 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.embracesource.yilianti.R;
-import com.embracesource.yilianti.common.http.Api;
 import com.embracesource.yilianti.util.SimpleObserver;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * OtherThemeViewModel <br/>
@@ -24,13 +21,8 @@ import javax.inject.Inject;
  */
 public class HomeViewModel extends ViewModel {
 
-    private final Api zhihuApi;
     private final MutableLiveData<Object> themeResponse = new MutableLiveData<>();
 
-    @Inject
-    HomeViewModel(Api zhihuApi) {
-        this.zhihuApi = zhihuApi;
-    }
 
     public void initConvenientBanner(ConvenientBanner convenientBanner, List localImages) {
         //开始自动翻页

@@ -6,6 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
@@ -24,7 +25,9 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     //    @Inject
     DiagnosisPictureViewModel viewModel;
     private CommonAdapter mAdapter;
-    private int currentPage = 0;
+    private int currentPage = 1;
+    private final static int pageSize = 20;
+    private int currentCheckPage;//当前选择的页面
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,62 +45,6 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     @Override
     protected void initView() {
         viewModel = new DiagnosisPictureViewModel(this);
-        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_my_launch:
-                        viewModel.getMyLaunchList(mContext, 0);
-                        break;
-                    case R.id.rb_my_participate:
-//                        requestData02();
-                        break;
-                }
-            }
-        });
-        binding.rbMyLaunch.setChecked(true);
-
-//        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        int i = 10;
-        List<Object> mList = new ArrayList<>();
-        while (i-- > 0) {
-            mList.add(i);
-        }
-        mAdapter = new CommonAdapter(this, R.layout.diagnosis_item, mList) {
-            @Override
-            protected void convert(ViewHolder viewHolder, Object item, int position) {
-
-            }
-        };
-/*        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                //// TODO: 2017/10/17 0017 test 
-                new ApplyDiagnosisDetailViewModel(new ApplyDiagnosisDetailCallBack() {
-
-                }).getDetail("65", "2");
-            }
-
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                return false;
-            }
-        });*/
-        binding.swipeRecyclerView.setAdapter(mAdapter);
-        binding.swipeRecyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this));
-        binding.swipeRecyclerView.setOnLoadListener(new SwipeRecyclerView.OnLoadListener() {
-            @Override
-            public void onRefresh() {
-                currentPage = 0;
-                viewModel.getMyLaunchList(mContext, currentPage);
-                binding.swipeRecyclerView.setRefreshing(false);
-            }
-
-            @Override
-            public void onLoadMore() {
-                viewModel.getMyLaunchList(mContext, ++currentPage);
-            }
-        });
         setTitleRightVisiable(getString(R.string.apply_diagnosis), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,43 +53,119 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
                 startActivity(intent);
             }
         });
-    }
-    //        设置分割线
-//        rcv.addItemDecoration(new BaseItemDecoration(this,R.color.colorAccent));
-/*        binding.recyclerView.setOnItemClickListener(new OnItemClickListener() {
-        @Override
-        public void OnItemClick ( int position){
-            Toast.makeText(LinearManagerActivity.this, "item" + position + " has been clicked", Toast.LENGTH_SHORT).show();
-        }
-    });*/
-/*
-    private View getHeaderView() {
-        View view = getLayoutInflater().inflate(R.layout.item_header,rcv,false);
-        ((TextView) view.findViewById(R.id.tv)).setText("Header"+headerViews.size());
-        headerViews.add(view);
-        return view;
+        initRecycler();
     }
 
-    private View getFooterView() {
-        View view = getLayoutInflater().inflate(R.layout.item_footer,rcv,false);
-        ((TextView) view.findViewById(R.id.tv)).setText("Footer"+footerViews.size());
-        footerViews.add(view);
-        return view;
-    }
-*/
-
-    public void getMyLaunchListOK(MyLaunchListBean response, int pageNum) {
-  /*      if(pageNum == 0){
-            mAdapter.setDatas(response.getData().getList());
-        }else{
-            mAdapter.addDatas(response.getData().getList());
+    private void initRecycler() {
+        int i = 10;
+        List<Object> mList = new ArrayList<>();
+      /*  while (i-- > 0) {
+            mList.add(i);
         }*/
+        mAdapter = new CommonAdapter(this, R.layout.diagnosis_item, mList) {
+            @Override
+            protected void convert(ViewHolder viewHolder, Object item, int position) {
+                final MyLaunchListBean.DataBean.ListBean entity = (MyLaunchListBean.DataBean.ListBean) item;
+                TextView tv_name = viewHolder.getView(R.id.tv_name);
+                TextView tv_status = viewHolder.getView(R.id.tv_status);
+                TextView tv_content = viewHolder.getView(R.id.tv_content);
+                TextView tv_date = viewHolder.getView(R.id.tv_date);
 
+                tv_name.setText(entity.getPatientName());
+                tv_status.setText(entity.getType() + "");
+                tv_content.setText(entity.getContent());
+                tv_date.setText(entity.getReferralPlanDate());
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(DiagnosisPictureActivity.this, ApplyDiagnosisDetailActivity.class);
+                        intent.putExtra(ApplyDiagnosisDetailActivity.class.getName(), entity.getId());
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+        binding.swipeRecyclerView.setAdapter(mAdapter);
+        binding.swipeRecyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this));
+        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                currentPage = 1;
+                requestList(checkedId);
+            }
+        });
+        binding.rbMyLaunch.setChecked(true);
+
+
+        binding.swipeRecyclerView.setOnLoadListener(new SwipeRecyclerView.OnLoadListener() {
+            @Override
+            public void onRefresh() {
+                currentPage = 1;
+                requestList(currentCheckPage);
+                binding.swipeRecyclerView.setRefreshing(false);
+            }
+
+            @Override
+            public void onLoadMore() {
+                switch (currentCheckPage){
+                    case R.id.rb_my_launch:
+//                        showDialog();
+                        viewModel.getMyLaunchList(++currentPage, pageSize);
+                        break;
+                    case R.id.rb_my_participate:
+//                        showDialog();
+                        viewModel.getMyParticipateList(++currentPage, pageSize);
+                        break;
+
+
+                }
+            }
+        });
+    }
+
+    private void requestList(int checkedId) {
+        currentCheckPage = checkedId;
+        switch (checkedId) {
+            case R.id.rb_my_launch:
+                showDialog();
+                viewModel.getMyLaunchList(currentPage, pageSize);
+                break;
+            case R.id.rb_my_participate:
+                showDialog();
+                viewModel.getMyParticipateList(currentPage, pageSize);
+                break;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.getMyLaunchList(mContext, 0);
+//        viewModel.getMyLaunchList(mContext, 0);
+//        eventBus()refresh()//// TODO: 2017/10/19 0019
+    }
+
+    public void getMyLaunchListOK(MyLaunchListBean response, int pageNum) {
+        refreshView(response, pageNum);
+    }
+
+    @Override
+    public void getMyParticipateListOK(MyLaunchListBean response, int pageNum) {
+        refreshView(response, pageNum);
+    }
+
+    private void refreshView(MyLaunchListBean response, int pageNum) {
+        binding.swipeRecyclerView.stopLoadingMore();
+        binding.swipeRecyclerView.complete();
+        if (pageNum == 1) {
+            mAdapter.setDatas(response.getData().getList());
+        } else {
+            mAdapter.addDatas(response.getData().getList());
+            if (response.getData().getList().size() == 0) {
+                binding.swipeRecyclerView.setEmptyView(View.inflate(this, R.layout.list_empty_view, null));
+            }
+            if (response.getData().getList().size() < pageSize) {
+                binding.swipeRecyclerView.onNoMore(getString(R.string.recyclerview_nomore));
+            }
+        }
     }
 }

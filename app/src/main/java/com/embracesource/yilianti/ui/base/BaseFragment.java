@@ -1,6 +1,5 @@
 package com.embracesource.yilianti.ui.base;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -8,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.embracesource.yilianti.app.AppContext;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -47,7 +44,7 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract int getFragmentLayout();
 
-    protected ViewModelProvider.Factory viewModelFactory() {
+/*    protected ViewModelProvider.Factory viewModelFactory() {
         return AppContext.getInstance().getViewModelFactory();
-    }
+    }*/
 }

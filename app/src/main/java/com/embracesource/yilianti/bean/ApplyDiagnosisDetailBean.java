@@ -12,19 +12,19 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
     /**
      * code : 1111
      * message : success
-     * data : {"PatientInfo":{"id":39,"createdTime":1508144351000,"hVersion":1,"available":1,"userId":null,"fullname":"陈先生","sex":1,"age":31,"idnumber":"430101199901011234","address":"","phonenum":"13117513421","medicareType":2,"nativeplace":"湖南长沙"},"list":[{"id":65,"createdTime":"2017-10-16 16:59:11","hVersion":4,"available":7,"type":2,"userId":null,"patientId":39,"patientIllnessBasicinfoId":65,"doctorId":2,"consultationType":1,"consultationObjective":3,"priority":1,"team":1,"referralHospital":1,"referralDoctor":32,"referralPlanDate":"2017-10-16 00:00:00","referralStartdate":null,"referralEnddate":null,"saveKey":"6542ad79-a609-4ae2-aad9-4e3ac9fe99b3","chiefComplaint":"皮炎湿疹","preliminaryDiagnosis":"皮炎湿疹","illnessDescription":"皮炎湿疹皮炎湿疹皮炎湿疹","consultationTypeName":"普通会诊","consultationObjectiveName":"要求转诊","teamName":"银屑病等红斑鳞屑性疾病团队","referralHospitalName":"湘雅二医院","referralDoctorName":null,"content":"","medicineHormone":"A激素100ML；B激素500ML；A激素100ML；B激素500ML；A激素100ML；B激素500ML；","medicineAntibiotic":"","medicineAntiallergic":"A激素100ML；B激素500ML；A激素100ML；B激素500ML；","medicineExternal":"","operation":"","picIdcard":["http://192.168.1.165/imgs/idcard/6542ad79-a609-4ae2-aad9-4e3ac9fe99b3/20171016165848-4f878929-0fc6-4355-8c6e-2a400e3099df.jpg"],"picIllness":["http://192.168.1.165/imgs/illness/6542ad79-a609-4ae2-aad9-4e3ac9fe99b3/20171016165845-80518c9f-c104-43b0-b1bb-6111a1b15e17.jpg"],"video":null,"patientName":null}]}
+     * data : {"PatientInfo":{"id":48,"createdTime":1508378116000,"hVersion":1,"available":1,"userId":null,"fullname":"李白","sex":0,"age":28,"idnumber":"430386198811187766","address":null,"phonenum":"13546463434","medicareType":12,"nativeplace":"海南省琼海市"},"list":[{"id":75,"createdTime":"2017-10-19 09:55:16","hVersion":1,"available":1,"type":6,"userId":null,"patientId":48,"patientIllnessBasicinfoId":75,"doctorId":2,"consultationType":0,"consultationObjective":3,"priority":9,"team":2,"referralHospital":1,"referralDoctor":6,"referralPlanDate":null,"referralStartdate":null,"referralEnddate":null,"saveKey":null,"chiefComplaint":"住宿哈","preliminaryDiagnosis":"avbuzheme初步诊断h","illnessDescription":"病情描述什么额","consultationTypeName":null,"consultationObjectiveName":"要求转诊","teamName":"荨麻疹等过敏性疾病团队","referralHospitalName":"湘雅二医院","referralDoctorName":"谢红付","content":null,"medicineHormone":null,"medicineAntibiotic":null,"medicineAntiallergic":null,"medicineExternal":null,"operation":null,"picIdcard":null,"picIllness":null,"video":null,"patientName":null}]}
      * traceInfo : []
      * sessionid : null
-     * fail : false
      * success : true
+     * fail : false
      */
 
     private String code;
     private String message;
     private DataBean data;
     private Object sessionid;
-    private boolean fail;
     private boolean success;
+    private boolean fail;
     private List<?> traceInfo;
 
     public String getCode() {
@@ -59,20 +59,20 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
         this.sessionid = sessionid;
     }
 
-    public boolean isFail() {
-        return fail;
-    }
-
-    public void setFail(boolean fail) {
-        this.fail = fail;
-    }
-
     public boolean isSuccess() {
         return success;
     }
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public boolean isFail() {
+        return fail;
+    }
+
+    public void setFail(boolean fail) {
+        this.fail = fail;
     }
 
     public List<?> getTraceInfo() {
@@ -85,8 +85,8 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
 
     public static class DataBean {
         /**
-         * PatientInfo : {"id":39,"createdTime":1508144351000,"hVersion":1,"available":1,"userId":null,"fullname":"陈先生","sex":1,"age":31,"idnumber":"430101199901011234","address":"","phonenum":"13117513421","medicareType":2,"nativeplace":"湖南长沙"}
-         * list : [{"id":65,"createdTime":"2017-10-16 16:59:11","hVersion":4,"available":7,"type":2,"userId":null,"patientId":39,"patientIllnessBasicinfoId":65,"doctorId":2,"consultationType":1,"consultationObjective":3,"priority":1,"team":1,"referralHospital":1,"referralDoctor":32,"referralPlanDate":"2017-10-16 00:00:00","referralStartdate":null,"referralEnddate":null,"saveKey":"6542ad79-a609-4ae2-aad9-4e3ac9fe99b3","chiefComplaint":"皮炎湿疹","preliminaryDiagnosis":"皮炎湿疹","illnessDescription":"皮炎湿疹皮炎湿疹皮炎湿疹","consultationTypeName":"普通会诊","consultationObjectiveName":"要求转诊","teamName":"银屑病等红斑鳞屑性疾病团队","referralHospitalName":"湘雅二医院","referralDoctorName":null,"content":"","medicineHormone":"A激素100ML；B激素500ML；A激素100ML；B激素500ML；A激素100ML；B激素500ML；","medicineAntibiotic":"","medicineAntiallergic":"A激素100ML；B激素500ML；A激素100ML；B激素500ML；","medicineExternal":"","operation":"","picIdcard":["http://192.168.1.165/imgs/idcard/6542ad79-a609-4ae2-aad9-4e3ac9fe99b3/20171016165848-4f878929-0fc6-4355-8c6e-2a400e3099df.jpg"],"picIllness":["http://192.168.1.165/imgs/illness/6542ad79-a609-4ae2-aad9-4e3ac9fe99b3/20171016165845-80518c9f-c104-43b0-b1bb-6111a1b15e17.jpg"],"video":null,"patientName":null}]
+         * PatientInfo : {"id":48,"createdTime":1508378116000,"hVersion":1,"available":1,"userId":null,"fullname":"李白","sex":0,"age":28,"idnumber":"430386198811187766","address":null,"phonenum":"13546463434","medicareType":12,"nativeplace":"海南省琼海市"}
+         * list : [{"id":75,"createdTime":"2017-10-19 09:55:16","hVersion":1,"available":1,"type":6,"userId":null,"patientId":48,"patientIllnessBasicinfoId":75,"doctorId":2,"consultationType":0,"consultationObjective":3,"priority":9,"team":2,"referralHospital":1,"referralDoctor":6,"referralPlanDate":null,"referralStartdate":null,"referralEnddate":null,"saveKey":null,"chiefComplaint":"住宿哈","preliminaryDiagnosis":"avbuzheme初步诊断h","illnessDescription":"病情描述什么额","consultationTypeName":null,"consultationObjectiveName":"要求转诊","teamName":"荨麻疹等过敏性疾病团队","referralHospitalName":"湘雅二医院","referralDoctorName":"谢红付","content":null,"medicineHormone":null,"medicineAntibiotic":null,"medicineAntiallergic":null,"medicineExternal":null,"operation":null,"picIdcard":null,"picIllness":null,"video":null,"patientName":null}]
          */
 
         private PatientInfoBean PatientInfo;
@@ -110,19 +110,19 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
 
         public static class PatientInfoBean {
             /**
-             * id : 39
-             * createdTime : 1508144351000
+             * id : 48
+             * createdTime : 1508378116000
              * hVersion : 1
              * available : 1
              * userId : null
-             * fullname : 陈先生
-             * sex : 1
-             * age : 31
-             * idnumber : 430101199901011234
-             * address :
-             * phonenum : 13117513421
-             * medicareType : 2
-             * nativeplace : 湖南长沙
+             * fullname : 李白
+             * sex : 0
+             * age : 28
+             * idnumber : 430386198811187766
+             * address : null
+             * phonenum : 13546463434
+             * medicareType : 12
+             * nativeplace : 海南省琼海市
              */
 
             private int id;
@@ -134,7 +134,7 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
             private int sex;
             private int age;
             private String idnumber;
-            private String address;
+            private Object address;
             private String phonenum;
             private int medicareType;
             private String nativeplace;
@@ -211,11 +211,11 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.idnumber = idnumber;
             }
 
-            public String getAddress() {
+            public Object getAddress() {
                 return address;
             }
 
-            public void setAddress(String address) {
+            public void setAddress(Object address) {
                 this.address = address;
             }
 
@@ -246,41 +246,41 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
 
         public static class ListBean {
             /**
-             * id : 65
-             * createdTime : 2017-10-16 16:59:11
-             * hVersion : 4
-             * available : 7
-             * type : 2
+             * id : 75
+             * createdTime : 2017-10-19 09:55:16
+             * hVersion : 1
+             * available : 1
+             * type : 6
              * userId : null
-             * patientId : 39
-             * patientIllnessBasicinfoId : 65
+             * patientId : 48
+             * patientIllnessBasicinfoId : 75
              * doctorId : 2
-             * consultationType : 1
+             * consultationType : 0
              * consultationObjective : 3
-             * priority : 1
-             * team : 1
+             * priority : 9
+             * team : 2
              * referralHospital : 1
-             * referralDoctor : 32
-             * referralPlanDate : 2017-10-16 00:00:00
+             * referralDoctor : 6
+             * referralPlanDate : null
              * referralStartdate : null
              * referralEnddate : null
-             * saveKey : 6542ad79-a609-4ae2-aad9-4e3ac9fe99b3
-             * chiefComplaint : 皮炎湿疹
-             * preliminaryDiagnosis : 皮炎湿疹
-             * illnessDescription : 皮炎湿疹皮炎湿疹皮炎湿疹
-             * consultationTypeName : 普通会诊
+             * saveKey : null
+             * chiefComplaint : 住宿哈
+             * preliminaryDiagnosis : avbuzheme初步诊断h
+             * illnessDescription : 病情描述什么额
+             * consultationTypeName : null
              * consultationObjectiveName : 要求转诊
-             * teamName : 银屑病等红斑鳞屑性疾病团队
+             * teamName : 荨麻疹等过敏性疾病团队
              * referralHospitalName : 湘雅二医院
-             * referralDoctorName : null
-             * content :
-             * medicineHormone : A激素100ML；B激素500ML；A激素100ML；B激素500ML；A激素100ML；B激素500ML；
-             * medicineAntibiotic :
-             * medicineAntiallergic : A激素100ML；B激素500ML；A激素100ML；B激素500ML；
-             * medicineExternal :
-             * operation :
-             * picIdcard : ["http://192.168.1.165/imgs/idcard/6542ad79-a609-4ae2-aad9-4e3ac9fe99b3/20171016165848-4f878929-0fc6-4355-8c6e-2a400e3099df.jpg"]
-             * picIllness : ["http://192.168.1.165/imgs/illness/6542ad79-a609-4ae2-aad9-4e3ac9fe99b3/20171016165845-80518c9f-c104-43b0-b1bb-6111a1b15e17.jpg"]
+             * referralDoctorName : 谢红付
+             * content : null
+             * medicineHormone : null
+             * medicineAntibiotic : null
+             * medicineAntiallergic : null
+             * medicineExternal : null
+             * operation : null
+             * picIdcard : null
+             * picIllness : null
              * video : null
              * patientName : null
              */
@@ -300,28 +300,28 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
             private int team;
             private int referralHospital;
             private int referralDoctor;
-            private String referralPlanDate;
+            private Object referralPlanDate;
             private Object referralStartdate;
             private Object referralEnddate;
-            private String saveKey;
+            private Object saveKey;
             private String chiefComplaint;
             private String preliminaryDiagnosis;
             private String illnessDescription;
-            private String consultationTypeName;
+            private Object consultationTypeName;
             private String consultationObjectiveName;
             private String teamName;
             private String referralHospitalName;
-            private Object referralDoctorName;
-            private String content;
-            private String medicineHormone;
-            private String medicineAntibiotic;
-            private String medicineAntiallergic;
-            private String medicineExternal;
-            private String operation;
+            private String referralDoctorName;
+            private Object content;
+            private Object medicineHormone;
+            private Object medicineAntibiotic;
+            private Object medicineAntiallergic;
+            private Object medicineExternal;
+            private Object operation;
+            private Object picIdcard;
+            private Object picIllness;
             private Object video;
             private Object patientName;
-            private List<String> picIdcard;
-            private List<String> picIllness;
 
             public int getId() {
                 return id;
@@ -443,11 +443,11 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.referralDoctor = referralDoctor;
             }
 
-            public String getReferralPlanDate() {
+            public Object getReferralPlanDate() {
                 return referralPlanDate;
             }
 
-            public void setReferralPlanDate(String referralPlanDate) {
+            public void setReferralPlanDate(Object referralPlanDate) {
                 this.referralPlanDate = referralPlanDate;
             }
 
@@ -467,11 +467,11 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.referralEnddate = referralEnddate;
             }
 
-            public String getSaveKey() {
+            public Object getSaveKey() {
                 return saveKey;
             }
 
-            public void setSaveKey(String saveKey) {
+            public void setSaveKey(Object saveKey) {
                 this.saveKey = saveKey;
             }
 
@@ -499,11 +499,11 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.illnessDescription = illnessDescription;
             }
 
-            public String getConsultationTypeName() {
+            public Object getConsultationTypeName() {
                 return consultationTypeName;
             }
 
-            public void setConsultationTypeName(String consultationTypeName) {
+            public void setConsultationTypeName(Object consultationTypeName) {
                 this.consultationTypeName = consultationTypeName;
             }
 
@@ -531,60 +531,76 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.referralHospitalName = referralHospitalName;
             }
 
-            public Object getReferralDoctorName() {
+            public String getReferralDoctorName() {
                 return referralDoctorName;
             }
 
-            public void setReferralDoctorName(Object referralDoctorName) {
+            public void setReferralDoctorName(String referralDoctorName) {
                 this.referralDoctorName = referralDoctorName;
             }
 
-            public String getContent() {
+            public Object getContent() {
                 return content;
             }
 
-            public void setContent(String content) {
+            public void setContent(Object content) {
                 this.content = content;
             }
 
-            public String getMedicineHormone() {
+            public Object getMedicineHormone() {
                 return medicineHormone;
             }
 
-            public void setMedicineHormone(String medicineHormone) {
+            public void setMedicineHormone(Object medicineHormone) {
                 this.medicineHormone = medicineHormone;
             }
 
-            public String getMedicineAntibiotic() {
+            public Object getMedicineAntibiotic() {
                 return medicineAntibiotic;
             }
 
-            public void setMedicineAntibiotic(String medicineAntibiotic) {
+            public void setMedicineAntibiotic(Object medicineAntibiotic) {
                 this.medicineAntibiotic = medicineAntibiotic;
             }
 
-            public String getMedicineAntiallergic() {
+            public Object getMedicineAntiallergic() {
                 return medicineAntiallergic;
             }
 
-            public void setMedicineAntiallergic(String medicineAntiallergic) {
+            public void setMedicineAntiallergic(Object medicineAntiallergic) {
                 this.medicineAntiallergic = medicineAntiallergic;
             }
 
-            public String getMedicineExternal() {
+            public Object getMedicineExternal() {
                 return medicineExternal;
             }
 
-            public void setMedicineExternal(String medicineExternal) {
+            public void setMedicineExternal(Object medicineExternal) {
                 this.medicineExternal = medicineExternal;
             }
 
-            public String getOperation() {
+            public Object getOperation() {
                 return operation;
             }
 
-            public void setOperation(String operation) {
+            public void setOperation(Object operation) {
                 this.operation = operation;
+            }
+
+            public Object getPicIdcard() {
+                return picIdcard;
+            }
+
+            public void setPicIdcard(Object picIdcard) {
+                this.picIdcard = picIdcard;
+            }
+
+            public Object getPicIllness() {
+                return picIllness;
+            }
+
+            public void setPicIllness(Object picIllness) {
+                this.picIllness = picIllness;
             }
 
             public Object getVideo() {
@@ -601,22 +617,6 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
 
             public void setPatientName(Object patientName) {
                 this.patientName = patientName;
-            }
-
-            public List<String> getPicIdcard() {
-                return picIdcard;
-            }
-
-            public void setPicIdcard(List<String> picIdcard) {
-                this.picIdcard = picIdcard;
-            }
-
-            public List<String> getPicIllness() {
-                return picIllness;
-            }
-
-            public void setPicIllness(List<String> picIllness) {
-                this.picIllness = picIllness;
             }
         }
     }

@@ -1,13 +1,11 @@
 package com.embracesource.yilianti.ui.homepage.diagnosis;
 
+import com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean;
 import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosisDetailCallBack;
 import com.embracesource.yilianti.viewmodel.BaseViewModel;
 
-import org.json.JSONObject;
-
 import io.reactivex.annotations.NonNull;
-import retrofit2.Response;
 
 /**
  * Created by Administrator on 2017/10/17 0017.
@@ -20,12 +18,12 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
         this.callBack = callBack;
     }
 
-    public void getDetail(String id,String flag) {
-        api.getApplyDiagnosisDetail(id,flag).subscribe(new BaseActivity.MyObserver<Response<JSONObject>>() {//ApplyDiagnosisDetailBean
+    public void getDetail(int id,String flag) {
+        api.getApplyDiagnosisDetail(id,flag).subscribe(new BaseActivity.MyObserver<ApplyDiagnosisDetailBean>() {//ApplyDiagnosisDetailBean
             @Override
-            public void onNext(@NonNull Response<JSONObject> applyDiagnosisDetailBean) {
+            public void onNext(@NonNull ApplyDiagnosisDetailBean applyDiagnosisDetailBean) {
                 super.onNext(applyDiagnosisDetailBean);
-                applyDiagnosisDetailBean.toString();
+                callBack.getApplyDiagnosisDetailOK(applyDiagnosisDetailBean);
             }
         });
     }

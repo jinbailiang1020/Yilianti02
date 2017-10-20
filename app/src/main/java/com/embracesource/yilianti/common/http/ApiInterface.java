@@ -2,9 +2,9 @@ package com.embracesource.yilianti.common.http;
 
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
-import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.LoginBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
+import com.embracesource.yilianti.bean.SimpleBean;
 
 import io.reactivex.Observable;
 
@@ -16,7 +16,7 @@ public interface ApiInterface {
 
     Observable getMyLaunchList(int pageNum, int pageSize);
 
-    Observable getApplyDiagnosisDetail(int id,String flag);
+    Observable getApplyDiagnosisDetail(int id, String flag);
 
     Observable submitApplyDiagnosis(ApplyDiagnosisRequestBean bean);
 
@@ -26,7 +26,16 @@ public interface ApiInterface {
 
     Observable<ApplyDiagnosisGoalBean> getBaseData(String code);
 
-    Observable<DoctorBean> changeDoctorList(int groupId);
+    Observable changeDoctorList(int groupId);
+
+    Observable<SimpleBean> diagnosisDetailsendPass_2(int id, int available);
+
+    Observable diagnosisDetailsendUnPass_2(int id, int available, String content);
+
+    Observable selectUserRole();
+
+    Observable getHospitalList(int pageNum, int pageSize) ;
+
 
 //    Observable<LoginBean> login1(String userName, String pwd);
 }

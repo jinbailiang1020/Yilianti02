@@ -92,11 +92,12 @@
     <Button
         android:layout_marginTop="10dp"
         android:onClick="login"
+        android:textColor="@color/white"
         android:id="@+id/btn_login"
         android:background="@drawable/shape_conor"
         android:text="@string/login"
         android:layout_width="match_parent"
-        android:layout_height="45dp" />
+        android:layout_height="@dimen/common_btn_height" />
 
 </LinearLayout>
 </layout>

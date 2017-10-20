@@ -23,11 +23,14 @@ import com.embracesource.yilianti.bean.DiagnosisTeamBean;
 import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.HospitalBean;
 import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.bean.eventbus.RefreshDiagnosisListBean;
 import com.embracesource.yilianti.common.dialog.DialogAdapter;
 import com.embracesource.yilianti.databinding.ActivityApplyDiagnosis02Binding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
 import com.embracesource.yilianti.util.PhoneUtils;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosisViewModelCallBack;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -305,6 +308,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     public void submitApplyDiagnosisOK(SimpleBean response) {
         showToast(response.getMessage());
         if(response.isSuccess()){
+            EventBus.getDefault().post(new RefreshDiagnosisListBean());
             Intent intent = new Intent(ApplyDiagnosisActivity02.this,DiagnosisPictureActivity.class);
             startActivity(intent);
             finish();

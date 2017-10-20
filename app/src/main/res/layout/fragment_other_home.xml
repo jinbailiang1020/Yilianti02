@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_cacaca"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="117dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                app:canLoop="true" />
+            <!--   app:canLoop="true"  //控制循环与否-->
+
+            <!--会诊/转诊 start-->
+
+            <!--会诊/转诊 end-->
+
+            <!--医生工作台 start-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="医生工作台"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_wait_handle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/daibanshixiang"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="@string/wait_handle"
+                    android:textSize="12sp" />
+
+                <include layout="@layout/vertical_line" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/diaochawenjuan"
+                    android:visibility="invisible"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="调查问卷"
+                    android:textSize="12sp" />
+
+                <!--<include layout="@layout/vertical_line" />-->
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/muban"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:visibility="invisible"
+                    android:text="模板"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!--医生工作台 end-->
+
+            <!--大数据 start-->
+
+            <!--大数据 end-->
+
+            <!--医学培训 start-->
+
+            <!--医学培训 end-->
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

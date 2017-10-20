@@ -21,4 +21,8 @@
     <dimen name="common_little_textsize">12sp</dimen>
     <dimen name="common_layout_margin_top_height">10dp</dimen>
     <dimen name="common_margin_label_and_content">5dp</dimen>
+    <dimen name="common_btn_height">45dp</dimen>
+
+
+
 </resources>

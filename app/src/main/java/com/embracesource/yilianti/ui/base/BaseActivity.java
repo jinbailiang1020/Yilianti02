@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.wait));
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.width = PhoneUtils.getPhoneWidth(this)/8;
+        params.width = PhoneUtils.getPhoneWidth(this) / 8;
         dialog.getWindow().setAttributes(params);
     }
 
@@ -77,14 +77,14 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     }
 
     public void showDialog() {
-        if (!isFinishing()) {
-            try {
-                dialog.show();
-            } catch (WindowManager.BadTokenException e) {
-                e.printStackTrace();
-            }
-
+//        if (!isFinishing()) {
+        try {
+            dialog.show();
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
         }
+
+//        }
     }
 
     public void hideDialog() {

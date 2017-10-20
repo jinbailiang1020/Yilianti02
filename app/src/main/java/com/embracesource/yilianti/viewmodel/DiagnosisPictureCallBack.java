@@ -1,5 +1,6 @@
 package com.embracesource.yilianti.viewmodel;
 
+import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
 
 /**
@@ -8,5 +9,10 @@ import com.embracesource.yilianti.bean.MyLaunchListBean;
 
 public interface DiagnosisPictureCallBack {
 
+    void getMyLaunchListOK(MyLaunchListBean response, int pageNum);
+
     void getMyParticipateListOK(MyLaunchListBean response, int pageNum);
+
+
+    void getHospitalListOK(HospitalWaitHandleListBean response, int pageNum);
 }

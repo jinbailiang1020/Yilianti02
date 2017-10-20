@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--///////////-->
-    <color name="main_color">#13b5b1</color>
+    <!--#13b5b1-->
+    <color name="main_color">#970014</color>
     <color name="white">#ffffff</color>
     <color name="black_color_9">#999999</color>
     <color name="color_cacaca">#cacaca</color>

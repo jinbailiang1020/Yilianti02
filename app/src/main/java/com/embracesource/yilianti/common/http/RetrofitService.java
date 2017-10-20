@@ -6,9 +6,11 @@ import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.DiagnosisTeamBean;
 import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.HospitalBean;
+import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.LoginBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
 import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.bean.UserTypeBean;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -59,6 +61,19 @@ public interface RetrofitService {
     //http://192.168.1.165:8002/referralAndConsultation/selectDoctorList?groupId={groupId}
     @GET("referralAndConsultation/selectDoctorList")
     Observable<DoctorBean> changeDoctorList(@Query("groupId") int groupId);
+
+    @GET("referralAndConsultation/audit/{id}")
+    Observable<SimpleBean> diagnosisDetailsendPass_2(@Path("id") int id, @Query("available") int available);
+
+    @POST("referralAndConsultation/audit/{id}")
+    Observable<SimpleBean> diagnosisDetailsendUnPass_2(@Path("id") int id, @Query("available") int available, @Body RequestBody content);
+
+    @GET("account/selectUserRole")
+    Observable<UserTypeBean> selectUserRole();
+
+//    http://192.168.1.165:8002/workbench/todo/list?pageSize=5&pageNum=1
+    @GET("workbench/todo/list")
+    Observable<HospitalWaitHandleListBean> getHospitalList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
 
 //    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}

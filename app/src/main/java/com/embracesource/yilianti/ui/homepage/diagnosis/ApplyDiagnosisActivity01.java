@@ -166,9 +166,9 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
 
         int sex = 0;
         if (binding.rbMan.isChecked()) {// 性别
-            sex = 0;//男
+            sex = 1;//男
         } else {
-            sex = 1;//    女
+            sex = 0;//    女
         }
         bean.setConsultationReferral(new ApplyDiagnosisRequestBean.ConsultationReferralBean());
         bean.setPatientIllnessBasicinfo(new ApplyDiagnosisRequestBean.PatientIllnessBasicinfoBean());

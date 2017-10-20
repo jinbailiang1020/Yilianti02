@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_size"
+            android:gravity="center"
+            android:layout_height="@dimen/common_label_height"
+            android:background="@color/main_color" />
+
+        <EditText
+            android:id="@+id/et_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_stroke_gray"
+            android:layout_margin="10dp"
+            android:lines="3"
+            android:padding="3dp"
+            android:gravity="start"
+            android:maxLength="200"
+            android:textColor="@color/common_text_color">
+            <requestFocus/>
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_sure"
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_btn_height"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_conor"
+                android:text="@string/sure"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_margin="10dp"
+                android:id="@+id/btn_cancle"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_btn_height"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_conor"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

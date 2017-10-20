@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.embracesource.yilianti.bean.LoginBean;
+import com.embracesource.yilianti.bean.UserTypeBean;
 import com.embracesource.yilianti.common.http.Api;
 import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.viewmodel.LoginViewModelCallBack;
@@ -40,6 +41,16 @@ public class LoginViewModel extends ViewModel {
             public void onError(Throwable e) {
                 super.onError(e);
                 callBack.loginOK(null, name, pwd);
+            }
+        });
+    }
+
+    public void selectUserRole() {
+        api.selectUserRole().subscribe(new BaseActivity.MyObserver<UserTypeBean>() {
+            @Override
+            public void onNext(@NonNull UserTypeBean response) {
+                super.onNext(response);
+                callBack.selectUserRoleOK(response);
             }
         });
     }

@@ -8,9 +8,11 @@ import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
 import com.embracesource.yilianti.bean.DiagnosisTeamBean;
 import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.HospitalBean;
+import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.LoginBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
 import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.bean.UserTypeBean;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -38,7 +40,7 @@ import retrofit2.Response;
  */
 
 public class Api implements ApiInterface {
-//    @Inject
+    //    @Inject
     public Api() {
     }
 
@@ -110,14 +112,44 @@ public class Api implements ApiInterface {
     }
 
     @Override
-    public Observable<MyLaunchListBean> getMyParticipateList(int pageNum, int pageSize) {
-        return RetrofitConfig.getInstance_afterLogin().getMyParticipateList(pageNum,pageSize)
+    public Observable<SimpleBean> diagnosisDetailsendPass_2(int id, int available) {
+        return RetrofitConfig.getInstance().diagnosisDetailsendPass_2(id, available)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable diagnosisDetailsendUnPass_2(int id, int available, String content) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), content.toString());//传递json需要加上这一句
+        return RetrofitConfig.getInstance().diagnosisDetailsendUnPass_2(id, available,body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<UserTypeBean> selectUserRole() {
+        return RetrofitConfig.getInstance_afterLogin().selectUserRole()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<HospitalWaitHandleListBean> getHospitalList(int pageNum, int pageSize) {
+        return RetrofitConfig.getInstance_afterLogin().getHospitalList(pageNum,pageSize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<MyLaunchListBean> getMyParticipateList(int pageNum, int pageSize) {
+        return RetrofitConfig.getInstance_afterLogin().getMyParticipateList(pageNum, pageSize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     @Override
     public Observable<MyLaunchListBean> getMyLaunchList(int pageNum, int pageSize) {//MyLaunchListBean
-        return RetrofitConfig.getInstance_afterLogin().getMyLaunchList(pageNum,pageSize)
+        return RetrofitConfig.getInstance_afterLogin().getMyLaunchList(pageNum, pageSize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

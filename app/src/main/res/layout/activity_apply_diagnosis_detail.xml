@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="bean"
-            type="com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean"/>
+            type="com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean" />
 
         <variable
             name="itemBean"
-            type="com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean.DataBean.ListBean"/>
+            type="com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean.DataBean.ListBean" />
     </data>
 
     <LinearLayout
@@ -50,13 +51,13 @@
                         android:textSize="@dimen/common_label_textsize" />
 
                     <EditText
-                        android:text="...."
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:focusable="false"
-                        android:textSize="@dimen/common_label_textsize"
-                        android:textColor="@color/common_text_color" />
+                        android:text="...."
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
 
 
@@ -79,13 +80,13 @@
                         android:textSize="@dimen/common_label_textsize" />
 
                     <EditText
-                        android:text="@{bean.data.patientInfo.idnumber}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="@dimen/common_label_textsize"
                         android:background="@null"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{bean.data.patientInfo.idnumber}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -110,11 +111,11 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8"
-                        android:textSize="@dimen/common_label_textsize"
                         android:background="@null"
-                        android:text="@{bean.data.patientInfo.fullname}"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{bean.data.patientInfo.fullname}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
 
                     <RadioGroup
                         android:id="@+id/radioGroup"
@@ -128,18 +129,20 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:checked="@{bean.data.patientInfo.sex == 1}"
                             android:enabled="false"
-                            android:checked="@{bean.data.patientInfo.sex == 0}"
-                            android:text="@string/man"></RadioButton>
+                            android:text="@string/man"
+                            android:theme="@style/MyCheckBox"></RadioButton>
 
                         <RadioButton
                             android:id="@+id/rb_woman"
-                            android:checked="@{bean.data.patientInfo.sex == 1}"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:checked="@{bean.data.patientInfo.sex == 0}"
                             android:enabled="false"
-                            android:text="@string/woman"></RadioButton>
+                            android:text="@string/woman"
+                            android:theme="@style/MyCheckBox"></RadioButton>
                     </RadioGroup>
                 </LinearLayout>
 
@@ -165,12 +168,12 @@
                     <EditText
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:textSize="@dimen/common_label_textsize"
                         android:layout_weight="3"
-                        android:text="@{String.valueOf(bean.data.patientInfo.age)}"
                         android:background="@null"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{String.valueOf(bean.data.patientInfo.age)}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -184,13 +187,13 @@
                     <EditText
                         android:id="@+id/et_jiguan"
                         android:layout_width="0dp"
-                        android:textSize="@dimen/common_label_textsize"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:background="@null"
-                        android:text="@{bean.data.patientInfo.nativeplace}"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{bean.data.patientInfo.nativeplace}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
 
 
@@ -216,10 +219,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:textSize="@dimen/common_label_textsize"
-                        android:text="@{bean.data.patientInfo.phonenum}"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{bean.data.patientInfo.phonenum}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -242,20 +245,20 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="@dimen/common_label_textsize"
                         android:background="@null"
                         android:drawableRight="@drawable/down"
-                        android:text="@{String.valueOf(bean.data.patientInfo.medicareType)}"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{String.valueOf(bean.data.patientInfo.medicareType)}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
 
-               <!--     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/main_color"
-                        android:gravity="center_vertical"
-                        android:scaleType="center"
-                        android:src="@drawable/down" />-->
+                    <!--     <ImageView
+                             android:layout_width="30dp"
+                             android:layout_height="match_parent"
+                             android:background="@color/main_color"
+                             android:gravity="center_vertical"
+                             android:scaleType="center"
+                             android:src="@drawable/down" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -318,8 +321,8 @@
                         android:background="@null"
                         android:focusable="false"
                         android:gravity="start"
-                        android:text="@{itemBean.illnessDescription}"
                         android:hint="@string/hint_illness_desc"
+                        android:text="@{itemBean.illnessDescription}"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
@@ -347,10 +350,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:textSize="@dimen/common_label_textsize"
                         android:focusable="false"
                         android:text="@{itemBean.consultationTypeName}"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -375,10 +378,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:text="@{itemBean.teamName}"
-                        android:textSize="@dimen/common_label_textsize"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{itemBean.teamName}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
 
 
@@ -404,10 +407,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:text="@{itemBean.consultationObjectiveName}"
-                        android:textSize="@dimen/common_label_textsize"
                         android:focusable="false"
-                        android:textColor="@color/common_text_color" />
+                        android:text="@{itemBean.consultationObjectiveName}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -444,6 +447,35 @@
                         android:text="@string/hint_picture"
                         android:textSize="@dimen/common_label_textsize" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_examine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_examine_pass"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/common_btn_height"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:background="@drawable/shape_conor"
+                        android:layout_margin="20dp"
+                        android:text="@string/examine_pass" />
+
+                    <Button
+                        android:id="@+id/btn_examine_unpass"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/common_btn_height"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_conor"
+                        android:layout_margin="20dp"
+                        android:text="@string/examine_unpass" />
                 </LinearLayout>
 
             </LinearLayout>

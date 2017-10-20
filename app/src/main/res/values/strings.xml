@@ -61,4 +61,12 @@
     <string name="wait">请稍等...</string>
     <string name="net_error">网络异常</string>
     <string name="Max_Pic_Size">最多只能上传9张</string>
+    <string name="wait_handle">待办事项</string>
+    <string name="examine_pass">审核通过</string>
+    <string name="examine_unpass">审核不通过</string>
+    <string name="unpass_reason">不通过理由</string>
+    <string name="sure">确认</string>
+    <string name="cancel">取消</string>
+    <string name="msg_input_unpass_reason">请输入不通过理由</string>
+    <string name="get_user_type_error">获取用户角色异常，请重新登录</string>
 </resources>

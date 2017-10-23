@@ -39,6 +39,7 @@
                 <EditText
                     android:id="@+id/et_original_pwd"
                     android:layout_width="match_parent"
+                    android:inputType="textPassword"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:textColor="@color/common_text_color" />
@@ -69,6 +70,7 @@
                     android:id="@+id/et_new_pwd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPassword"
                     android:background="@null"
                     android:textColor="@color/common_text_color" />
             </LinearLayout>
@@ -96,6 +98,7 @@
 
                 <EditText
                     android:id="@+id/et_sure_pwd"
+                    android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"

@@ -46,7 +46,7 @@ public class MyPrefrences {
 
     //获取数据的方法
     public String getString(String key) {
-        return sharedPreferences.getString(key, null);
+        return sharedPreferences.getString(key, "");
     }
 
     public boolean getBoolean(String key) {

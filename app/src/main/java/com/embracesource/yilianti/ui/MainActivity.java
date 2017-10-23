@@ -57,7 +57,7 @@ public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
         binding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
+                menuItem.setChecked(true);
                 updateFragment(menuItem.getItemId());
                 return false;
             }

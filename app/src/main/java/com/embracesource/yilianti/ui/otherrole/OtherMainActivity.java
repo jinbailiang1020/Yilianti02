@@ -58,7 +58,7 @@ public class OtherMainActivity extends AacBaseActivity<ActivityOtherMainBinding>
         String tag = "content_fragment";
         switch (itemId) {
             case R.id.homepage:
-                fragment = HomeFragment.newInstance();
+                fragment = OtherHomeFragment.newInstance();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.framelayout, fragment, tag)

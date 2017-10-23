@@ -46,33 +46,6 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_label_height"
-                android:layout_marginBottom="1dp"
-                android:layout_marginTop="@dimen/common_layout_margin_top_height"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/common_margin_label_and_content"
-                    android:text="@string/about"
-                    android:textColor="@color/common_label_text_color"
-                    android:textSize="@dimen/common_label_textsize" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/common_text_color" />
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-
-            <LinearLayout
                 android:id="@+id/ll_update_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_label_height"
@@ -96,6 +69,34 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/common_text_color" />
             </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_label_height"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="@dimen/common_layout_margin_top_height"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/common_margin_label_and_content"
+                    android:text="@string/about"
+                    android:textColor="@color/common_label_text_color"
+                    android:textSize="@dimen/common_label_textsize" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/common_text_color" />
+            </LinearLayout>
+
 
             <include layout="@layout/horizontal_line" />
 

@@ -3,6 +3,7 @@ package com.embracesource.yilianti.common.http;
 
 import com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
+import com.embracesource.yilianti.bean.CustomerServiceDiagnosisListBean;
 import com.embracesource.yilianti.bean.DiagnosisTeamBean;
 import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.HospitalBean;
@@ -67,12 +68,11 @@ public interface RetrofitService {
     Observable<SimpleBean> diagnosisDetailsendPass_2(@Path("id") int id, @Query("available") int available);
 
     @POST("referralAndConsultation/audit/{id}")
-    Observable<SimpleBean> diagnosisDetailsendUnPass_2(@Path("id") int id, @Query("available") int available, @Body RequestBody content);
+    Observable<SimpleBean> diagnosisDetailsendUnPass_2(@Path("id") int id, @Query("available") int available, @Body RequestBody content);//// TODO: 2017/10/23 0023
 
     @GET("account/selectUserRole")
     Observable<UserTypeBean> selectUserRole();
 
-//    http://192.168.1.165:8002/workbench/todo/list?pageSize=5&pageNum=1
     @GET("workbench/todo/list")
     Observable<HospitalWaitHandleListBean> getHospitalList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
@@ -81,6 +81,11 @@ public interface RetrofitService {
 
     @GET("account/selectUser")
     Observable<UserInfoBean> getUserInfo();
+    @GET("set/personal/update/userpwd/{id}")
+    Observable<SimpleBean> customerService_nextStep(@Path("id") int id, @Query("available") int available);
+
+    @GET("workbench/medicalService/list")
+    Observable<CustomerServiceDiagnosisListBean> getCustomerServiceList(@Query("flagFinish") int flagFinish);
 
 
 //    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}

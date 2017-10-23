@@ -2,8 +2,10 @@ package com.embracesource.yilianti.ui.homepage.diagnosis;
 
 import android.arch.lifecycle.ViewModel;
 
+import com.embracesource.yilianti.bean.CustomerServiceDiagnosisListBean;
 import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
+import com.embracesource.yilianti.bean.SimpleBean;
 import com.embracesource.yilianti.common.http.Api;
 import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.viewmodel.DiagnosisPictureCallBack;
@@ -49,6 +51,24 @@ public class DiagnosisPictureViewModel extends ViewModel {
             @Override
             public void onNextUI(@NonNull HospitalWaitHandleListBean response) {
                 callBack.getHospitalListOK(response,pageNum);//
+            }
+        });
+    }
+
+    public void nextStep(int id, int available) {
+        api.customerService_nextStep(id,available).subscribe(new BaseActivity.MyObserver<SimpleBean>() {//
+            @Override
+            public void onNextUI(@NonNull SimpleBean response) {
+                callBack.customer_Service_nextStepOK(response);//
+            }
+        });
+    }
+
+    public void getCustomerServiceList(int flagFinish) {//客服获取列表
+        api.getCustomerServiceList(flagFinish).subscribe(new BaseActivity.MyObserver<CustomerServiceDiagnosisListBean>() {//
+            @Override
+            public void onNextUI(@NonNull CustomerServiceDiagnosisListBean response) {
+                callBack.getCustomerServiceListOK(response);//
             }
         });
     }

@@ -96,6 +96,8 @@ dependencies {
 //    compile 'com.lzy.net:okrx2:2.0.2'
     compile 'com.lzy.net:okserver:2.0.5'
 
+//    compile 'me.zhouzhuo.zzhorizontalprogressbar:zz-horizontal-progressbar:1.0.0'//进度条
+    compile project(':zz-horizontal-progressbar')
     //上传https://github.com/hongyangAndroid/okhttputils
 
     //    compile 'com.squareup.picasso:picasso:2.5.2'

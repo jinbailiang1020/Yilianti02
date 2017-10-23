@@ -5,6 +5,7 @@ import android.util.Log;
 import com.embracesource.yilianti.bean.ApplyDiagnosisDetailBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
+import com.embracesource.yilianti.bean.CustomerServiceDiagnosisListBean;
 import com.embracesource.yilianti.bean.DiagnosisTeamBean;
 import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.HospitalBean;
@@ -19,6 +20,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -27,6 +29,8 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Response;
+
+import static android.R.attr.id;
 
 /**
  * Created by Administrator on 2017/10/16 0016.
@@ -94,7 +98,7 @@ public class Api implements ApiInterface {
 
     @Override
     public Observable<ApplyDiagnosisGoalBean> getBaseData(String code) {
-        return RetrofitConfig.getInstance().getBaseData(code)
+        return RetrofitConfig.getInstance_afterLogin().getBaseData(code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).map(new Function<Response<ApplyDiagnosisGoalBean>, ApplyDiagnosisGoalBean>() {
                     @Override
@@ -107,22 +111,28 @@ public class Api implements ApiInterface {
 
     @Override
     public Observable<DoctorBean> changeDoctorList(int groupId) {
-        return RetrofitConfig.getInstance().changeDoctorList(groupId)
+        return RetrofitConfig.getInstance_afterLogin().changeDoctorList(groupId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<SimpleBean> diagnosisDetailsendPass_2(int id, int available) {
-        return RetrofitConfig.getInstance().diagnosisDetailsendPass_2(id, available)
+        return RetrofitConfig.getInstance_afterLogin().diagnosisDetailsendPass_2(id, available)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable diagnosisDetailsendUnPass_2(int id, int available, String content) {
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), content.toString());//传递json需要加上这一句
-        return RetrofitConfig.getInstance().diagnosisDetailsendUnPass_2(id, available, body)
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("content", content);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());//传递json需要加上这一句
+        return RetrofitConfig.getInstance_afterLogin().diagnosisDetailsendUnPass_2(id, available, body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -155,7 +165,7 @@ public class Api implements ApiInterface {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<SimpleBean> updatePwd(String userId,String pwd1, String pwd2) {
+    public Observable<SimpleBean> updatePwd(String userId, String pwd1, String pwd2) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("oldPwd", pwd1);
@@ -165,13 +175,25 @@ public class Api implements ApiInterface {
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());//传递json需要加上这一句
-        return RetrofitConfig.getInstance_afterLogin().updatePwd(body,userId)
+        return RetrofitConfig.getInstance_afterLogin().updatePwd(body, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<UserInfoBean> getUserInfo() {
         return RetrofitConfig.getInstance_afterLogin().getUserInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<SimpleBean>  customerService_nextStep(int id, int available) {
+        return RetrofitConfig.getInstance_afterLogin().customerService_nextStep(id,available)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<CustomerServiceDiagnosisListBean> getCustomerServiceList(int flagFinish) {
+        return RetrofitConfig.getInstance_afterLogin().getCustomerServiceList(flagFinish)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -47,13 +47,13 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
     }
 
     public void sendPass_4(int id) {
-        api.diagnosisDetailsendPass_2(id, 3).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
+  /*      api.diagnosisDetailsendPass_2(id, 3).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
             @Override
             public void onNextUI(@NonNull SimpleBean bean) {
                 super.onNext(bean);
                 callBack.sendPassOK(bean);
             }
-        });
+        });*///// TODO: 2017/10/23 0023 专家团队审核
     }
 
 

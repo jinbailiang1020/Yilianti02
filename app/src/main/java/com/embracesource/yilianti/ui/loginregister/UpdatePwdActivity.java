@@ -25,6 +25,7 @@ public class UpdatePwdActivity extends AacBaseActivity<ActivityUpdatePwdBinding>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initTitleLayout(getString(R.string.update_pwd));
     }
 
 

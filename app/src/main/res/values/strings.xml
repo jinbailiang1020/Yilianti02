@@ -80,4 +80,8 @@
     <string name="about">关于</string>
     <string name="msg_data_error">数据异常</string>
     <string name="msg_update_pwd_ok">密码修改成功</string>
+    <string name="unfinish">未完成</string>
+    <string name="finished">已完成</string>
+    <string name="doing">正在进行</string>
+    <string name="finish">完成</string>
 </resources>

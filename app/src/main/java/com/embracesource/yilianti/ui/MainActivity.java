@@ -2,16 +2,19 @@ package com.embracesource.yilianti.ui;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.databinding.ActivityMainBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
 import com.embracesource.yilianti.ui.homepage.HomeFragment;
+import com.embracesource.yilianti.ui.personcenter.PersonCenterFragment;
 
 import java.lang.reflect.Field;
 
@@ -33,10 +36,7 @@ public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
 //        InjectHelp.appComponent().inject(this);
         initBottom();
         setTitleLeftViewGone();
-        updateFragment();
-/*        init();
-        initSlideMenu();
-        loadData();*/
+        updateFragment(R.id.homepage);
     }
 
     private void initBottom() {
@@ -53,6 +53,15 @@ public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
         ColorStateList csl = new ColorStateList(states, colors);
         binding.navigation.setItemTextColor(csl);
         binding.navigation.setItemIconTintList(csl);
+
+        binding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                updateFragment(menuItem.getItemId());
+                return false;
+            }
+        });
     }
 
     //底部菜单去掉动画
@@ -75,19 +84,34 @@ public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
         }
     }
 
-    void updateFragment() {
-        String tag = "content_fragment";
+    void updateFragment(int itemId) {
         Fragment fragment;
-  /*      if (currentThemeItem != null) {
-            fragment = HomeFragment.newInstance(currentThemeItem);
-        } else {
-            fragment = HomeFragment.newInstance();
-        }*/
-        fragment = HomeFragment.newInstance();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.framelayout, fragment, tag)
-                .commitAllowingStateLoss();
+        String tag = "content_fragment";
+        switch (itemId) {
+            case R.id.homepage:
+                fragment = HomeFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.framelayout, fragment, tag)
+                        .commitAllowingStateLoss();
+                break;
+            case R.id.my_patients:
+
+
+                break;
+            case R.id.circle:
+
+                break;
+            case R.id.person_center:
+                fragment = PersonCenterFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.framelayout, fragment, tag)
+                        .commitAllowingStateLoss();
+
+                break;
+        }
+
     }
 
 

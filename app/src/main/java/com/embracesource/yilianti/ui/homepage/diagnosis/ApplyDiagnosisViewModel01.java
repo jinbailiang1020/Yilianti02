@@ -169,8 +169,7 @@ public class ApplyDiagnosisViewModel01 extends BaseViewModel {
     public void getBaseData(String code) {
         api.getBaseData(code).subscribe(new BaseActivity.MyObserver<ApplyDiagnosisGoalBean>() {
             @Override
-            public void onNext(@NonNull ApplyDiagnosisGoalBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull ApplyDiagnosisGoalBean response) {
                 callBack.getBaseDataOK(response);
             }
 

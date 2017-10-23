@@ -32,8 +32,7 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
     public void getBaseData(String code) {
         api.getBaseData(code).subscribe(new BaseActivity.MyObserver<ApplyDiagnosisGoalBean>() {
             @Override
-            public void onNext(@NonNull ApplyDiagnosisGoalBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull ApplyDiagnosisGoalBean response) {
                 callBack.getBaseDataOK(response);
             }
 
@@ -43,8 +42,7 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
     public void submit(ApplyDiagnosisRequestBean bean) {
         api.submitApplyDiagnosis(bean).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
             @Override
-            public void onNext(@NonNull SimpleBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull SimpleBean response) {
                 callBack.submitApplyDiagnosisOK(response);//
             }
 
@@ -54,8 +52,7 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
     public void getDiagnosisTeam() {
         api.getDiagnosisTeam().subscribe(new BaseActivity.MyObserver<DiagnosisTeamBean>() {
             @Override
-            public void onNext(@NonNull DiagnosisTeamBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull DiagnosisTeamBean response) {
                 callBack.getDiagnosisTeamOK(response);
             }
 
@@ -65,8 +62,7 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
     public void changeHospitalList() { //获得医院
         api.changeHospitalList().subscribe(new BaseActivity.MyObserver<HospitalBean>() {
             @Override
-            public void onNext(@NonNull HospitalBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull HospitalBean response) {
                 callBack.changeHospitalListOK(response);
             }
         });
@@ -75,8 +71,7 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
     public void changeDoctorList(int groupId) {//医生列表接口
         api.changeDoctorList(groupId).subscribe(new BaseActivity.MyObserver<DoctorBean>() {
             @Override
-            public void onNext(@NonNull DoctorBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull DoctorBean response) {
                 callBack.changeDoctorListOK(response);
             }
         });

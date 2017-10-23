@@ -10,6 +10,7 @@ import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.LoginBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
 import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.bean.UserInfoBean;
 import com.embracesource.yilianti.bean.UserTypeBean;
 
 import io.reactivex.Observable;
@@ -75,9 +76,14 @@ public interface RetrofitService {
     @GET("workbench/todo/list")
     Observable<HospitalWaitHandleListBean> getHospitalList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
+    @POST("set/personal/update/userpwd/{userId}")
+    Observable<SimpleBean> updatePwd( @Body RequestBody content,@Path("userId")String userId);
+
+    @GET("account/selectUser")
+    Observable<UserInfoBean> getUserInfo();
+
 
 //    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}
-
 
 //    Observable<LoginBean> login(@Query("username") String username, @Query("pwd") String pwd);
 

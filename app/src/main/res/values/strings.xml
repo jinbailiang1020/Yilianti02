@@ -69,4 +69,15 @@
     <string name="cancel">取消</string>
     <string name="msg_input_unpass_reason">请输入不通过理由</string>
     <string name="get_user_type_error">获取用户角色异常，请重新登录</string>
+    <string name="forget_password"><u>忘记密码</u></string>
+    <string name="update_pwd">修改密码</string>
+    <string name="original_pwd">原始密码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="sure_pwd">确认密码</string>
+    <string name="msg_pwd">请输入正确的密码</string>
+    <string name="msg_sure_pwd">前后密码不一致</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="msg_data_error">数据异常</string>
+    <string name="msg_update_pwd_ok">密码修改成功</string>
 </resources>

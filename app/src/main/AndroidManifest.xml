@@ -47,19 +47,19 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.otherrole.OtherMainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
-
-        <activity android:name=".ui.homepage.diagnosis.DiagnosisPictureActivity" android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.homepage.diagnosis.DiagnosisPictureActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisActivity01" />
         <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisActivity02" />
         <activity android:name=".ui.loginregister.LoginActivity" />
-        <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisDetailActivity"></activity>
+        <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisDetailActivity" />
+        <activity android:name=".ui.loginregister.UpdatePwdActivity"></activity>
     </application>
 
 </manifest>

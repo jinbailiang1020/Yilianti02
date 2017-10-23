@@ -2,15 +2,19 @@ package com.embracesource.yilianti.ui.otherrole;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.databinding.ActivityOtherMainBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
+import com.embracesource.yilianti.ui.homepage.HomeFragment;
+import com.embracesource.yilianti.ui.personcenter.PersonCenterFragment;
 
 import java.lang.reflect.Field;
 
@@ -32,10 +36,51 @@ public class OtherMainActivity extends AacBaseActivity<ActivityOtherMainBinding>
 //        InjectHelp.appComponent().inject(this);
         initBottom();
         setTitleLeftViewGone();
-        updateFragment();
+        updateFragment(R.id.homepage);
+
+        binding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                updateFragment(menuItem.getItemId());
+                return false;
+            }
+        });
 /*        init();
         initSlideMenu();
         loadData();*/
+    }
+
+
+
+    void updateFragment(int itemId) {
+        Fragment fragment;
+        String tag = "content_fragment";
+        switch (itemId) {
+            case R.id.homepage:
+                fragment = HomeFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.framelayout, fragment, tag)
+                        .commitAllowingStateLoss();
+                break;
+            case R.id.my_patients:
+
+
+                break;
+            case R.id.circle:
+
+                break;
+            case R.id.person_center:
+                fragment = PersonCenterFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.framelayout, fragment, tag)
+                        .commitAllowingStateLoss();
+
+                break;
+        }
+
     }
 
     private void initBottom() {
@@ -74,41 +119,4 @@ public class OtherMainActivity extends AacBaseActivity<ActivityOtherMainBinding>
         }
     }
 
-    void updateFragment() {
-        String tag = "content_fragment";
-        Fragment fragment;
-  /*      if (currentThemeItem != null) {
-            fragment = HomeFragment.newInstance(currentThemeItem);
-        } else {
-            fragment = HomeFragment.newInstance();
-        }*/
-        fragment = OtherHomeFragment.newInstance();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.framelayout, fragment, tag)
-                .commitAllowingStateLoss();
-    }
-
-
-/*    @Override
-    protected void onResume() {
-        super.onResume();
-        requestRuntimePermission(
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.CAMERA},
-                new PermissionListener() {
-
-                    @Override
-                    public void onGranted() {
-                        // 已被授权 可执行相应权限操作
-                        Toast.makeText(mContext,"onGranted",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onDenied(List<String> deniedPermission) {
-                        // 权限被拒绝
-                        Toast.makeText(mContext,"onDenied",Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-    }*/
 }

@@ -34,20 +34,20 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseActivity extends AppCompatActivity implements ILoadDataView, BaseViewModelCallBack {
 
     static final String LOADING_DIALOG_TAG = "loading_dialog";
-    public static final String Key_ID = "id";
+    public static final int REQUEST_CODE = 1;
     private static PermissionListener mListener;
-    protected static Context mContext;
-    private static BaseActivity activity;
-    protected static Disposable mDisposable;
-
     public MyPrefrences myPrefrences;
 
 
     private DialogFragment loadingDialogFragment;
     protected Handler uiHandler;
-    public static final int REQUEST_CODE = 1;
-    public static ProgressDialog dialog;
 
+    public static ProgressDialog dialog;
+    protected static Context mContext;
+    private static BaseActivity activity;
+    protected static Disposable mDisposable;
+
+    protected abstract int getLayoutId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +77,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     }
 
     public void showDialog() {
-//        if (!isFinishing()) {
         try {
             dialog.show();
-        } catch (WindowManager.BadTokenException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        }
     }
 
     public void hideDialog() {
@@ -99,7 +96,20 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         setContentView(getLayoutId());
     }
 
-    protected abstract int getLayoutId();
+    private void initStatic() {
+        if (dialog == null) {
+            dialog = new ProgressDialog(this);
+        }
+        if (mContext == null) {
+            mContext = this.getApplicationContext();
+        }
+        if (activity == null) {
+            activity = this;
+        }
+        if (dialog == null) {
+            dialog = new ProgressDialog(this);
+        }
+    }
 
     // ***************************************** ActionBar *****************************
     private void initActionBar() {
@@ -290,29 +300,47 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         }
 
         @Override
-        public void onError(Throwable e) {
-            dialog.dismiss();
-            showToast(e.getMessage());
+        public void onError(final Throwable e) {
+            if (dialog != null) dialog.dismiss();
             Logger.e(TAG, "onError: " + e.getMessage());
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    onErrorUI(e);
+                }
+            });
         }
 
+
         @Override
-        public void onNext(@io.reactivex.annotations.NonNull T t) {
-            dialog.dismiss();
+        public void onNext(@io.reactivex.annotations.NonNull final T t) {
+            if (dialog != null) dialog.dismiss();
             Logger.d(TAG, "onNext: " + t.toString());//BaseBean{code=0, message='请输入用户名', success=false}
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    onNextUI(t);
+                }
+            });
         }
+
+        protected abstract void onNextUI(T t);
 
         @Override
         public void onComplete() {
-            dialog.dismiss();
+            if (dialog != null) dialog.dismiss();
         }
 
+        public void onErrorUI(Throwable e) {
+            showToast(e.getMessage());
 
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        initStatic();
         String jsession = myPrefrences.getString(MyPrefrences.Key.sessionid);
         if (!StringUtils.isNullorEmpty(jsession)) {
             RetrofitConfig.setJsessionid(jsession, this);

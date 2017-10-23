@@ -12,6 +12,7 @@ import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.LoginBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
 import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.bean.UserInfoBean;
 import com.embracesource.yilianti.bean.UserTypeBean;
 import com.google.gson.Gson;
 
@@ -121,7 +122,7 @@ public class Api implements ApiInterface {
     @Override
     public Observable diagnosisDetailsendUnPass_2(int id, int available, String content) {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), content.toString());//传递json需要加上这一句
-        return RetrofitConfig.getInstance().diagnosisDetailsendUnPass_2(id, available,body)
+        return RetrofitConfig.getInstance().diagnosisDetailsendUnPass_2(id, available, body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -135,7 +136,7 @@ public class Api implements ApiInterface {
 
     @Override
     public Observable<HospitalWaitHandleListBean> getHospitalList(int pageNum, int pageSize) {
-        return RetrofitConfig.getInstance_afterLogin().getHospitalList(pageNum,pageSize)
+        return RetrofitConfig.getInstance_afterLogin().getHospitalList(pageNum, pageSize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -154,4 +155,24 @@ public class Api implements ApiInterface {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<SimpleBean> updatePwd(String userId,String pwd1, String pwd2) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("oldPwd", pwd1);
+            jsonObject.put("newPwd", pwd2);
+            jsonObject.put("newPwd2", pwd2);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());//传递json需要加上这一句
+        return RetrofitConfig.getInstance_afterLogin().updatePwd(body,userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<UserInfoBean> getUserInfo() {
+        return RetrofitConfig.getInstance_afterLogin().getUserInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

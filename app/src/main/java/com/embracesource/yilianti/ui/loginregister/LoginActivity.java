@@ -66,7 +66,7 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
         if (response.isSuccess()) {
             loginSuccess(response, name, pwd);
         } else {
-            //Todo Toast
+         showToast(response.getMessage());
         }
 
     }
@@ -122,5 +122,9 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
             e.printStackTrace();
             showToast(getString(R.string.get_user_type_error));
         }
+    }
+
+
+    public void forgetPassword(View view) {
     }
 }

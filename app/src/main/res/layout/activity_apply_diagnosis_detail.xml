@@ -55,7 +55,8 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:focusable="false"
-                        android:text="...."
+                        android:text=""
+                        android:visibility="invisible"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>

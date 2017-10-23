@@ -108,7 +108,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         String preliminaryDiagnosis = binding.etPreliminaryDiagnosis.getText().toString();
         String chiefComplaint = binding.etChiefComplaint.getText().toString();//非必填
         String illnessDesc = binding.etIllnessDesc.getText().toString();
-        String patientInfo = binding.etPatientInfo.getText().toString();
+//        String patientInfo = binding.etPatientInfo.getText().toString();
         String idcardNumber = binding.etIdcardNumber.getText().toString();
         String name = binding.etName.getText().toString();
         String age = binding.etAge.getText().toString();
@@ -127,11 +127,11 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             showToast(msg0 + msg);
             return;
         }
-        if (patientInfo.isEmpty()) {
+     /*   if (patientInfo.isEmpty()) {
             msg = "患者信息";
             showToast(msg0 + msg);
             return;
-        }
+        }*/
         if (idcardNumber.isEmpty()) {
             msg = "身份证号";
             showToast(msg0 + msg);
@@ -214,7 +214,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MyObserver<List>() {
                     @Override
-                    public void onNext(@NonNull List list) {
+                    public void onNextUI(@NonNull List list) {
                         options1Items.clear();
                         options1Items.addAll((Collection<? extends JsonBean>) list.get(0));
                         options2Items.clear();

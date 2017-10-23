@@ -76,6 +76,7 @@ public class MyPrefrences {
         String loginBean = "LoginBean";
         String sessionid = "sessionid";
         String role = "role";
+        String userId = "userId";
     }
 
 

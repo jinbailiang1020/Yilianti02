@@ -32,15 +32,14 @@ public class LoginViewModel extends ViewModel {
     public void login(final String name , final String pwd) {
         api.login( name , pwd).subscribe(new BaseActivity.MyObserver<LoginBean>() {
             @Override
-            public void onNext(@NonNull LoginBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull LoginBean response) {
                 callBack.loginOK(response,name,pwd);
             }
 
             @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                callBack.loginOK(null, name, pwd);
+            public void onErrorUI(Throwable e) {
+                super.onErrorUI(e);
+//                callBack.loginOK(null, name, pwd);
             }
         });
     }
@@ -48,8 +47,7 @@ public class LoginViewModel extends ViewModel {
     public void selectUserRole() {
         api.selectUserRole().subscribe(new BaseActivity.MyObserver<UserTypeBean>() {
             @Override
-            public void onNext(@NonNull UserTypeBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull UserTypeBean response) {
                 callBack.selectUserRoleOK(response);
             }
         });

@@ -27,8 +27,7 @@ public class DiagnosisPictureViewModel extends ViewModel {
     public void getMyLaunchList(final int pageNum,final int pageSize) {
         api.getMyLaunchList(pageNum,pageSize).subscribe(new BaseActivity.MyObserver<MyLaunchListBean>() {//
             @Override
-            public void onNext(@NonNull MyLaunchListBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull MyLaunchListBean response) {
                 callBack.getMyLaunchListOK(response,pageNum);//sss
             }
         });
@@ -38,8 +37,7 @@ public class DiagnosisPictureViewModel extends ViewModel {
     public void getMyParticipateList(final int pageNum, int pageSize) {
         api.getMyParticipateList(pageNum,pageSize).subscribe(new BaseActivity.MyObserver<MyLaunchListBean>() {//
             @Override
-            public void onNext(@NonNull MyLaunchListBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull MyLaunchListBean response) {
                 callBack.getMyParticipateListOK(response,pageNum);//sss
             }
         });
@@ -49,8 +47,7 @@ public class DiagnosisPictureViewModel extends ViewModel {
         //完成标识符flagFinish：0 未完成；1 已完成
         api.getHospitalList(pageNum,pageSize).subscribe(new BaseActivity.MyObserver<HospitalWaitHandleListBean>() {//
             @Override
-            public void onNext(@NonNull HospitalWaitHandleListBean response) {
-                super.onNext(response);
+            public void onNextUI(@NonNull HospitalWaitHandleListBean response) {
                 callBack.getHospitalListOK(response,pageNum);//
             }
         });

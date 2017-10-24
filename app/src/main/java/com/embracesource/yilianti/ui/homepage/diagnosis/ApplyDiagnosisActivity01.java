@@ -127,11 +127,6 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             showToast(msg0 + msg);
             return;
         }
-     /*   if (patientInfo.isEmpty()) {
-            msg = "患者信息";
-            showToast(msg0 + msg);
-            return;
-        }*/
         if (idcardNumber.isEmpty()) {
             msg = "身份证号";
             showToast(msg0 + msg);

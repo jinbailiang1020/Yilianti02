@@ -87,6 +87,12 @@ public interface RetrofitService {
     @GET("workbench/medicalService/list")
     Observable<CustomerServiceDiagnosisListBean> getCustomerServiceList(@Query("flagFinish") int flagFinish);
 
+    @POST("referralAndConsultation/teamReply/consultation/pass/{id}")
+    Observable<SimpleBean> huizhenSubmit(@Body RequestBody body,@Path("id") int id);
+
+    @POST("referralAndConsultation/teamReply/consultation/toReferral/{id}")
+    Observable<SimpleBean> changeToDiagnosis(@Body RequestBody body,@Path("id") int id);
+
 
 //    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}
 

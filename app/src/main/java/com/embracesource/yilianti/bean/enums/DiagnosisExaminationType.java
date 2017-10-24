@@ -1,4 +1,4 @@
-package com.embracesource.yilianti.bean;
+package com.embracesource.yilianti.bean.enums;
 
 /**
  * Created by Administrator on 2017/10/23 0023.

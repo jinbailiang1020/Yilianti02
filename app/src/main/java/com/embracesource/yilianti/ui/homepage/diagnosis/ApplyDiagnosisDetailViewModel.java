@@ -6,6 +6,8 @@ import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosisDetailCallBack;
 import com.embracesource.yilianti.viewmodel.BaseViewModel;
 
+import org.json.JSONObject;
+
 import io.reactivex.annotations.NonNull;
 
 /**
@@ -76,4 +78,21 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
         });
     }
 
+    public void huizhenSubmit(String diagnosisAdvice, int id) {
+        api.huizhenSubmit(diagnosisAdvice,id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
+            @Override
+            public void onNextUI(@NonNull SimpleBean bean) {
+                callBack.huizhenSubmitOK(bean);
+            }
+        });
+    }
+
+    public void changeToDiagnosis(int id, JSONObject jsonObject) {
+        api.changeToDiagnosis(jsonObject,id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
+            @Override
+            public void onNextUI(@NonNull SimpleBean bean) {
+                callBack.huizhenSubmitOK(bean);
+            }
+        });
+    }
 }

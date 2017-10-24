@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagnosis02Binding> implements View.OnClickListener, ApplyDiagnosisViewModelCallBack {
 
-    private static final String SIMPLE_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String SIMPLE_DATE_FORMAT = "yyyy-MM-dd";
     private List<ApplyDiagnosisGoalBean.DataBean> goalList = new ArrayList<>();
     private List<ApplyDiagnosisGoalBean.DataBean> typeList = new ArrayList<>();
     private List<DiagnosisTeamBean.DataBean> teamList = new ArrayList<>();
@@ -175,7 +175,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
         switch (v.getId()) {
             case R.id.sp_goal:
                 if (goalList.isEmpty()) {
-                    dialog.show();
+                    showDialog();
                     viewModel.getBaseData("consultation_objective");//目的
                 } else {
                     adapter.setList(goalList);
@@ -185,7 +185,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                 break;
             case R.id.sp_type:
                 if (typeList.isEmpty()) {
-                    dialog.show();
+                    showDialog();
                     viewModel.getBaseData("consultation_type");// consultation_type 会诊类型
                 } else {
                     adapter.setList(typeList);
@@ -194,7 +194,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                 break;
             case R.id.sp_team://会诊团队
                 if (teamList.isEmpty()) {
-                    dialog.show();
+                    showDialog();
                     viewModel.getDiagnosisTeam();//
                 } else {
                     adapter.setList(teamList);
@@ -204,7 +204,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                 break;
             case R.id.sp_emergency_degree:
                 if (emergencyDegreeList.isEmpty()) {
-                    dialog.show();
+                    showDialog();
                     viewModel.getBaseData("priority");//priority 紧急程度
                 } else {
                     adapter.setList(emergencyDegreeList);
@@ -213,7 +213,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                 break;
             case R.id.sp_change_hospital://医院
                 if (hospitalList.isEmpty()) {
-                    dialog.show();
+                    showDialog();
                     viewModel.changeHospitalList();
                 } else {
                     adapter.setList(hospitalList);
@@ -226,7 +226,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                     showToast("请先选择转诊医院");
                     return;
                 }
-                dialog.show();
+               showDialog();
                 viewModel.changeDoctorList(hospitalList.get(currentSelected_changeHospital).getId());
                 break;
 

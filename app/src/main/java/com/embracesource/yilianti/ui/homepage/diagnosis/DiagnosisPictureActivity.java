@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.bean.CustomerServiceDiagnosisListBean;
-import com.embracesource.yilianti.bean.DiagnosisExaminationType;
+import com.embracesource.yilianti.bean.enums.DiagnosisExaminationType;
 import com.embracesource.yilianti.bean.DiagnosisItemBean;
 import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
@@ -113,7 +113,9 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
                     View tv2 = viewHolder.itemView.findViewById(R.id.tv2);
                     View tv3 = viewHolder.itemView.findViewById(R.id.tv3);
                     View tv4 = viewHolder.itemView.findViewById(R.id.tv4);
+                    TextView tv_name = (TextView) viewHolder.itemView.findViewById(R.id.tv_name);
                     Button btn = (Button) viewHolder.itemView.findViewById(R.id.next_step);
+                    tv_name.setText(bean.getName());
                     btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {//下一步

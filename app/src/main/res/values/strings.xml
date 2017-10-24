@@ -20,7 +20,7 @@
     <string name="my_launch">我的发起</string>
     <string name="my_participate">我的参与</string>
     <string name="diagnosis">会诊</string>
-    <string name="patient_info">患者信息</string>
+    <string name="patient_info">患者信息：</string>
     <string name="idcard_number">身份证号</string>
     <string name="label_name">姓名</string>
     <string name="man">男</string>
@@ -84,4 +84,19 @@
     <string name="finished">已完成</string>
     <string name="doing">正在进行</string>
     <string name="finish">完成</string>
+    <string name="basic_illness">基本病情：</string>
+    <string name="diagnosis_advice">会诊意见</string>
+    <string name="hint_diagnosis_advice">填写您的意见</string>
+    <string name="jisu">激素</string>
+    <string name="kangshengsu">抗生素</string>
+    <string name="kangguomin">抗过敏</string>
+    <string name="waiyongyao">外用药</string>
+    <string name="shoushu">手术</string>
+    <string name="other">其他</string>
+    <string name="no">否</string>
+    <string name="yes">是</string>
+    <string name="is_change_to_diagnosis">是否会诊转转诊</string>
+    <string name="msg_input_diagnosis_advice">请填写会诊意见</string>
+    <string name="start_date">开始时间</string>
+    <string name="end_date">结束时间</string>
 </resources>

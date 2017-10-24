@@ -13,4 +13,6 @@ public interface ApplyDiagnosisDetailCallBack extends BaseViewModelCallBack{
     void sendPassOK(SimpleBean bean);
 
     void sendUnPassOK(SimpleBean bean);
+
+    void huizhenSubmitOK(SimpleBean bean);
 }

@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -29,8 +28,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Response;
-
-import static android.R.attr.id;
 
 /**
  * Created by Administrator on 2017/10/16 0016.
@@ -194,6 +191,26 @@ public class Api implements ApiInterface {
 
     public Observable<CustomerServiceDiagnosisListBean> getCustomerServiceList(int flagFinish) {
         return RetrofitConfig.getInstance_afterLogin().getCustomerServiceList(flagFinish)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<SimpleBean> huizhenSubmit(String diagnosisAdvice, int id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("content", diagnosisAdvice);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());//传递json需要加上这一句
+        return RetrofitConfig.getInstance_afterLogin().huizhenSubmit(body,id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<SimpleBean> changeToDiagnosis(JSONObject jsonObject, int id) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());//传递json需要加上这一句
+        return RetrofitConfig.getInstance_afterLogin().changeToDiagnosis(body,id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

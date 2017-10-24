@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.bean.LoginBean;
+import com.embracesource.yilianti.bean.UserType;
 import com.embracesource.yilianti.bean.UserTypeBean;
 import com.embracesource.yilianti.common.http.RetrofitConfig;
 import com.embracesource.yilianti.common.memory.MyPrefrences;
@@ -63,10 +64,26 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
 
     @Override
     public void loginOK(LoginBean response, String name, String pwd) {
-        if (response.isSuccess()) {
+        if (response != null && response.isSuccess()) {
             loginSuccess(response, name, pwd);
         } else {
-         showToast(response.getMessage());
+            if(response == null)response = new LoginBean();//test
+            showToast(response.getMessage());
+
+            //test//todo
+            //test//todo
+            int role = UserType.DOCTOR;
+            switch (role) {
+                case UserType.DOCTOR:
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case UserType.Medical_Service:
+                case UserType.Customer_Service:
+                    Intent intent1 = new Intent(LoginActivity.this, OtherMainActivity.class);
+                    startActivity(intent1);
+                    break;
+            }
         }
 
     }
@@ -91,7 +108,7 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
     public void selectUserRoleOK(UserTypeBean response) {
         try {
             int role = response.getData().get(0);
-            Logger.d("UserTypeBean --->"+role);
+            Logger.d("UserTypeBean --->" + role);
             if (response.isSuccess() && role > 0) {
                 myPrefrences.putValues(new MyPrefrences.ContentValue(MyPrefrences.Key.role, role));
                 /**
@@ -104,19 +121,19 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
                  * 6 客服 、、、
                  * 7 系统管理员
                  */
-                switch (role){
-                    case 2:
+                switch (role) {
+                    case UserType.DOCTOR:
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         break;
-                    case 5:
-                    case 6:
+                    case UserType.Medical_Service:
+                    case UserType.Customer_Service:
                         Intent intent1 = new Intent(LoginActivity.this, OtherMainActivity.class);
                         startActivity(intent1);
                         break;
                 }
             } else {
-            showToast(getString(R.string.get_user_type_error));
+                showToast(getString(R.string.get_user_type_error));
             }
         } catch (Exception e) {
             e.printStackTrace();

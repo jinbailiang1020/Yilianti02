@@ -300,9 +300,9 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
             private int team;
             private int referralHospital;
             private int referralDoctor;
-            private Object referralPlanDate;
-            private Object referralStartdate;
-            private Object referralEnddate;
+            private String referralPlanDate;
+            private String referralStartdate;
+            private String referralEnddate;
             private Object saveKey;
             private String chiefComplaint;
             private String preliminaryDiagnosis;
@@ -443,27 +443,27 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.referralDoctor = referralDoctor;
             }
 
-            public Object getReferralPlanDate() {
+            public String getReferralPlanDate() {
                 return referralPlanDate;
             }
 
-            public void setReferralPlanDate(Object referralPlanDate) {
+            public void setReferralPlanDate(String referralPlanDate) {
                 this.referralPlanDate = referralPlanDate;
             }
 
-            public Object getReferralStartdate() {
+            public String getReferralStartdate() {
                 return referralStartdate;
             }
 
-            public void setReferralStartdate(Object referralStartdate) {
+            public void setReferralStartdate(String referralStartdate) {
                 this.referralStartdate = referralStartdate;
             }
 
-            public Object getReferralEnddate() {
+            public String getReferralEnddate() {
                 return referralEnddate;
             }
 
-            public void setReferralEnddate(Object referralEnddate) {
+            public void setReferralEnddate(String referralEnddate) {
                 this.referralEnddate = referralEnddate;
             }
 

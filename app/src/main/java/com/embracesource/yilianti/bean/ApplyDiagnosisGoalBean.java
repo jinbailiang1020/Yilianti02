@@ -12,7 +12,11 @@ public class ApplyDiagnosisGoalBean  {
     /**
      * code : 1111
      * message : success
-     * data : [{"id":1,"createdTime":1504771845000,"hVersion":1,"available":1,"code":"consultation_objective","value":1,"description":"明确诊断","order":1,"parentid":null,"mark":"会诊目的"},{"id":2,"createdTime":1504771780000,"hVersion":1,"available":1,"code":"consultation_objective","value":2,"description":"协助治疗","order":2,"parentid":null,"mark":"会诊目的"},{"id":3,"createdTime":1504771811000,"hVersion":1,"available":1,"code":"consultation_objective","value":3,"description":"要求转诊","order":3,"parentid":null,"mark":"会诊目的"},{"id":4,"createdTime":1504771817000,"hVersion":1,"available":1,"code":"consultation_objective","value":4,"description":"其他","order":4,"parentid":null,"mark":"会诊目的"}]
+     * data : [
+     * {"id":1,"createdTime":1504771845000,"hVersion":1,"available":1,"code":"consultation_objective","value":1,"description":"明确诊断","order":1,"parentid":null,"mark":"会诊目的"},
+     * {"id":2,"createdTime":1504771780000,"hVersion":1,"available":1,"code":"consultation_objective","value":2,"description":"协助治疗","order":2,"parentid":null,"mark":"会诊目的"},
+     * {"id":3,"createdTime":1504771811000,"hVersion":1,"available":1,"code":"consultation_objective","value":3,"description":"要求转诊","order":3,"parentid":null,"mark":"会诊目的"},
+     * {"id":4,"createdTime":1504771817000,"hVersion":1,"available":1,"code":"consultation_objective","value":4,"description":"其他","order":4,"parentid":null,"mark":"会诊目的"}]
      * traceInfo : []
      * sessionid : null
      * fail : false

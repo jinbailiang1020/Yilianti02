@@ -56,9 +56,9 @@
                         android:background="@null"
                         android:focusable="false"
                         android:text=""
-                        android:visibility="invisible"
                         android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
+                        android:textSize="@dimen/common_label_textsize"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
 
@@ -265,7 +265,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_marginBottom="1dp"
                     android:layout_marginTop="@dimen/common_margin_label_and_content"
                     android:background="@color/white"
                     android:gravity="center_vertical"
@@ -300,9 +299,38 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_label_height"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="@dimen/common_layout_margin_top_height"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_padding"
+                    android:paddingRight="@dimen/common_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:text="@string/basic_illness"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:text=""
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_marginBottom="1dp"
-                    android:layout_marginTop="@dimen/common_margin_label_and_content"
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/common_padding">
@@ -323,93 +351,8 @@
                         android:focusable="false"
                         android:gravity="start"
                         android:hint="@string/hint_illness_desc"
+                        android:padding="5dp"
                         android:text="@{itemBean.illnessDescription}"
-                        android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_label_height"
-                    android:layout_marginBottom="1dp"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_padding"
-                    android:paddingRight="@dimen/common_padding">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/common_margin_label_and_content"
-                        android:text="@string/diagnosis_type"
-                        android:textColor="@color/common_label_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:focusable="false"
-                        android:text="@{itemBean.consultationTypeName}"
-                        android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_label_height"
-                    android:layout_marginBottom="1dp"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_padding"
-                    android:paddingRight="@dimen/common_padding">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/common_margin_label_and_content"
-                        android:text="@string/diagnosis_team"
-                        android:textColor="@color/common_label_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:focusable="false"
-                        android:text="@{itemBean.teamName}"
-                        android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_label_height"
-                    android:layout_marginBottom="1dp"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_padding"
-                    android:paddingRight="@dimen/common_padding">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/common_margin_label_and_content"
-                        android:text="@string/diagnosis_purpose"
-                        android:textColor="@color/common_label_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:focusable="false"
-                        android:text="@{itemBean.consultationObjectiveName}"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
@@ -450,34 +393,407 @@
 
                 </LinearLayout>
 
+
                 <LinearLayout
-                    android:id="@+id/ll_examine"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_label_height"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_padding"
+                    android:paddingRight="@dimen/common_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:text="@string/diagnosis_purpose"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <EditText
+                        android:id="@+id/et_goal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:text="@{itemBean.consultationObjectiveName}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_label_height"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_padding"
+                    android:paddingRight="@dimen/common_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:text="@string/diagnosis_team"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <EditText
+                        android:id="@+id/et_team"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:text="@{itemBean.teamName}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_label_height"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_padding"
+                    android:paddingRight="@dimen/common_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:text="@string/diagnosis_type"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <EditText
+                        android:id="@+id/et_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:text="@{itemBean.consultationTypeName}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:paddingLeft="10dp"
+                        android:text="@string/msg01"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_little_textsize" />
+
+                    <TextView
+                        android:id="@+id/cash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:paddingRight="10dp"
+                        android:text="@string/msg02"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/common_little_textsize" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_label_height"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_padding"
+                    android:paddingRight="@dimen/common_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:text="@string/emergent_degree"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <TextView
+                        android:id="@+id/sp_emergency_degree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:textColor="@color/common_text_color" />
+                </LinearLayout>
+
+                <!--///////////////////////-->
+                <LinearLayout
+                    android:id="@+id/ll_change_diagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/change_hospital"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/tv_change_hospital"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/change_doctor"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/tv_change_doctor"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/change_date"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/sp_change_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/start_date"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/sp_start_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:layout_marginBottom="1dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_padding"
+                        android:paddingRight="@dimen/common_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_margin_label_and_content"
+                            android:text="@string/end_date"
+                            android:textColor="@color/common_label_text_color"
+                            android:textSize="@dimen/common_label_textsize" />
+
+                        <TextView
+                            android:id="@+id/sp_end_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/common_text_color" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/common_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:paddingTop="10dp"
+                        android:text="@string/diagnosis_advice"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <EditText
+                        android:id="@+id/et_diagnosis_advice"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:gravity="start"
+                        android:hint="@string/hint_diagnosis_advice"
+                        android:padding="5dp"
+                        android:text="@{itemBean.illnessDescription}"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/rg_change_to_diagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
+                    android:paddingLeft="@dimen/common_padding"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:text="@string/is_change_to_diagnosis"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <RadioButton
+                        android:id="@+id/rb_change_to_diagnosis_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:text="@string/yes"
+                        android:theme="@style/MyCheckBox" />
+
+                    <RadioButton
+                        android:checked="true"
+                        android:id="@+id/rb_change_to_diagnosis_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/no"
+                        android:theme="@style/MyCheckBox" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/ll_examine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_layout_margin_top_height"
+                    android:gravity="center"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
                     <Button
                         android:id="@+id/btn_examine_pass"
-                        android:layout_width="0dp"
+                        android:layout_width="120dp"
                         android:layout_height="@dimen/common_btn_height"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/white"
-                        android:background="@drawable/shape_conor"
                         android:layout_margin="20dp"
-                        android:text="@string/examine_pass" />
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shape_conor"
+                        android:text="@string/examine_pass"
+                        android:textColor="@color/white" />
 
                     <Button
                         android:id="@+id/btn_examine_unpass"
-                        android:layout_width="0dp"
+                        android:layout_width="120dp"
                         android:layout_height="@dimen/common_btn_height"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/white"
-                        android:layout_weight="1"
-                        android:background="@drawable/shape_conor"
                         android:layout_margin="20dp"
-                        android:text="@string/examine_unpass" />
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shape_conor"
+                        android:text="@string/examine_unpass"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_huizhen_submit"
+                        android:layout_width="120dp"
+                        android:layout_height="@dimen/common_btn_height"
+                        android:layout_margin="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shape_conor"
+                        android:text="@string/submit"
+                        android:textColor="@color/white" />
                 </LinearLayout>
+
 
             </LinearLayout>
         </ScrollView>

@@ -54,7 +54,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         super.onCreate(savedInstanceState);
         mContext = this.getApplicationContext();
         activity = this;
-        initProgressDialog();
         myPrefrences = new MyPrefrences(mContext);
         StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
         initContentView();
@@ -68,6 +67,12 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = PhoneUtils.getPhoneWidth(this) / 8;
         dialog.getWindow().setAttributes(params);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initProgressDialog();
     }
 
     protected void initView() {
@@ -266,7 +271,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
 
         switch (requestCode) {
             case REQUEST_CODE: {
-
                 List<String> deniedPermissionList = new ArrayList<>();
                 // 检查返回授权结果不为空
                 if (grantResults.length > 0) {
@@ -310,7 +314,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
                 }
             });
         }
-
 
         @Override
         public void onNext(@io.reactivex.annotations.NonNull final T t) {

@@ -26,7 +26,7 @@ public class DiagnosisPictureViewModel extends ViewModel {
         this.callBack = diagnosisPictureActivity;
     }
 
-    public void getMyLaunchList(final int pageNum,final int pageSize) {
+    public void  getMyLaunchList(final int pageNum,final int pageSize) {
         api.getMyLaunchList(pageNum,pageSize).subscribe(new BaseActivity.MyObserver<MyLaunchListBean>() {//
             @Override
             public void onNextUI(@NonNull MyLaunchListBean response) {

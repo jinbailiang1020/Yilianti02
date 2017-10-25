@@ -18,7 +18,6 @@ import io.reactivex.annotations.NonNull;
 /**
  * Created by Administrator on 2017/10/13 0013.
  */
-
 public class ApplyDiagnosisViewModel02 extends ViewModel{
 
     private final ApiInterface api;
@@ -35,7 +34,6 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
             public void onNextUI(@NonNull ApplyDiagnosisGoalBean response) {
                 callBack.getBaseDataOK(response);
             }
-
         });
     }
 
@@ -76,4 +74,5 @@ public class ApplyDiagnosisViewModel02 extends ViewModel{
             }
         });
     }
+
 }

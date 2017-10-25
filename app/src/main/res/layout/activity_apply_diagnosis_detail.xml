@@ -271,13 +271,20 @@
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/common_padding">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:text="@string/idcard"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
                     <ImageView
                         android:id="@+id/iv_select_idcard01"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:background="@drawable/shape_stroke_gray"
-                        android:scaleType="center"
-                        android:src="@drawable/add" />
+                        android:scaleType="center" />
 
                     <ImageView
                         android:id="@+id/iv_select_idcard02"
@@ -285,15 +292,7 @@
                         android:layout_height="70dp"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/shape_stroke_gray"
-                        android:scaleType="center"
-                        android:src="@drawable/add" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="@string/hint_idcard_two_page"
-                        android:textSize="@dimen/common_label_textsize" />
+                        android:scaleType="center" />
 
                 </LinearLayout>
 
@@ -367,29 +366,19 @@
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/common_padding">
 
-                    <ImageView
-                        android:id="@+id/iv_Symptoms01"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:background="@drawable/shape_stroke_gray"
-                        android:scaleType="center"
-                        android:src="@drawable/add" />
-
-                    <ImageView
-                        android:id="@+id/iv_Symptoms02"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_marginLeft="20dp"
-                        android:background="@drawable/shape_stroke_gray"
-                        android:scaleType="center"
-                        android:src="@drawable/add" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
                         android:text="@string/hint_picture"
+                        android:textColor="@color/common_label_text_color"
                         android:textSize="@dimen/common_label_textsize" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
 
@@ -627,7 +616,9 @@
                             android:gravity="center"
                             android:textColor="@color/common_text_color" />
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/ll_start_date"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_label_height"
                         android:layout_marginBottom="1dp"
@@ -654,7 +645,9 @@
                             android:gravity="center"
                             android:textColor="@color/common_text_color" />
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/ll_end_date"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_label_height"
                         android:layout_marginBottom="1dp"
@@ -684,6 +677,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_huizhen_advice"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_marginBottom="1dp"
@@ -720,9 +714,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="1dp"
-                    android:paddingLeft="@dimen/common_padding"
                     android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_padding">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -745,10 +739,10 @@
                         android:theme="@style/MyCheckBox" />
 
                     <RadioButton
-                        android:checked="true"
                         android:id="@+id/rb_change_to_diagnosis_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:gravity="center"
                         android:text="@string/no"
                         android:theme="@style/MyCheckBox" />
@@ -759,8 +753,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_layout_margin_top_height"
-                    android:gravity="center"
                     android:background="@color/white"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <Button

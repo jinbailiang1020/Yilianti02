@@ -318,8 +318,8 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
             private Object medicineAntiallergic;
             private Object medicineExternal;
             private Object operation;
-            private Object picIdcard;
-            private Object picIllness;
+            private List<String> picIdcard;
+            private List<String> picIllness;
             private Object video;
             private Object patientName;
 
@@ -587,19 +587,19 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.operation = operation;
             }
 
-            public Object getPicIdcard() {
+            public List<String> getPicIdcard() {
                 return picIdcard;
             }
 
-            public void setPicIdcard(Object picIdcard) {
+            public void setPicIdcard(List<String> picIdcard) {
                 this.picIdcard = picIdcard;
             }
 
-            public Object getPicIllness() {
+            public List<String> getPicIllness() {
                 return picIllness;
             }
 
-            public void setPicIllness(Object picIllness) {
+            public void setPicIllness(List<String> picIllness) {
                 this.picIllness = picIllness;
             }
 

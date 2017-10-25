@@ -56,8 +56,8 @@ public class DialogAdapter extends RecyclerView.Adapter<DialogAdapter.DialogView
 
         if (entity instanceof ApplyDiagnosisGoalBean.DataBean) {
             tv.setText(((ApplyDiagnosisGoalBean.DataBean) entity).getDescription());
-        } else if (entity instanceof HospitalBean.DataBean.ListBean) {
-            tv.setText(((HospitalBean.DataBean.ListBean) entity).getDescription());
+        } else if (entity instanceof HospitalBean.DataBean) {
+            tv.setText(((HospitalBean.DataBean) entity).getDescription());
         } else if (entity instanceof DoctorBean.DataBean) {
             tv.setText(((DoctorBean.DataBean) entity).getFullname());
         } else if (entity instanceof DiagnosisTeamBean.DataBean) {

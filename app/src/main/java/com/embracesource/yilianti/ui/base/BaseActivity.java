@@ -58,6 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
         initContentView();
         initActionBar();
+        initProgressDialog();
         uiHandler = new Handler(getMainLooper());
     }
 
@@ -72,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     @Override
     protected void onStart() {
         super.onStart();
-        initProgressDialog();
+//        initProgressDialog();
     }
 
     protected void initView() {
@@ -83,7 +84,16 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
 
     public void showDialog() {
         try {
-            dialog.show();
+            if (dialog == null) {
+                initProgressDialog();
+            }
+            if (dialog.getContext() == this) {//bingo   handle  exception :is activity  running?
+                dialog.show();
+            } else {
+                initProgressDialog();
+                dialog.show();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

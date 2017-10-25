@@ -96,7 +96,14 @@
     <string name="no">否</string>
     <string name="yes">是</string>
     <string name="is_change_to_diagnosis">是否会诊转转诊</string>
-    <string name="msg_input_diagnosis_advice">请填写会诊意见</string>
+    <string name="msg_input_diagnosis_advice">请填写会诊意见(10~250字)</string>
     <string name="start_date">开始时间</string>
     <string name="end_date">结束时间</string>
+    <string name="msg_input_start_date">请选择开始时间</string>
+    <string name="msg_input_end_date">请选择结束时间</string>
+    <string name="diagnosis_term">转诊期限</string>
+    <string name="diagnosis_explain">转诊说明</string>
+    <string name="hint_diagnosis_explain">请输入至少10个但不超过250个字</string>
+    <string name="diagnosis_pass">同意转诊</string>
+    <string name="idcard">身份证</string>
 </resources>

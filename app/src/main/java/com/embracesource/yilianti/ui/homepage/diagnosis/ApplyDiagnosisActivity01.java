@@ -17,10 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.bumptech.glide.Glide;
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.bean.ApplyDiagnosisGoalBean;
 import com.embracesource.yilianti.bean.ApplyDiagnosisRequestBean;
+import com.embracesource.yilianti.bean.ImageUploadBean;
 import com.embracesource.yilianti.common.adapter.CommonAdapter;
 import com.embracesource.yilianti.common.adapter.MultiItemTypeAdapter;
 import com.embracesource.yilianti.common.adapter.ViewHolder;
@@ -33,6 +33,7 @@ import com.embracesource.yilianti.databinding.ActivityApplyDiagnosis01Binding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
 import com.embracesource.yilianti.util.PhoneUtils;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosis01CallBack;
+import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -45,9 +46,7 @@ import com.lzy.okserver.upload.UploadListener;
 import com.lzy.okserver.upload.UploadTask;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -57,7 +56,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.R.attr.path;
 
 public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagnosis01Binding> implements View.OnClickListener, ApplyDiagnosis01CallBack {
 
@@ -83,6 +81,11 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     private List<ImageItem> symptomsList = new ArrayList<>();//患处图片集合
     private CommonAdapter symptomsAdapter;
     public static final int Max_Pic_Size = 9;
+    private String saveKey;//第一次上传图片之后返回saveKey，以后都上传这个值表示是同一个单的图片
+    private int uploadType;//  1 身份证，2是病情描述
+    private boolean idIdcard01Upload;//身份证 正面是否上次成功
+    private boolean idIdcard02Upload;//身份证 反面是否上次成功
+    private boolean idSymptoms01Upload;//患处图片是否上
 
     @Override
     protected int getLayoutId() {
@@ -127,6 +130,11 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             showToast(msg0 + msg);
             return;
         }
+        if (!idSymptoms01Upload) {
+            showToast("请上传患处图片");
+            return;
+        }
+
         if (idcardNumber.isEmpty()) {
             msg = "身份证号";
             showToast(msg0 + msg);
@@ -158,6 +166,15 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             showToast(msg0 + msg);
             return;
         }
+        if (!idIdcard01Upload) {
+            showToast("请上传身份证正面照片");
+            return;
+        }
+
+        if (!idIdcard02Upload) {
+            showToast("请上传身份证反面照片");
+            return;
+        }
 
         int sex = 0;
         if (binding.rbMan.isChecked()) {// 性别
@@ -165,6 +182,8 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         } else {
             sex = 0;//    女
         }
+        bean.getConsultationReferral().setSaveKey(saveKey);//
+
         bean.setConsultationReferral(new ApplyDiagnosisRequestBean.ConsultationReferralBean());
         bean.setPatientIllnessBasicinfo(new ApplyDiagnosisRequestBean.PatientIllnessBasicinfoBean());
         bean.setPatientInfo(new ApplyDiagnosisRequestBean.PatientInfoBean());
@@ -176,7 +195,6 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
 //        bean.getConsultationReferral().setConsultationObjective();//目的// 下一步
 //        bean.getConsultationReferral().setConsultationType();//咨询类型//
 //        bean.getConsultationReferral().setPriority();//优先//
-//        bean.getConsultationReferral().setSaveKey();//
 //        bean.getConsultationReferral().setTeam();//
 //        bean.getConsultationReferral().setType();//
 
@@ -346,6 +364,15 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
 
     private void showSelectPhotoDialog(int typeId) {
         currentSelectPhotoTypeId = typeId;
+        switch (typeId) {
+            case R.id.iv_select_idcard01:
+            case R.id.iv_select_idcard02:
+                uploadType = 1;
+                break;
+            case R.id.iv_Symptoms01:
+                uploadType = 2;
+                break;
+        }
         List<String> names = new ArrayList<>();
         names.add("拍照");
         names.add("相册");
@@ -388,8 +415,6 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == IMAGE_PICKER) {
                 final ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-//                MyAdapter adapter = new MyAdapter(images);
-//                gridView.setAdapter(adapter);
                 if (images == null || images.size() == 0) {
                     Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
                 } else {
@@ -406,11 +431,9 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     private void uploadFile(final ImageItem imageItem) {
         PostRequest<String> postRequest = OkGo.<String>post(RetrofitConfig.BASE_URL + "referralAndConsultation/upload")//
 //                .headers("aaa", "111")//
-                .params("bbb", "222")//
-                .params("saveKey", "7a890690-52f7-454d-886f-7a71e12b107e")
-                .params("type", "2")
-                .params("file", path)
-                .params("submit", "上传")//" enctype="multipart/form-data"
+                .params("saveKey", saveKey)
+                .params("uploadType", uploadType)//uploadType  1 身份证，2是病情描述
+                .params("file", new File(imageItem.path))
                 .converter(new StringConvert());
         final UploadTask<String> task = OkUpload.request(imageItem.path, postRequest)//
                 .priority(new Random().nextInt(100))//
@@ -437,36 +460,40 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             @Override
             public void onFinish(String s, Progress progress) {
                 // HAHA onFinish:{"code":"0000","message":"type参数不正确","data":null,"traceInfo":["0026"],"sessionid":null,"success":false,"fail":true}
+                //{"code":"1111","message":"success","data":"6ef4755c-10be-4346-8d32-c791d91d73a3","traceInfo":[],"sessionid":null,"fail":false,"success":true}
                 Logger.d("HAHA onFinish:" + s + " ; " + progress);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    boolean success = jsonObject.getBoolean("success");
-                    String msg = jsonObject.getString("message");
-//                    if (success) {
-                    if (true) { //// TODO: 2017/10/19 0019
-                        if (currentSelectPhotoTypeId == R.id.iv_Symptoms01) {//患处图片，多选
-                            if(symptomsList.size()>Max_Pic_Size){
-                                showToast(getString(R.string.Max_Pic_Size));
-                                return;
-                            }
-                            symptomsList.add(imageItem);
-                            symptomsAdapter.notifyDataSetChanged();
-                        } else {
+                ImageUploadBean imageUploadBean = new Gson().fromJson(s, ImageUploadBean.class);
+                saveKey = imageUploadBean.getData();
+                if (imageUploadBean != null && imageUploadBean.isSuccess()) {
+                    switch (currentSelectPhotoTypeId) {
+                        case R.id.iv_select_idcard01:
+                            idIdcard01Upload = true;
                             imageLoader.displayImage(ApplyDiagnosisActivity01.this,
                                     imageItem.path,
                                     (ImageView) findViewById(currentSelectPhotoTypeId),
                                     binding.ivSelectIdcard01.getMeasuredWidth(),
                                     binding.ivSelectIdcard01.getMeasuredWidth());
-                        }
-                    } else {
-                        showToast(msg);
-                        Glide.with(ApplyDiagnosisActivity01.this)//
-                                .load(R.drawable.default_image)
-                                .centerCrop()//
-                                .into((ImageView) findViewById(currentSelectPhotoTypeId));
+                            break;
+                        case R.id.iv_select_idcard02:
+                            idIdcard02Upload = true;
+                            imageLoader.displayImage(ApplyDiagnosisActivity01.this,
+                                    imageItem.path,
+                                    (ImageView) findViewById(currentSelectPhotoTypeId),
+                                    binding.ivSelectIdcard01.getMeasuredWidth(),
+                                    binding.ivSelectIdcard01.getMeasuredWidth());
+                            break;
+                        case R.id.iv_Symptoms01://患处图片，多选
+                            idSymptoms01Upload = true;
+                            if (symptomsList.size() > Max_Pic_Size) {
+                                showToast(getString(R.string.Max_Pic_Size));
+                                return;
+                            }
+                            symptomsList.add(imageItem);
+                            symptomsAdapter.notifyDataSetChanged();
+                            break;
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else {
+                    showToast(imageUploadBean.getMessage());
                 }
 
                 task.remove();

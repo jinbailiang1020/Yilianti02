@@ -284,6 +284,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
                 break;
 
             case UserType.Medical_Service://医务处，上级医院
+                showDialog();
                 viewModel.getHospitalList(currentPage, pageSize);
                 break;
             case UserType.Customer_Service://客服
@@ -307,26 +308,34 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     @Override
     protected void onResume() {
         super.onResume();
-//        viewModel.getMyLaunchList(mContext, 0);
-//        eventBus()refresh()//// TODO: 2017/10/19 0019
     }
 
     @Override
     public void getMyLaunchListOK(MyLaunchListBean response, int pageNum) {
-        if (response != null && response.getData() != null)
+        if (response != null && response.getData() != null && response.getData().getList()!=null){
             refreshView(response.getData().getList(), pageNum);
+        }else{
+            refreshView(new ArrayList<DiagnosisItemBean>(), pageNum);
+        }
     }
 
     @Override
     public void getMyParticipateListOK(MyLaunchListBean response, int pageNum) {
-        if (response != null && response.getData() != null)
+        if (response != null && response.getData() != null && response.getData().getList()!=null){
             refreshView(response.getData().getList(), pageNum);
+        }else{
+            refreshView(new ArrayList<DiagnosisItemBean>(), pageNum);
+        }
     }
 
     @Override
     public void getHospitalListOK(HospitalWaitHandleListBean response, int pageNum) {
-        if (response != null && response.getData() != null)
+        if (response != null && response.getData() != null && response.getData().getList()!=null){
             refreshView(response.getData().getList(), pageNum);
+        }else{
+            refreshView(new ArrayList<DiagnosisItemBean>(), pageNum);
+        }
+
     }
 
     @Override
@@ -337,8 +346,9 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
 
     @Override
     public void getCustomerServiceListOK(CustomerServiceDiagnosisListBean response) {
-        if (response != null && response.getData() != null)
+        if (response != null && response.getData() != null){
             refreshCustomerServiceView(response.getData());
+        }
     }
 
     private void refreshCustomerServiceView(List<CustomerServiceDiagnosisListBean.DataBean> data) {
@@ -353,7 +363,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     private void refreshView(List<DiagnosisItemBean> response, int pageNum) {
         binding.swipeRecyclerView.stopLoadingMore();
         binding.swipeRecyclerView.complete();
-        if (pageNum == 1) {
+        if (pageNum == 1 && !response.isEmpty()) {
             mAdapter.setDatas(response);
         } else {
             mAdapter.addDatas(response);

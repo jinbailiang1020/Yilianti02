@@ -57,10 +57,12 @@ public interface RetrofitService {
     @GET("referralAndConsultation/selectTeamList")
     Observable<DiagnosisTeamBean> getDiagnosisTeam();
 
-    @GET("group/search")
+    //group/search 只显示湘雅的医院
+    @GET("referralAndConsultation/selectReferralGroupList")
     Observable<HospitalBean> changeHospitalList();
 
     //http://192.168.1.165:8002/referralAndConsultation/selectDoctorList?groupId={groupId}
+
     @GET("referralAndConsultation/selectDoctorList")
     Observable<DoctorBean> changeDoctorList(@Query("groupId") int groupId);
 
@@ -92,6 +94,14 @@ public interface RetrofitService {
 
     @POST("referralAndConsultation/teamReply/consultation/toReferral/{id}")
     Observable<SimpleBean> changeToDiagnosis(@Body RequestBody body,@Path("id") int id);
+
+    @POST("referralAndConsultation/teamReply/referral/pass/{id}")
+    Observable<SimpleBean> diagnosisDetailSendPass_expert(@Body RequestBody body,@Path("id") int id);
+
+    @POST("referralAndConsultation/teamReply/referral/refuse/{id}")
+    Observable<SimpleBean> diagnosisDetailSendUnPass_expert(@Body RequestBody body,@Path("id") int id);
+
+
 
 
 //    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}

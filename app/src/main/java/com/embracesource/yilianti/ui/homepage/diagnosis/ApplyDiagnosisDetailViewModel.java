@@ -48,14 +48,16 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
         });
     }
 
-    public void sendPass_4(int id) {
-  /*      api.diagnosisDetailsendPass_2(id, 3).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
+
+    //专家团队转诊审核通过 referralAndConsultation/teamReply/referral/pass/{id}
+    public void sendUnPass_expert(JSONObject json,int id) {
+        api.diagnosisDetailSendUnPass_expert(json,id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
             @Override
             public void onNextUI(@NonNull SimpleBean bean) {
                 super.onNext(bean);
                 callBack.sendPassOK(bean);
             }
-        });*///// TODO: 2017/10/23 0023 专家团队审核
+        });
     }
 
 
@@ -68,6 +70,7 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
             }
         });
     }
+
     public void sendUnPass_3(int id, String content) {
         //http://192.168.1.165:8002/referralAndConsultation/audit/{id}?available=2
         api.diagnosisDetailsendUnPass_2(id, 13, content).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
@@ -79,7 +82,7 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
     }
 
     public void huizhenSubmit(String diagnosisAdvice, int id) {
-        api.huizhenSubmit(diagnosisAdvice,id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
+        api.huizhenSubmit(diagnosisAdvice, id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
             @Override
             public void onNextUI(@NonNull SimpleBean bean) {
                 callBack.huizhenSubmitOK(bean);
@@ -88,7 +91,7 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
     }
 
     public void changeToDiagnosis(int id, JSONObject jsonObject) {
-        api.changeToDiagnosis(jsonObject,id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
+        api.changeToDiagnosis(jsonObject, id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
             @Override
             public void onNextUI(@NonNull SimpleBean bean) {
                 callBack.huizhenSubmitOK(bean);

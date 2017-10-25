@@ -45,7 +45,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     private List<ApplyDiagnosisGoalBean.DataBean> typeList = new ArrayList<>();
     private List<DiagnosisTeamBean.DataBean> teamList = new ArrayList<>();
     private List<ApplyDiagnosisGoalBean.DataBean> emergencyDegreeList = new ArrayList<>();
-    private List<HospitalBean.DataBean.ListBean> hospitalList = new ArrayList<>();
+    private List<HospitalBean.DataBean> hospitalList = new ArrayList<>();
     private List<DoctorBean.DataBean> doctorList = new ArrayList<>();
 
     private int currentClickItem = -1;//当前点击的类型
@@ -140,7 +140,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                     case R.id.sp_change_hospital:
                         clearDoctor();
                         currentSelected_changeHospital = position;
-                        binding.spChangeHospital.setText(hospitalList.get(position).getDescription());
+                        binding.spChangeHospital.setText(hospitalList.get(position).getName());
                         break;
                     case R.id.sp_change_doctor:
                         currentSelected_changeDoctor = position;
@@ -271,7 +271,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
         Object entity = data.get(0);
         if (entity instanceof ApplyDiagnosisGoalBean.DataBean) {
             popTitle.setText(((ApplyDiagnosisGoalBean.DataBean) entity).getMark());
-        } else if (entity instanceof HospitalBean.DataBean.ListBean) {
+        } else if (entity instanceof HospitalBean.DataBean) {
             popTitle.setText(getString(R.string.change_hospital));
         }else if(entity instanceof DoctorBean.DataBean){
             popTitle.setText(getString(R.string.change_doctor));
@@ -327,9 +327,9 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     @Override
     public void changeHospitalListOK(HospitalBean response) {
         hospitalList.clear();
-        hospitalList.addAll(response.getData().getList());
-        adapter.setList(response.getData().getList());
-        showFragmentDialog(response.getData().getList());
+        hospitalList.addAll(response.getData());
+        adapter.setList(response.getData());
+        showFragmentDialog(response.getData());
     }
 
     @Override

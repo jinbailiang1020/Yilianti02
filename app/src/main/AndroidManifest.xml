@@ -59,7 +59,8 @@
         <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisActivity02" />
         <activity android:name=".ui.loginregister.LoginActivity" />
         <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisDetailActivity" />
-        <activity android:name=".ui.loginregister.UpdatePwdActivity"></activity>
+        <activity android:name=".ui.loginregister.UpdatePwdActivity" />
+        <activity android:name=".ui.homepage.diagnosis.DiagnosisDetailPassActivity"></activity>
     </application>
 
 </manifest>

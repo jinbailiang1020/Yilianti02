@@ -214,4 +214,18 @@ public class Api implements ApiInterface {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<SimpleBean> diagnosisDetailSendPass_expert(JSONObject jsonObject,int id) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());//传递json需要加上这一句
+        return RetrofitConfig.getInstance_afterLogin().diagnosisDetailSendPass_expert(body,id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<SimpleBean> diagnosisDetailSendUnPass_expert(JSONObject jsonObject,int id) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());//传递json需要加上这一句
+        return RetrofitConfig.getInstance_afterLogin().diagnosisDetailSendPass_expert(body,id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

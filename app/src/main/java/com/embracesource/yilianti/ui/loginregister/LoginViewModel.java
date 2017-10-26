@@ -39,7 +39,7 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onErrorUI(Throwable e) {
                 super.onErrorUI(e);
-                callBack.loginOK(null, name, pwd);//// TODO: 2017/10/24 0024 注释掉
+//                callBack.loginOK(null, name, pwd);//
             }
         });
     }

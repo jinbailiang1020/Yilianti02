@@ -69,9 +69,7 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
         } else {
             if(response == null)response = new LoginBean();//test
             showToast(response.getMessage());
-
-            //test//todo
-            //test//todo
+/*
             int role = UserType.DOCTOR;
             switch (role) {
                 case UserType.DOCTOR:
@@ -83,7 +81,7 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
                     Intent intent1 = new Intent(LoginActivity.this, OtherMainActivity.class);
                     startActivity(intent1);
                     break;
-            }
+            }*/
         }
 
     }

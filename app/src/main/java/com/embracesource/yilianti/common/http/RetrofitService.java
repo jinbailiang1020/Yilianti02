@@ -70,7 +70,7 @@ public interface RetrofitService {
     Observable<SimpleBean> diagnosisDetailsendPass_2(@Path("id") int id, @Query("available") int available);
 
     @POST("referralAndConsultation/audit/{id}")
-    Observable<SimpleBean> diagnosisDetailsendUnPass_2(@Path("id") int id, @Query("available") int available, @Body RequestBody content);//// TODO: 2017/10/23 0023
+    Observable<SimpleBean> diagnosisDetailsendUnPass_2(@Path("id") int id, @Query("available") int available, @Body RequestBody content);//// TODO: 2017/10/23 0023  405
 
     @GET("account/selectUserRole")
     Observable<UserTypeBean> selectUserRole();

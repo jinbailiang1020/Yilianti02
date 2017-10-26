@@ -23,6 +23,7 @@ import com.embracesource.yilianti.bean.DiagnosisTeamBean;
 import com.embracesource.yilianti.bean.DoctorBean;
 import com.embracesource.yilianti.bean.HospitalBean;
 import com.embracesource.yilianti.bean.SimpleBean;
+import com.embracesource.yilianti.bean.enums.ConsultationObjectiveType;
 import com.embracesource.yilianti.bean.eventbus.RefreshDiagnosisListBean;
 import com.embracesource.yilianti.common.dialog.DialogAdapter;
 import com.embracesource.yilianti.databinding.ActivityApplyDiagnosis02Binding;
@@ -64,7 +65,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     private ApplyDiagnosisRequestBean bean = new ApplyDiagnosisRequestBean();
     private TextView popTitle;
     private Date date;
-    private int int_Is_change_disgnosis = 2;//会诊目的，转诊，positiopn == 2
+//    private int int_Is_change_disgnosis = 2;//会诊目的，转诊，positiopn == 2
 
 
     @Override
@@ -92,7 +93,8 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     protected void initView() {
         super.initView();
         ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
-        //加载适配器
+        binding.llGone.setVisibility(View.GONE);
+
         binding.spGoal.setOnClickListener(this);
         binding.spType.setOnClickListener(this);
         binding.spTeam.setOnClickListener(this);
@@ -123,7 +125,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                     case R.id.sp_goal:
                         currentSelected_goal = position;
                         binding.spGoal.setText(goalList.get(position).getDescription());
-                        showChangeDiagnosis(currentSelected_goal == int_Is_change_disgnosis);
+                        showChangeDiagnosis(idChangeDiagnosis());//转诊
                         break;
                     case R.id.sp_type:
                         currentSelected_type = position;
@@ -226,7 +228,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                     showToast("请先选择转诊医院");
                     return;
                 }
-               showDialog();
+                showDialog();
                 viewModel.changeDoctorList(hospitalList.get(currentSelected_changeHospital).getId());
                 break;
 
@@ -273,9 +275,9 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
             popTitle.setText(((ApplyDiagnosisGoalBean.DataBean) entity).getMark());
         } else if (entity instanceof HospitalBean.DataBean) {
             popTitle.setText(getString(R.string.change_hospital));
-        }else if(entity instanceof DoctorBean.DataBean){
+        } else if (entity instanceof DoctorBean.DataBean) {
             popTitle.setText(getString(R.string.change_doctor));
-        }else if(entity instanceof DiagnosisTeamBean.DataBean){
+        } else if (entity instanceof DiagnosisTeamBean.DataBean) {
             popTitle.setText(getString(R.string.diagnosis_team));
         }
         popupWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
@@ -307,9 +309,9 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     @Override
     public void submitApplyDiagnosisOK(SimpleBean response) {
         showToast(response.getMessage());
-        if(response.isSuccess()){
+        if (response.isSuccess()) {
             EventBus.getDefault().post(new RefreshDiagnosisListBean());
-            Intent intent = new Intent(ApplyDiagnosisActivity02.this,DiagnosisPictureActivity.class);
+            Intent intent = new Intent(ApplyDiagnosisActivity02.this, DiagnosisPictureActivity.class);
             startActivity(intent);
             finish();
         }
@@ -358,7 +360,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
                 showToast("请选择紧急程度");
                 return;
             }
-            if (currentSelected_goal == int_Is_change_disgnosis) {//是转诊
+            if (idChangeDiagnosis()) {//是转诊
                 if (currentSelected_changeHospital == -1) {
                     showToast("请选择转诊医院");
                     return;
@@ -375,16 +377,30 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
             bean.getConsultationReferral().setConsultationObjective(goalList.get(currentSelected_goal).getId());//目的
 //        bean.getConsultationReferral().setConsultationType();//咨询类型// TODO: 2017/10/17 0017
             bean.getConsultationReferral().setPriority(emergencyDegreeList.get(currentSelected_emergencyDegree).getId());//优先
-//        bean.getConsultationReferral().setSaveKey();// TODO: 2017/10/17 0017
             bean.getConsultationReferral().setTeam(teamList.get(currentSelected_team).getId());
             bean.getConsultationReferral().setType(typeList.get(currentSelected_type).getId());//
-            bean.getConsultationReferral().setReferralDoctor(doctorList.get(currentSelected_changeDoctor).getId());
-            bean.getConsultationReferral().setReferralHospital(hospitalList.get(currentSelected_changeHospital).getId());
-            bean.getConsultationReferral().setReferralPlanDate(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
+            //
+            if (idChangeDiagnosis()) {
+                bean.getConsultationReferral().setReferralDoctor(doctorList.get(currentSelected_changeDoctor).getId());
+                bean.getConsultationReferral().setReferralHospital(hospitalList.get(currentSelected_changeHospital).getId());
+                bean.getConsultationReferral().setReferralPlanDate(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
+            }
             viewModel.submit(bean);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
+    /**
+     * 会诊目的是转诊 true
+     */
+    private  Boolean idChangeDiagnosis(){
+        try {
+            return  goalList.get(currentSelected_goal).getId() == ConsultationObjectiveType.ChangeDiagnosis.id;
+        }catch (Exception e){
+            e.printStackTrace();
+            return  false;
+        }
+    }
+
 }

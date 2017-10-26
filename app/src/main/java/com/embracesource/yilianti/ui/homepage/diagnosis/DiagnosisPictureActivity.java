@@ -115,7 +115,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
                     View tv4 = viewHolder.itemView.findViewById(R.id.tv4);
                     TextView tv_name = (TextView) viewHolder.itemView.findViewById(R.id.tv_name);
                     Button btn = (Button) viewHolder.itemView.findViewById(R.id.next_step);
-                    tv_name.setText(bean.getName());
+                    tv_name.setText(bean.getPatientName());
                     btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {//下一步
@@ -137,6 +137,17 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
                     btn.setEnabled(true);
                     btn.setText(getString(R.string.next_step));
                     switch (bean.getAvailable()) {
+                        case 6:
+                            GradientDrawable drawable01 = (GradientDrawable) tv1.getBackground();
+                            drawable01.setColor(getResources().getColor(R.color.color_a1a1a1));
+                            GradientDrawable drawable02 = (GradientDrawable) tv2.getBackground();
+                            drawable02.setColor(getResources().getColor(R.color.color_a1a1a1));
+                            GradientDrawable drawable03 = (GradientDrawable) tv3.getBackground();
+                            drawable03.setColor(getResources().getColor(R.color.color_a1a1a1));
+                            GradientDrawable drawable04 = (GradientDrawable) tv4.getBackground();
+                            drawable04.setColor(getResources().getColor(R.color.color_a1a1a1));
+                            progressBar.setProgress(0);
+                            break;
                         case 8:
                             GradientDrawable drawable11 = (GradientDrawable) tv1.getBackground();
                             drawable11.setColor(getResources().getColor(R.color.green));
@@ -312,27 +323,27 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
 
     @Override
     public void getMyLaunchListOK(MyLaunchListBean response, int pageNum) {
-        if (response != null && response.getData() != null && response.getData().getList()!=null){
+        if (response != null && response.getData() != null && response.getData().getList() != null) {
             refreshView(response.getData().getList(), pageNum);
-        }else{
+        } else {
             refreshView(new ArrayList<DiagnosisItemBean>(), pageNum);
         }
     }
 
     @Override
     public void getMyParticipateListOK(MyLaunchListBean response, int pageNum) {
-        if (response != null && response.getData() != null && response.getData().getList()!=null){
+        if (response != null && response.getData() != null && response.getData().getList() != null) {
             refreshView(response.getData().getList(), pageNum);
-        }else{
+        } else {
             refreshView(new ArrayList<DiagnosisItemBean>(), pageNum);
         }
     }
 
     @Override
     public void getHospitalListOK(HospitalWaitHandleListBean response, int pageNum) {
-        if (response != null && response.getData() != null && response.getData().getList()!=null){
+        if (response != null && response.getData() != null && response.getData().getList() != null) {
             refreshView(response.getData().getList(), pageNum);
-        }else{
+        } else {
             refreshView(new ArrayList<DiagnosisItemBean>(), pageNum);
         }
 
@@ -346,7 +357,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
 
     @Override
     public void getCustomerServiceListOK(CustomerServiceDiagnosisListBean response) {
-        if (response != null && response.getData() != null){
+        if (response != null && response.getData() != null) {
             refreshCustomerServiceView(response.getData());
         }
     }
@@ -356,24 +367,30 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
         binding.swipeRecyclerView.complete();
         mAdapter.setDatas(data);
         if (data.size() == 0) {
-            binding.swipeRecyclerView.setEmptyView(View.inflate(this, R.layout.list_empty_view, null));
+            showEmptyView();
         }
     }
 
     private void refreshView(List<DiagnosisItemBean> response, int pageNum) {
         binding.swipeRecyclerView.stopLoadingMore();
         binding.swipeRecyclerView.complete();
-        if (pageNum == 1 && !response.isEmpty()) {
-            mAdapter.setDatas(response);
-        } else {
-            mAdapter.addDatas(response);
-            if (response.size() == 0) {
-                binding.swipeRecyclerView.setEmptyView(View.inflate(this, R.layout.list_empty_view, null));
-            }
-        }
         if (response.size() < pageSize) {
             binding.swipeRecyclerView.onNoMore(getString(R.string.recyclerview_nomore));
         }
+        if (pageNum == 1) {
+            if (response == null || response.isEmpty()) {
+                showEmptyView();
+            }
+            mAdapter.setDatas(response);
+        } else {
+            if (response == null || response.isEmpty()) {
+                mAdapter.addDatas(response);
+            }
+        }
+    }
+
+    private void showEmptyView() {
+        binding.swipeRecyclerView.setEmptyView(View.inflate(this, R.layout.list_empty_view, null));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行

@@ -34,6 +34,7 @@ import com.embracesource.yilianti.bean.HospitalBean;
 import com.embracesource.yilianti.bean.SimpleBean;
 import com.embracesource.yilianti.bean.UserType;
 import com.embracesource.yilianti.bean.enums.ConsultationObjectiveType;
+import com.embracesource.yilianti.bean.enums.DiagnosisExaminationType;
 import com.embracesource.yilianti.bean.eventbus.RefreshDiagnosisListBean;
 import com.embracesource.yilianti.common.adapter.CommonAdapter;
 import com.embracesource.yilianti.common.adapter.ViewHolder;
@@ -110,6 +111,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
 
     private Date startdate;
     private Date enddate;
+    private Date plandate;
     private int currentSelectDate;//当前选择的时间按钮
 
     private List<HospitalBean.DataBean> hospitalList = new ArrayList<>();
@@ -120,6 +122,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
     private TextView popTitle;
     private ApplyDiagnosisViewModel02 viewModel02;
     private ApplyDiagnosisDetailBean.DataBean.ListBean itemBean;
+
 
     @Override
     protected int getLayoutId() {
@@ -146,6 +149,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
         binding.spEmergencyDegree.setOnClickListener(this);
         binding.spStartDate.setOnClickListener(this);
         binding.spEndDate.setOnClickListener(this);
+        binding.spChangeDate.setOnClickListener(this);
     }
 
     @Override
@@ -215,12 +219,12 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                             .into(binding.ivSelectIdcard01);
                 }
             }
-            if(itemBean != null && itemBean.getPicIllness() != null){
+            if (itemBean != null && itemBean.getPicIllness() != null) {
                 //患处图片adapter
                 CommonAdapter symptomsAdapter = new CommonAdapter(mContext, R.layout.image_item, itemBean.getPicIllness()) {
                     @Override
                     protected void convert(ViewHolder holder, Object o, int position) {
-                     String entity = (String) o;
+                        String entity = (String) o;
                         new PicassoImageLoader().displayImage(ApplyDiagnosisDetailActivity.this,
                                 entity,
                                 (ImageView) holder.itemView.findViewById(R.id.iv),
@@ -298,15 +302,21 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                     binding.btnExamineUnpass.setVisibility(View.GONE);
                     binding.btnExaminePass.setVisibility(View.GONE);
                 }
-                initShowUnPassAlertDialog();//// TODO: 2017/10/24 0024
+                initShowUnPassAlertDialog();
             } else if (role == UserType.Medical_Service) {//是医务处
                 binding.llExamine.setVisibility(View.VISIBLE);
                 binding.btnHuizhenSubmit.setVisibility(View.GONE);
                 binding.btnExamineUnpass.setVisibility(View.VISIBLE);
                 binding.btnExaminePass.setVisibility(View.VISIBLE);
-                initShowUnPassAlertDialog();//// TODO: 2017/10/24 0024
+                initShowUnPassAlertDialog();
             } else {
                 binding.llExamine.setVisibility(View.GONE);
+            }
+            //已完成，不需要操作
+            if (DiagnosisExaminationType.getDiagnosisExaminationType(itemBean.getAvailable()) == DiagnosisExaminationType.STATUS_Finished) {
+                binding.btnHuizhenSubmit.setVisibility(View.GONE);
+                binding.btnExamineUnpass.setVisibility(View.GONE);
+                binding.btnExaminePass.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -378,6 +388,10 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                                 ApplyDiagnosisDetailActivity.this.enddate = date;
                                 binding.spEndDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
                                 break;
+                            case R.id.sp_change_date:
+                                ApplyDiagnosisDetailActivity.this.plandate = date;
+                                binding.spChangeDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
+                                break;
                         }
                     }
                 });
@@ -388,18 +402,34 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
 
     private void submitHuiZhen_or_changeToDiagnosis() {
         String diagnosisAdvice = binding.etDiagnosisAdvice.getText().toString().trim();
-        if (diagnosisAdvice.isEmpty()) {
+        if (diagnosisAdvice.length() < 10) {
             showToast(getString(R.string.msg_input_diagnosis_advice));
             return;
         }
         if (binding.rbChangeToDiagnosisYes.isChecked()) {//  会诊转转诊 加： 开始时间，结束时间
             try {
-                //// TODO: 2017/10/24 0024  非空判断
+                if (currentSelected_changeHospital == -1) {
+                    showToast("请先选择转诊医院");
+                    return;
+                }
+                if (currentSelected_changeDoctor == -1) {
+                    showToast("请先选择转诊医生");
+                }
+                if (plandate == null) {
+                    showToast("请先选择转诊时间");
+                }
+                if (startdate == null) {
+                    showToast("请先选择转诊开始时间");
+                }
+                if (enddate == null) {
+                    showToast("请先选择转诊结束时间");
+                }
+
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("content", diagnosisAdvice);
                 jsonObject.put("referralHospital", hospitalList.get(currentSelected_changeHospital).getId());
                 jsonObject.put("referralDoctor", doctorList.get(currentSelected_changeDoctor).getId());
-                jsonObject.put("referralPlanDate", "");
+                jsonObject.put("referralPlanDate", new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(plandate));
                 jsonObject.put("referralStartdate", new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(startdate));
                 jsonObject.put("referralEnddate", new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(enddate));
                 viewModel.changeToDiagnosis(id, jsonObject);//会诊转转诊
@@ -530,17 +560,17 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                     switch (tab.getPosition()) {
                         case 0:
                             v1.setVisibility(View.VISIBLE);
-                            v2.setVisibility(View.GONE);
-                            v3.setVisibility(View.GONE);
+                            v2.setVisibility(View.INVISIBLE);//GONE
+                            v3.setVisibility(View.INVISIBLE);
                             break;
                         case 1:
-                            v1.setVisibility(View.GONE);
+                            v1.setVisibility(View.INVISIBLE);
                             v2.setVisibility(View.VISIBLE);
-                            v3.setVisibility(View.GONE);
+                            v3.setVisibility(View.INVISIBLE);
                             break;
                         case 2:
-                            v1.setVisibility(View.GONE);
-                            v2.setVisibility(View.GONE);
+                            v1.setVisibility(View.INVISIBLE);
+                            v2.setVisibility(View.INVISIBLE);
                             v3.setVisibility(View.VISIBLE);
                             break;
                     }
@@ -599,9 +629,6 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
 
     //专家审批转诊不通过
     private void sendUnPassExpert(String jisu, String kangshengsu, String kangguomin, String waiyongyao, String shoushu, String other) {
-        String strStartDate = binding.spStartDate.getText().toString();
-        String strEndDate = binding.spEndDate.getText().toString();
-
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("content", other);//其他  转诊详情不需要会诊意见

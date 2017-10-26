@@ -182,7 +182,6 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         } else {
             sex = 0;//    女
         }
-        bean.getConsultationReferral().setSaveKey(saveKey);//
 
         bean.setConsultationReferral(new ApplyDiagnosisRequestBean.ConsultationReferralBean());
         bean.setPatientIllnessBasicinfo(new ApplyDiagnosisRequestBean.PatientIllnessBasicinfoBean());
@@ -191,6 +190,8 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         bean.getPatientIllnessBasicinfo().setPreliminaryDiagnosis(preliminaryDiagnosis);//初步诊断
         bean.getPatientIllnessBasicinfo().setChiefComplaint(chiefComplaint);
         bean.getPatientIllnessBasicinfo().setIllnessDescription(illnessDesc);
+
+        bean.getConsultationReferral().setSaveKey(saveKey);//
 
 //        bean.getConsultationReferral().setConsultationObjective();//目的// 下一步
 //        bean.getConsultationReferral().setConsultationType();//咨询类型//
@@ -243,7 +244,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
         binding.ivSelectIdcard01.setOnClickListener(this);
         binding.ivSelectIdcard02.setOnClickListener(this);
         binding.ivSymptoms01.setOnClickListener(this);
-        binding.ivSymptoms02.setOnClickListener(this);
+//        binding.ivSymptoms02.setOnClickListener(this);
         binding.etJiguan.setOnClickListener(this);
         binding.spMedicalInsuranceType.setOnClickListener(this);
 

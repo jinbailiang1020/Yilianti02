@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.embracesource.yilianti.R;
+import com.embracesource.yilianti.bean.UserType;
+import com.embracesource.yilianti.common.memory.MyPrefrences;
 import com.embracesource.yilianti.databinding.FragmentOtherHomeBinding;
 import com.embracesource.yilianti.ui.base.AacFragment;
 import com.embracesource.yilianti.ui.homepage.HomeViewModel;
@@ -44,8 +46,16 @@ public class OtherHomeFragment extends AacFragment<FragmentOtherHomeBinding> {
         for (int position = 0; position < 7; position++) {
             localImages.add(BaseUtils.getResId("haibao", R.drawable.class));
         }
-
-        new HomeViewModel().initConvenientBanner(binding.convenientBanner,localImages);
+        int role = myPrefrences.getInt(MyPrefrences.Key.role);
+        switch (role){
+            case UserType.Medical_Service:
+                binding.tvWorkbench.setText(getString(R.string.Medical_Service_Workbench));
+                break;
+            case UserType.Customer_Service:
+                binding.tvWorkbench.setText(getString(R.string.Customer_Service_Workbench));
+                break;
+        }
+        new HomeViewModel().initConvenientBanner(binding.convenientBanner, localImages);
 
 
 //会诊--图文
@@ -57,7 +67,7 @@ public class OtherHomeFragment extends AacFragment<FragmentOtherHomeBinding> {
                 startActivity(intent);
             }
         });
-}
+    }
 
 
 }

@@ -54,7 +54,6 @@ public class ApplyDiagnosisDetailViewModel extends BaseViewModel {
         api.diagnosisDetailSendUnPass_expert(json,id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
             @Override
             public void onNextUI(@NonNull SimpleBean bean) {
-                super.onNext(bean);
                 callBack.sendPassOK(bean);
             }
         });

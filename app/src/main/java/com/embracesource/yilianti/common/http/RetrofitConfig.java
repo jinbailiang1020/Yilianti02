@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.embracesource.yilianti.common.memory.MyPrefrences;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -75,10 +77,17 @@ public class RetrofitConfig {
     }
 
     private static OkHttpClient genericClient(final String jsessionid) {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
 
+            @Override
+            public void log(String message) {
+                Log.e("=====log======", message);
+            }
+        }).setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
+
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request()
@@ -90,6 +99,7 @@ public class RetrofitConfig {
 //                                .addHeader("Cookie", "add cookies here")
                                 .addHeader("jsessionid", jsessionid)
                                 .build();
+                        Logger.i("okhttp:method "+ request.method().toString()+"\n okhttp: url-->  "+request.url().toString()+"\n okhttp: header--> "+request.headers().toString());
                         return chain.proceed(request);//jsessionid:D0924D8BD4C842AEAE4A25C320391169
                     }
 

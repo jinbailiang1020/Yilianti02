@@ -27,6 +27,7 @@
 
             <!--医生工作台 start-->
             <TextView
+                android:id="@+id/tv_workbench"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"

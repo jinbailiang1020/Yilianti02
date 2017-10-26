@@ -138,7 +138,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:clickable="false"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="@dimen/common_margin_label_and_content"
                     android:background="@color/white"
@@ -149,6 +148,7 @@
                     <ImageView
                         android:id="@+id/iv_Symptoms02"
                         android:layout_width="70dp"
+                        android:clickable="false"
                         android:layout_height="70dp"
                         android:background="@drawable/shape_stroke_gray"
                         android:scaleType="center"

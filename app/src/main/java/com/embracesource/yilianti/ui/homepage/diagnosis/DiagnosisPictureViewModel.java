@@ -32,6 +32,12 @@ public class DiagnosisPictureViewModel extends ViewModel {
             public void onNextUI(@NonNull MyLaunchListBean response) {
                 callBack.getMyLaunchListOK(response,pageNum);//sss
             }
+
+            @Override
+            public void onErrorUI(Throwable e) {
+                super.onErrorUI(e);
+                callBack.getMyLaunchListOK(null,pageNum);//sss
+            }
         });
 
     }
@@ -41,6 +47,12 @@ public class DiagnosisPictureViewModel extends ViewModel {
             @Override
             public void onNextUI(@NonNull MyLaunchListBean response) {
                 callBack.getMyParticipateListOK(response,pageNum);//sss
+            }
+
+            @Override
+            public void onErrorUI(Throwable e) {
+                super.onErrorUI(e);
+                callBack.getMyParticipateListOK(null,pageNum);//sss
             }
         });
     }

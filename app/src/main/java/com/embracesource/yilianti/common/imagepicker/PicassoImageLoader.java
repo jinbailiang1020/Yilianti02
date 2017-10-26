@@ -27,7 +27,7 @@ public class PicassoImageLoader implements ImageLoader {
                 .load(Uri.fromFile(new File(path)))//
                 .placeholder(R.drawable.default_image)//
                 .error(R.drawable.default_image)//
-                .fitCenter()//
+                .centerCrop()//
                 .into(imageView);
     }
 

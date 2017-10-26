@@ -34,4 +34,13 @@ public enum DiagnosisExaminationType {
         }
         return STATUS_Finished.value;
     }
+
+    public static  DiagnosisExaminationType getDiagnosisExaminationType(int id) {
+        for (DiagnosisExaminationType type : DiagnosisExaminationType.values()) {
+            if (id == type.id) {
+                return type;
+            }
+        }
+        return STATUS_Finished;
+    }
 }

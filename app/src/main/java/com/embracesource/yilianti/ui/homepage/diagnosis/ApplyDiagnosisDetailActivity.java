@@ -331,7 +331,13 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                 sendPass();
                 break;
             case R.id.btn_examine_unpass:
-                alertDialog.show();
+                if(UserType.DOCTOR == role){
+                    Intent intent = new Intent(ApplyDiagnosisDetailActivity.this, DiagnosisDetailUnPassActivity.class);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }else{
+                    alertDialog.show();
+                }
                 break;
             case R.id.btn_huizhen_submit:
                 submitHuiZhen_or_changeToDiagnosis();
@@ -526,7 +532,10 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                 break;
 
             case UserType.DOCTOR://医生  专家 审批不通过  (专家的会诊审批只有 给出会诊意见并提交  没有通过不通过)，此处只会是转诊
-                alertDialog.show();
+//                alertDialog.show();//以弹alertDialog的方式（专家审批不通过）
+                Intent intent = new Intent(ApplyDiagnosisDetailActivity.this, DiagnosisDetailUnPassActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
                 break;
             default:
                 hideDialog();

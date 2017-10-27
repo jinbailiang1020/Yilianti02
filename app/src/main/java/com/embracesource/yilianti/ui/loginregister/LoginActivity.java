@@ -48,7 +48,7 @@ public class LoginActivity extends AacBaseActivity<ActivityLoginBinding> impleme
         String pwd = binding.etPwd.getText().toString();
         String userName = binding.etPhone.getText().toString();
         if (userName.length() == 0) {
-            msg = "请输入手机号";
+            msg = "用户名/手机号";
             showToast(msg);
             return;
         }

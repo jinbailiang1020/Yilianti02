@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context="com.embracesource.yilianti.ui.homepage.diagnosis.DiagnosisDetailPassActivity">
+
+        <include layout="@layout/title_layout" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                app:tabIndicatorColor="#ff0000"
+                app:tabPaddingEnd="20dp"
+                app:tabPaddingStart="20dp"
+                app:tabSelectedTextColor="@color/main_color"
+                app:tabTextColor="@color/common_label_text_color"></android.support.design.widget.TabLayout>
+
+            <!--        <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_label_height"
+                        android:background="@color/main_color"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/title_size" />-->
+
+            <FrameLayout
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
+                    android:paddingRight="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/jisu" />
+
+                        <EditText
+                            android:id="@+id/et_jisu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="6"
+                            android:background="@drawable/shape_stroke_gray"
+                            android:gravity="start"
+                            android:lines="4"
+                            android:maxLength="200"
+                            android:padding="3dp"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/common_little_textsize" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/kangshengsu" />
+
+                        <EditText
+                            android:id="@+id/et_kangshengsu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="6"
+                            android:background="@drawable/shape_stroke_gray"
+                            android:gravity="start"
+                            android:lines="4"
+                            android:maxLength="200"
+                            android:padding="3dp"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/common_little_textsize" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/kangguomin" />
+
+                        <EditText
+                            android:id="@+id/et_kangguomin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="6"
+                            android:background="@drawable/shape_stroke_gray"
+                            android:gravity="start"
+                            android:lines="4"
+                            android:maxLength="200"
+                            android:padding="3dp"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/common_little_textsize" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/waiyongyao" />
+
+                        <EditText
+                            android:id="@+id/et_waiyongyao"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="6"
+                            android:background="@drawable/shape_stroke_gray"
+                            android:gravity="start"
+                            android:lines="4"
+                            android:maxLength="200"
+                            android:padding="3dp"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/common_little_textsize" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/shoushu" />
+
+                    <EditText
+                        android:id="@+id/et_shoushu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="6"
+                        android:background="@drawable/shape_stroke_gray"
+                        android:gravity="start"
+                        android:maxLength="200"
+                        android:padding="3dp"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_little_textsize" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/other" />
+
+                    <EditText
+                        android:id="@+id/et_other"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="6"
+                        android:background="@drawable/shape_stroke_gray"
+                        android:gravity="start"
+                        android:maxLength="200"
+                        android:padding="3dp"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/common_little_textsize" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

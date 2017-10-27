@@ -25,7 +25,8 @@ import static android.content.ContentValues.TAG;
  */
 
 public class RetrofitConfig {
-    public static final String BASE_URL = "http://192.168.1.165:8002/";
+    public static final String BASE_URL = "http://122.207.81.240:9002/";         //外网
+    //    public static final String BASE_URL = "http://192.168.1.165:8002/";//内网
     private static RetrofitService retrofitService;
 
     public static void setJsessionid(String jsessionid, Context context) {
@@ -34,7 +35,7 @@ public class RetrofitConfig {
             RetrofitConfig.jsessionid = myPrefrences.getString(MyPrefrences.Key.sessionid);
         }
         RetrofitConfig.jsessionid = jsessionid;
-        retrofitService_afterLogin =null;
+        retrofitService_afterLogin = null;
         Log.i(TAG, RetrofitConfig.jsessionid);
     }
 
@@ -99,7 +100,7 @@ public class RetrofitConfig {
 //                                .addHeader("Cookie", "add cookies here")
                                 .addHeader("jsessionid", jsessionid)
                                 .build();
-                        Logger.i("okhttp:method "+ request.method().toString()+"\n okhttp: url-->  "+request.url().toString()+"\n okhttp: header--> "+request.headers().toString());
+                        Logger.i("okhttp:method " + request.method().toString() + "\n okhttp: url-->  " + request.url().toString() + "\n okhttp: header--> " + request.headers().toString());
                         return chain.proceed(request);//jsessionid:D0924D8BD4C842AEAE4A25C320391169
                     }
 

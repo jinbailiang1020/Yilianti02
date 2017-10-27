@@ -31,6 +31,7 @@ import com.embracesource.yilianti.common.imagepicker.SelectDialog;
 import com.embracesource.yilianti.common.pickerview.JsonBean;
 import com.embracesource.yilianti.databinding.ActivityApplyDiagnosis01Binding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
+import com.embracesource.yilianti.util.FormatUtils;
 import com.embracesource.yilianti.util.PhoneUtils;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosis01CallBack;
 import com.google.gson.Gson;
@@ -155,8 +156,8 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             showToast(msg0 + msg);
             return;
         }
-        if (phone.isEmpty()) {
-            msg = "手机号";
+        if (FormatUtils.isInValidPhoneNumber(phone)) {
+            msg = "正确的手机号";
             showToast(msg0 + msg);
             return;
         }

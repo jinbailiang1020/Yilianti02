@@ -69,7 +69,7 @@ public interface RetrofitService {
     @GET("referralAndConsultation/audit/{id}")
     Observable<SimpleBean> diagnosisDetailsendPass_2(@Path("id") int id, @Query("available") int available);
 
-    @POST("referralAndConsultation/audit/{id}")
+    @GET("referralAndConsultation/audit/{id}")
     Observable<SimpleBean> diagnosisDetailsendUnPass_2(@Path("id") int id, @Query("available") int available, @Body RequestBody content);//// TODO: 2017/10/23 0023  405
 
     @GET("account/selectUserRole")
@@ -83,7 +83,8 @@ public interface RetrofitService {
 
     @GET("account/selectUser")
     Observable<UserInfoBean> getUserInfo();
-    @GET("set/personal/update/userpwd/{id}")
+
+    @GET("set/personal/update/userpwd/{id}")//// TODO: 2017/10/23 0023  405
     Observable<SimpleBean> customerService_nextStep(@Path("id") int id, @Query("available") int available);
 
     @GET("workbench/medicalService/list")

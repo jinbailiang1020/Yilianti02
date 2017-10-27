@@ -1,5 +1,6 @@
 package com.embracesource.yilianti.ui.homepage.diagnosis;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -120,10 +121,10 @@ public class DiagnosisDetailPassActivity extends AacBaseActivity<ActivityDiagnos
             new Api().diagnosisDetailSendPass_expert(jsonObject, id).subscribe(new BaseActivity.MyObserver<SimpleBean>() {
                 @Override
                 public void onNextUI(@NonNull SimpleBean bean) {
-                    super.onNext(bean);
                     showToast(bean.getMessage());
                     if (bean.isSuccess()) {
                         EventBus.getDefault().post(new RefreshDiagnosisListBean(""));
+                        startActivity(new Intent(DiagnosisDetailPassActivity.this,DiagnosisPictureActivity.class));
                         finish();
                     } else {
 

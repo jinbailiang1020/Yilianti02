@@ -19,7 +19,6 @@
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/common_label_text_color"></android.support.design.widget.TabLayout>
 
-
         <!--        <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"

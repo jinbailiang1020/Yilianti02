@@ -43,8 +43,8 @@ public class MainActivity extends AacBaseActivity<ActivityMainBinding> {
         disableShiftMode(binding.navigation);//    链接：http://www.jianshu.com/p/eada0f16afd9
 
         int[][] states = new int[][]{
-                new int[]{-android.R.attr.state_checked},
-                new int[]{android.R.attr.state_checked}
+                new int[]{android.R.attr.state_checked},
+                new int[]{-android.R.attr.state_checked}
         };
 
         int[] colors = new int[]{getResources().getColor(R.color.main_color),

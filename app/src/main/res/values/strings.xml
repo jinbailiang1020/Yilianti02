@@ -28,6 +28,7 @@
     <string name="age">年龄</string>
     <string name="origin_place">籍贯</string>
     <string name="phone_number">用户名</string>
+    <string name="phone_num">手机号</string>
     <string name="medical_insurance_type">医保类型</string>
     <string name="hint_idcard_two_page">患者身份证正反面</string>
     <string name="illness_desc">病情描述</string>
@@ -109,4 +110,6 @@
     <string name="Medical_Service_Workbench">医务处工作台</string>
     <string name="Customer_Service_Workbench">医务工作台</string>
     <string name="give_diagnosis_unpass_advice">给出治疗意见</string>
+    <string name="medical_station">医务工作台</string>
+
 </resources>

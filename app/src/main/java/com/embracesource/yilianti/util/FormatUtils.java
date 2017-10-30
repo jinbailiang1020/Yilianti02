@@ -3,7 +3,6 @@ package com.embracesource.yilianti.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static android.icu.text.Normalizer.YES;
 
 /**
  * Created by Administrator on 2017/10/23 0023.
@@ -43,7 +42,7 @@ public class FormatUtils {
          * 133,149,153,170,173,177,180,181,189
          */
         String CT = "^1(3[3]|4[9]|53|7[037]|8[019])\\d{8}$";
-        return !match(MOBILE, mobileNum) || match(CM, mobileNum) || match(CU, mobileNum) || match(CT, mobileNum);
+        return !(match(MOBILE, mobileNum) || match(CM, mobileNum) || match(CU, mobileNum) || match(CT, mobileNum));
     }
 
     private static boolean match(String regex, String str) {

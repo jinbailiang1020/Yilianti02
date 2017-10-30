@@ -22,11 +22,12 @@ import static android.content.ContentValues.TAG;
 
 /**
  * Created by Administrator on 2017/10/16 0016.
+ * 基层医生帐号test1  基层医务处帐号testywc    上级医院医务处帐号 testywc2   上级医生帐号test2     团队选择玫瑰痤疮
  */
 
 public class RetrofitConfig {
     public static final String BASE_URL = "http://122.207.81.240:9002/";         //外网
-    //    public static final String BASE_URL = "http://192.168.1.165:8002/";//内网
+//        public static final String BASE_URL = "http://192.168.1.165:8002/";//内网
     private static RetrofitService retrofitService;
 
     public static void setJsessionid(String jsessionid, Context context) {

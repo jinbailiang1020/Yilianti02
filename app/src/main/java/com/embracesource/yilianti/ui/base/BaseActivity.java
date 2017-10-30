@@ -58,16 +58,18 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
         StatusBarCompat.compat(this, getResources().getColor(R.color.main_color));
         initContentView();
         initActionBar();
-        initProgressDialog();
+        initProgressDialog(true);
         uiHandler = new Handler(getMainLooper());
     }
 
-    private void initProgressDialog() {
+    private void initProgressDialog(boolean dismissAble) {
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.wait));
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = PhoneUtils.getPhoneWidth(this) / 8;
         dialog.getWindow().setAttributes(params);
+        dialog.setCancelable(dismissAble);
+        dialog.setCanceledOnTouchOutside(dismissAble);
     }
 
     @Override
@@ -85,16 +87,40 @@ public abstract class BaseActivity extends AppCompatActivity implements ILoadDat
     public void showDialog() {
         try {
             if (dialog == null) {
-                initProgressDialog();
+                initProgressDialog(true);
             }
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(true);
             if (dialog.getContext() == this) {//bingo   handle  exception :is activity  running?
                 dialog.show();
             } else {
-                initProgressDialog();
+                initProgressDialog(true);
                 dialog.show();
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void showDialog(boolean dismissAble) {
+        try {
+            if (dialog == null) {
+                initProgressDialog(dismissAble);
+            }
+            if(dialog.isShowing())return;
+            if(!dismissAble){
+                dialog.setCancelable(dismissAble);
+                dialog.setCanceledOnTouchOutside(dismissAble);
+            }
+            if (dialog.getContext() == this) {//bingo   handle  exception :is activity  running?
+                dialog.show();
+            } else {
+                initProgressDialog(dismissAble);
+                dialog.show();
+            }
+
+        } catch (Exception e) {
+//            if(dialog !=null)dialog.dismiss();
             e.printStackTrace();
         }
     }

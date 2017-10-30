@@ -193,7 +193,6 @@
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:drawableRight="@drawable/down_blue_25"
-                            android:focusable="false"
                             android:gravity="center"
                             android:textColor="@color/common_text_color" />
                     </LinearLayout>
@@ -222,7 +221,6 @@
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:drawableRight="@drawable/down_blue_25"
-                            android:focusable="false"
                             android:gravity="center"
                             android:textColor="@color/common_text_color" />
                     </LinearLayout>
@@ -251,7 +249,6 @@
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:drawableRight="@drawable/down_blue_25"
-                            android:focusable="false"
                             android:gravity="center"
                             android:textColor="@color/common_text_color" />
                     </LinearLayout>

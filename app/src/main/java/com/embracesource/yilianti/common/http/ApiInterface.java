@@ -34,7 +34,7 @@ public interface ApiInterface {
 
     Observable selectUserRole();
 
-    Observable getHospitalList(int pageNum, int pageSize) ;
+    Observable getNeedHandleList(int pageNum, int pageSize) ;
 
 
 //    Observable<LoginBean> login1(String userName, String pwd);

@@ -39,10 +39,12 @@ import com.embracesource.yilianti.bean.eventbus.RefreshDiagnosisListBean;
 import com.embracesource.yilianti.common.adapter.CommonAdapter;
 import com.embracesource.yilianti.common.adapter.ViewHolder;
 import com.embracesource.yilianti.common.dialog.DialogAdapter;
+import com.embracesource.yilianti.common.http.Api;
 import com.embracesource.yilianti.common.imagepicker.PicassoImageLoader;
 import com.embracesource.yilianti.common.memory.MyPrefrences;
 import com.embracesource.yilianti.databinding.ActivityApplyDiagnosisDetailBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
+import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.util.PhoneUtils;
 import com.embracesource.yilianti.util.StringUtils;
 import com.embracesource.yilianti.viewmodel.ApplyDiagnosisDetailCallBack;
@@ -56,10 +58,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
+
 import static com.embracesource.yilianti.R.id.rb_change_to_diagnosis_yes;
 import static com.embracesource.yilianti.bean.enums.DiagnosisExaminationType.STATUS_Medical_Service;
 import static com.embracesource.yilianti.bean.enums.DiagnosisExaminationType.STATUS_Top_Medical_Service;
+import static com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisActivity01.medicare_type;
 import static com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisActivity02.SIMPLE_DATE_FORMAT;
+import static com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisActivity02.priority;
 
 /**
  * 转诊会诊详情
@@ -79,25 +85,15 @@ import static com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisAct
  * //            flag：1 医务处审核，2 详情展示，3 专家回复
  */
 public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyDiagnosisDetailBinding> implements ApplyDiagnosisDetailCallBack, ApplyDiagnosisViewModelCallBack, View.OnClickListener {
-    public static final String IS_participate = "IS_participate";
+    public static final String IS_participate = "IS_participate";//（我的参与  或者 代办事项  true  需要编辑
     private ApplyDiagnosisDetailViewModel viewModel;
 
     private AlertDialog alertDialog;
 
-    /**
-     * 用户类型
-     * 1 用户
-     * 2 医生 、、、
-     * 3 患者
-     * 4 游客
-     * 5 医务处、、、
-     * 6 客服 、、、
-     * 7 系统管理员
-     */
-    private int role;//
+    private int role;//UserType  角色
     private int id;
     private EditText et_upPass_msg;
-    private boolean isParticipate;        //我的参与进来的，如果是医生，需要显示审批相关按钮
+    private boolean isParticipate;        //我的参与 or 待办事项 进来的，需要显示审批相关按钮（）
     private ApplyDiagnosisDetailBean bean;
 
     private int currentClickItem = -1;//当前点击的类型
@@ -143,13 +139,14 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
         role = myPrefrences.getInt(MyPrefrences.Key.role);
         binding.btnExaminePass.setOnClickListener(this);
         binding.btnExamineUnpass.setOnClickListener(this);
+        binding.btnHuizhenSubmit.setOnClickListener(this);
 
         binding.tvChangeHospital.setOnClickListener(this);
         binding.tvChangeDoctor.setOnClickListener(this);
         binding.spEmergencyDegree.setOnClickListener(this);
-        binding.spStartDate.setOnClickListener(this);
-        binding.spEndDate.setOnClickListener(this);
-        binding.spChangeDate.setOnClickListener(this);
+        binding.tvStartDate.setOnClickListener(this);
+        binding.tvEndDate.setOnClickListener(this);
+        binding.tvChangeDate.setOnClickListener(this);
     }
 
     @Override
@@ -158,7 +155,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
         viewModel = new ApplyDiagnosisDetailViewModel(this);
         viewModel02 = new ApplyDiagnosisViewModel02(this);
         id = getIntent().getIntExtra(ApplyDiagnosisDetailActivity.class.getName(), 0);
-        isParticipate = R.id.rb_my_participate == getIntent().getIntExtra(IS_participate, Integer.MAX_VALUE);
+        isParticipate = getIntent().getBooleanExtra(IS_participate, false);
         showDialog();
         viewModel.getDetail(id, "2");
         initPopWindow();
@@ -175,12 +172,12 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
             @Override
             public void onClick(View v, int position) {
                 switch (currentClickItem) {
-                    case R.id.sp_change_hospital:
+                    case R.id.tv_change_hospital:
                         clearDoctor();
                         currentSelected_changeHospital = position;
                         binding.tvChangeHospital.setText(hospitalList.get(position).getDescription());
                         break;
-                    case R.id.sp_change_doctor:
+                    case R.id.tv_change_doctor:
                         currentSelected_changeDoctor = position;
                         binding.tvChangeDoctor.setText(doctorList.get(position).getFullname());
                         break;
@@ -201,10 +198,68 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
     @Override
     public void getApplyDiagnosisDetailOK(ApplyDiagnosisDetailBean applyDiagnosisDetailBean) {
         try {
+            if (!applyDiagnosisDetailBean.isSuccess()) {
+                showToast(applyDiagnosisDetailBean.getMessage());
+                return;
+            }
             binding.setBean(applyDiagnosisDetailBean);
             this.bean = applyDiagnosisDetailBean;
             itemBean = applyDiagnosisDetailBean.getData().getList().get(0);
             binding.setItemBean(itemBean);
+            //获取医保类型：
+            Api api = new Api();
+            api.getBaseData(medicare_type).subscribe(new BaseActivity.MyObserver<ApplyDiagnosisGoalBean>() {
+                @Override
+                public void onNextUI(@NonNull ApplyDiagnosisGoalBean response) {
+                    if (response.isSuccess()) {
+                        if (response.getData() != null && !response.getData().isEmpty()) {
+                            for (ApplyDiagnosisGoalBean.DataBean entity : response.getData()) {
+                                if (entity.getId() == bean.getData().getPatientInfo().getMedicareType()) {
+                                    binding.etMedicalType.setText(entity.getDescription());
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            if (StringUtils.isNullorEmpty(itemBean.getContent())) {
+                binding.llHuizhenAdvice.setVisibility(View.GONE);
+            } else {
+                binding.llHuizhenAdvice.setVisibility(View.VISIBLE);
+                binding.etDiagnosisAdvice.setFocusable(false);
+                binding.etDiagnosisAdvice.setText(itemBean.getContent());
+            }
+
+            binding.etType.setText(itemBean.getConsultationTypeName());//consultationTypeName
+   /*         api.getBaseData(consultation_type).subscribe(new BaseActivity.MyObserver<ApplyDiagnosisGoalBean>() {
+                @Override
+                public void onNextUI(@NonNull ApplyDiagnosisGoalBean response) {
+                    if (response.isSuccess()) {
+                        if (response.getData() != null && !response.getData().isEmpty()) {
+                            for (ApplyDiagnosisGoalBean.DataBean entity : response.getData()) {
+                                if (entity.getId() == bean.getData().getList().get(0).getConsultationType()) {
+                                    binding.etType.setText(entity.getDescription());
+                                }
+                            }
+                        }
+                    }
+                }
+            });*/
+            api.getBaseData(priority).subscribe(new BaseActivity.MyObserver<ApplyDiagnosisGoalBean>() {
+                @Override
+                public void onNextUI(@NonNull ApplyDiagnosisGoalBean response) {
+                    if (response.isSuccess()) {
+                        if (response.getData() != null && !response.getData().isEmpty()) {
+                            for (ApplyDiagnosisGoalBean.DataBean entity : response.getData()) {
+                                if (entity.getId() == bean.getData().getList().get(0).getPriority()) {
+                                    binding.spEmergencyDegree.setText(entity.getDescription());
+                                }
+                            }
+                        }
+                    }
+                }
+            });
             if (itemBean != null && itemBean.getPicIdcard() != null) {
                 if (itemBean.getPicIdcard().size() > 0) {
                     Glide.with(ApplyDiagnosisDetailActivity.this)//
@@ -216,7 +271,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                     Glide.with(ApplyDiagnosisDetailActivity.this)//
                             .load(itemBean.getPicIdcard().get(1))
                             .centerCrop()//
-                            .into(binding.ivSelectIdcard01);
+                            .into(binding.ivSelectIdcard02);
                 }
             }
             if (itemBean != null && itemBean.getPicIllness() != null) {
@@ -242,50 +297,57 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
 
                 binding.tvChangeHospital.setText(itemBean.getReferralHospitalName());
                 binding.tvChangeDoctor.setText(itemBean.getReferralDoctorName());
-                binding.spChangeDate.setText(itemBean.getReferralPlanDate());
+                binding.tvChangeDate.setText(itemBean.getReferralPlanDate());
                 if (StringUtils.isNullorEmpty(itemBean.getReferralStartdate())) {
                     binding.llStartDate.setVisibility(View.GONE);
                 } else {
                     binding.llStartDate.setVisibility(View.VISIBLE);
-                    binding.spStartDate.setText(itemBean.getReferralStartdate());
+                    binding.tvStartDate.setText(itemBean.getReferralStartdate());
                 }
                 if (StringUtils.isNullorEmpty(itemBean.getReferralEnddate())) {
                     binding.llEndDate.setVisibility(View.GONE);
                 } else {
                     binding.llEndDate.setVisibility(View.VISIBLE);
-                    binding.spEndDate.setText(itemBean.getReferralEnddate());
+                    binding.tvEndDate.setText(itemBean.getReferralEnddate());
                 }
 
             } else {//如果是会诊
                 binding.llChangeDiagnosis.setVisibility(View.GONE);
-                binding.rgChangeToDiagnosis.setVisibility(View.VISIBLE);
-                binding.rgChangeToDiagnosis.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                        if (checkedId == rb_change_to_diagnosis_yes) {//会诊转转诊
-                            binding.llChangeDiagnosis.setVisibility(View.VISIBLE);
-                            binding.llHuizhenAdvice.setVisibility(View.GONE);
-                            binding.tvChangeHospital.setEnabled(true);
-                            binding.tvChangeDoctor.setEnabled(true);
-                            binding.spChangeDate.setEnabled(true);
-                            binding.spEndDate.setEnabled(true);
-                            binding.spStartDate.setEnabled(true);
-                            Drawable drawableRight = getResources().getDrawable(R.drawable.down_blue_25);
-                            binding.tvChangeHospital.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
-                            binding.tvChangeDoctor.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
-                            binding.spChangeDate.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
+                if (role == UserType.DOCTOR && isParticipate) {//会诊时，如果是专家，并且属于我的参与
+                    binding.rgChangeToDiagnosis.setVisibility(View.VISIBLE);
+                    binding.rgChangeToDiagnosis.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                            if (checkedId == rb_change_to_diagnosis_yes) {//会诊转转诊
+                                binding.llChangeDiagnosis.setVisibility(View.VISIBLE);
+//                                binding.llHuizhenAdvice.setVisibility(View.GONE);
+                                binding.tvChangeHospital.setEnabled(true);
+                                binding.tvChangeDoctor.setEnabled(true);
+                                binding.tvChangeDate.setEnabled(true);
+                                binding.tvEndDate.setEnabled(true);
+                                binding.tvStartDate.setEnabled(true);
+                                Drawable drawableRight = getResources().getDrawable(R.drawable.down_blue_25);
+                                binding.tvChangeHospital.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
+                                binding.tvChangeDoctor.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
+                                binding.tvChangeDate.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
+                                binding.tvStartDate.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
+                                binding.tvEndDate.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
 
-                        } else {
-                            binding.llHuizhenAdvice.setVisibility(View.VISIBLE);
-                            binding.llChangeDiagnosis.setVisibility(View.GONE);
-                            binding.tvChangeHospital.setEnabled(false);
-                            binding.tvChangeDoctor.setEnabled(false);
-                            binding.spEmergencyDegree.setEnabled(false);
-                            binding.spEndDate.setEnabled(false);
-                            binding.spStartDate.setEnabled(false);
+                            } else {
+                                binding.llHuizhenAdvice.setVisibility(View.VISIBLE);
+                                binding.llChangeDiagnosis.setVisibility(View.GONE);
+                                binding.tvChangeHospital.setEnabled(false);
+                                binding.tvChangeDoctor.setEnabled(false);
+                                binding.spEmergencyDegree.setEnabled(false);
+                                binding.tvEndDate.setEnabled(false);
+                                binding.tvStartDate.setEnabled(false);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    binding.rgChangeToDiagnosis.setVisibility(View.GONE);
+                }
+
             }
 
             if (role == UserType.DOCTOR && isParticipate) {//是医生并且 是我参与(专家审批)，
@@ -303,7 +365,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                     binding.btnExaminePass.setVisibility(View.GONE);
                 }
                 initShowUnPassAlertDialog();
-            } else if (role == UserType.Medical_Service) {//是医务处
+            } else if (role == UserType.Medical_Service && isParticipate) {//是医务处
                 binding.llExamine.setVisibility(View.VISIBLE);
                 binding.btnHuizhenSubmit.setVisibility(View.GONE);
                 binding.btnExamineUnpass.setVisibility(View.VISIBLE);
@@ -331,11 +393,11 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                 sendPass();
                 break;
             case R.id.btn_examine_unpass:
-                if(UserType.DOCTOR == role){
+                if (UserType.DOCTOR == role) {
                     Intent intent = new Intent(ApplyDiagnosisDetailActivity.this, DiagnosisDetailUnPassActivity.class);
                     intent.putExtra("id", id);
                     startActivity(intent);
-                }else{
+                } else {
                     alertDialog.show();
                 }
                 break;
@@ -343,7 +405,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                 submitHuiZhen_or_changeToDiagnosis();
                 break;
 
-            case R.id.sp_change_hospital://医院
+            case R.id.tv_change_hospital://医院
                 if (hospitalList.isEmpty()) {
                     dialog.show();
                     viewModel02.changeHospitalList();
@@ -352,7 +414,7 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                     showFragmentDialog(hospitalList);
                 }
                 break;
-            case R.id.sp_change_doctor:
+            case R.id.tv_change_doctor:
                 if (currentSelected_changeHospital == -1) {
                     showToast("请先选择转诊医院");
                     return;
@@ -361,8 +423,9 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                 viewModel02.changeDoctorList(hospitalList.get(currentSelected_changeHospital).getId());
                 break;
 
-            case R.id.sp_start_date:
-            case R.id.sp_end_date:
+            case R.id.tv_start_date:
+            case R.id.tv_end_date:
+            case R.id.tv_change_date:
 //                TYPE_ALL--年、月、日、星期、时、分
 //                TYPE_YMDHM--年、月、日、时、分
 //                TYPE_YMDH--年、月、日、时
@@ -386,17 +449,17 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                     @Override
                     public void onSure(Date date) {
                         switch (currentSelectDate) {
-                            case R.id.sp_start_date:
+                            case R.id.tv_start_date:
                                 ApplyDiagnosisDetailActivity.this.startdate = date;
-                                binding.spStartDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
+                                binding.tvStartDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
                                 break;
-                            case R.id.sp_end_date:
+                            case R.id.tv_end_date:
                                 ApplyDiagnosisDetailActivity.this.enddate = date;
-                                binding.spEndDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
+                                binding.tvEndDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
                                 break;
-                            case R.id.sp_change_date:
+                            case R.id.tv_change_date:
                                 ApplyDiagnosisDetailActivity.this.plandate = date;
-                                binding.spChangeDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
+                                binding.tvChangeDate.setText(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(date));
                                 break;
                         }
                     }
@@ -438,12 +501,14 @@ public class ApplyDiagnosisDetailActivity extends AacBaseActivity<ActivityApplyD
                 jsonObject.put("referralPlanDate", new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(plandate));
                 jsonObject.put("referralStartdate", new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(startdate));
                 jsonObject.put("referralEnddate", new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(enddate));
+                showDialog();
                 viewModel.changeToDiagnosis(id, jsonObject);//会诊转转诊
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             //会诊通过
+            showDialog();
             viewModel.huizhenSubmit(diagnosisAdvice, id);
         }
     }

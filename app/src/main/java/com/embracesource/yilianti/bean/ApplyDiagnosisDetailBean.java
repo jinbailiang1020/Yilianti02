@@ -307,12 +307,12 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
             private String chiefComplaint;
             private String preliminaryDiagnosis;
             private String illnessDescription;
-            private Object consultationTypeName;
+            private String consultationTypeName;
             private String consultationObjectiveName;
             private String teamName;
             private String referralHospitalName;
             private String referralDoctorName;
-            private Object content;
+            private String content;
             private Object medicineHormone;
             private Object medicineAntibiotic;
             private Object medicineAntiallergic;
@@ -499,11 +499,11 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.illnessDescription = illnessDescription;
             }
 
-            public Object getConsultationTypeName() {
+            public String getConsultationTypeName() {
                 return consultationTypeName;
             }
 
-            public void setConsultationTypeName(Object consultationTypeName) {
+            public void setConsultationTypeName(String consultationTypeName) {
                 this.consultationTypeName = consultationTypeName;
             }
 
@@ -539,11 +539,11 @@ public class ApplyDiagnosisDetailBean extends BaseBean {
                 this.referralDoctorName = referralDoctorName;
             }
 
-            public Object getContent() {
+            public String getContent() {
                 return content;
             }
 
-            public void setContent(Object content) {
+            public void setContent(String content) {
                 this.content = content;
             }
 

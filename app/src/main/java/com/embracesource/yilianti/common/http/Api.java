@@ -142,8 +142,8 @@ public class Api implements ApiInterface {
     }
 
     @Override
-    public Observable<HospitalWaitHandleListBean> getHospitalList(int pageNum, int pageSize) {
-        return RetrofitConfig.getInstance_afterLogin().getHospitalList(pageNum, pageSize)
+    public Observable<HospitalWaitHandleListBean> getNeedHandleList(int pageNum, int pageSize) {
+        return RetrofitConfig.getInstance_afterLogin().getNeedHandleList(pageNum, pageSize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

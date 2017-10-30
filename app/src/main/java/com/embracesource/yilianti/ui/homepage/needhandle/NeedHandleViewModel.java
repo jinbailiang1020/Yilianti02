@@ -1,4 +1,4 @@
-package com.embracesource.yilianti.ui.homepage.diagnosis;
+package com.embracesource.yilianti.ui.homepage.needhandle;
 
 import android.arch.lifecycle.ViewModel;
 
@@ -8,7 +8,7 @@ import com.embracesource.yilianti.bean.MyLaunchListBean;
 import com.embracesource.yilianti.bean.SimpleBean;
 import com.embracesource.yilianti.common.http.Api;
 import com.embracesource.yilianti.ui.base.BaseActivity;
-import com.embracesource.yilianti.viewmodel.DiagnosisPictureCallBack;
+import com.embracesource.yilianti.viewmodel.NeedHandleCallBack;
 
 import io.reactivex.annotations.NonNull;
 
@@ -16,14 +16,14 @@ import io.reactivex.annotations.NonNull;
  * Created by Administrator on 2017/10/17 0017.
  */
 
-public class DiagnosisPictureViewModel extends ViewModel {
+public class NeedHandleViewModel extends ViewModel {
     private final Api api;
-    private final DiagnosisPictureCallBack callBack;
+    private final NeedHandleCallBack callBack;
 
 //    @Inject
-    public DiagnosisPictureViewModel(DiagnosisPictureActivity diagnosisPictureActivity) {
+    public NeedHandleViewModel(NeedHandleActivity NeedHandleActivity) {
         api = new Api();
-        this.callBack = diagnosisPictureActivity;
+        this.callBack = NeedHandleActivity;
     }
 
     public void  getMyLaunchList(final int pageNum,final int pageSize) {
@@ -57,12 +57,14 @@ public class DiagnosisPictureViewModel extends ViewModel {
         });
     }
 
-    public void getHospitalList(final int pageNum, int pageSize) {
+    //待办事项
+    public void getNeedHandleList(final int pageNum, int pageSize) {
         //完成标识符flagFinish：0 未完成；1 已完成
+//        http://192.168.1.165:8002/workbench/t    odo/list?pageNum={pageNum}&pageSize={pageSize}
         api.getNeedHandleList(pageNum,pageSize).subscribe(new BaseActivity.MyObserver<HospitalWaitHandleListBean>() {//
             @Override
             public void onNextUI(@NonNull HospitalWaitHandleListBean response) {
-                callBack.getHospitalListOK(response,pageNum);//
+                callBack.getNeedHandleListOK(response,pageNum);//
             }
         });
     }
@@ -84,4 +86,5 @@ public class DiagnosisPictureViewModel extends ViewModel {
             }
         });
     }
+
 }

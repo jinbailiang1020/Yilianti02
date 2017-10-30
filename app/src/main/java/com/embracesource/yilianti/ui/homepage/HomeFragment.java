@@ -8,6 +8,7 @@ import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.databinding.FragmentHomeBinding;
 import com.embracesource.yilianti.ui.base.AacFragment;
 import com.embracesource.yilianti.ui.homepage.diagnosis.DiagnosisPictureActivity;
+import com.embracesource.yilianti.ui.homepage.needhandle.NeedHandleActivity;
 import com.embracesource.yilianti.util.BaseUtils;
 
 import java.util.ArrayList;
@@ -44,10 +45,21 @@ public class HomeFragment extends AacFragment<FragmentHomeBinding> {
             localImages.add(BaseUtils.getResId("haibao", R.drawable.class));
         }
 
-        new HomeViewModel().initConvenientBanner(binding.convenientBanner,localImages);
+        new HomeViewModel().initConvenientBanner(binding.convenientBanner, localImages);
+//        binding.tvDiagnosisPicture.setTargetView( binding.tvDiagnosisPicture);
+//        binding.tvDiagnosisPicture.setBadgeGravity(Gravity.TOP | Gravity.LEFT);
+//        binding.tvDiagnosisPicture.setBadgeCount(8);
+        //待办事项
+        binding.tvNeedHandle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NeedHandleActivity.class);
+                intent.putExtra("", "");
+                startActivity(intent);
+            }
+        });
 
-
-//会诊--图文
+        //会诊--图文
         binding.tvDiagnosisPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +68,7 @@ public class HomeFragment extends AacFragment<FragmentHomeBinding> {
                 startActivity(intent);
             }
         });
-}
+    }
 
 
 }

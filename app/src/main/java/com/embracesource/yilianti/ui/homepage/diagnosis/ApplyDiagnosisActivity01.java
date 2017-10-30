@@ -87,6 +87,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     private boolean idIdcard01Upload;//身份证 正面是否上次成功
     private boolean idIdcard02Upload;//身份证 反面是否上次成功
     private boolean idSymptoms01Upload;//患处图片是否上
+    public static final String medicare_type = "medicare_type";
 
     @Override
     protected int getLayoutId() {
@@ -303,7 +304,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             case R.id.sp_medical_insurance_type://医保类型
                 if (medicalInsuranceTypeList.isEmpty()) {
                     showDialog();
-                    viewModel.getBaseData("medicare_type"); //medicare_type 医保类型
+                    viewModel.getBaseData(medicare_type); //medicare_type 医保类型
                 } else {
                     adapter.setList(medicalInsuranceTypeList);
                     showFragmentDialog(medicalInsuranceTypeList);
@@ -431,12 +432,15 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
     }
 
     private void uploadFile(final ImageItem imageItem) {
-        PostRequest<String> postRequest = OkGo.<String>post(RetrofitConfig.BASE_URL + "referralAndConsultation/upload")//
+//        if (currentSelectPhotoTypeId == R.id.iv_select_idcard01 || currentSelectPhotoTypeId == R.id.iv_select_idcard02){
+            showDialog(false);
+//        }
+            PostRequest<String> postRequest = OkGo.<String>post(RetrofitConfig.BASE_URL + "referralAndConsultation/upload")//
 //                .headers("aaa", "111")//
-                .params("saveKey", saveKey)
-                .params("uploadType", uploadType)//uploadType  1 身份证，2是病情描述
-                .params("file", new File(imageItem.path))
-                .converter(new StringConvert());
+                    .params("saveKey", saveKey)
+                    .params("uploadType", uploadType)//uploadType  1 身份证，2是病情描述
+                    .params("file", new File(imageItem.path))
+                    .converter(new StringConvert());
         final UploadTask<String> task = OkUpload.request(imageItem.path, postRequest)//
                 .priority(new Random().nextInt(100))//
                 .extra1(imageItem)//
@@ -457,12 +461,14 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
             public void onError(Progress progress) {
                 Logger.d("HAHA onError" + progress);
                 task.remove();
+                hideDialog();
             }
 
             @Override
             public void onFinish(String s, Progress progress) {
                 // HAHA onFinish:{"code":"0000","message":"type参数不正确","data":null,"traceInfo":["0026"],"sessionid":null,"success":false,"fail":true}
                 //{"code":"1111","message":"success","data":"6ef4755c-10be-4346-8d32-c791d91d73a3","traceInfo":[],"sessionid":null,"fail":false,"success":true}
+                hideDialog();
                 Logger.d("HAHA onFinish:" + s + " ; " + progress);
                 ImageUploadBean imageUploadBean = new Gson().fromJson(s, ImageUploadBean.class);
                 saveKey = imageUploadBean.getData();
@@ -503,7 +509,7 @@ public class ApplyDiagnosisActivity01 extends AacBaseActivity<ActivityApplyDiagn
 
             @Override
             public void onRemove(Progress progress) {
-
+                hideDialog();
             }
         });
         task.start();

@@ -69,14 +69,14 @@ public interface RetrofitService {
     @GET("referralAndConsultation/audit/{id}")
     Observable<SimpleBean> diagnosisDetailsendPass_2(@Path("id") int id, @Query("available") int available);
 
-    @GET("referralAndConsultation/audit/{id}")
+    @POST("referralAndConsultation/auditRefuse/{id}")
     Observable<SimpleBean> diagnosisDetailsendUnPass_2(@Path("id") int id, @Query("available") int available, @Body RequestBody content);//// TODO: 2017/10/23 0023  405
 
     @GET("account/selectUserRole")
     Observable<UserTypeBean> selectUserRole();
 
     @GET("workbench/todo/list")
-    Observable<HospitalWaitHandleListBean> getHospitalList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+    Observable<HospitalWaitHandleListBean> getNeedHandleList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
     @POST("set/personal/update/userpwd/{userId}")
     Observable<SimpleBean> updatePwd( @Body RequestBody content,@Path("userId")String userId);
@@ -84,7 +84,8 @@ public interface RetrofitService {
     @GET("account/selectUser")
     Observable<UserInfoBean> getUserInfo();
 
-    @GET("set/personal/update/userpwd/{id}")//// TODO: 2017/10/23 0023  405
+//    http://192.168.1.165:8002/workbench/medicalService/op/76?available=8
+    @GET("workbench/medicalService/op/{id}")//// TODO: 2017/10/23 0023  405
     Observable<SimpleBean> customerService_nextStep(@Path("id") int id, @Query("available") int available);
 
     @GET("workbench/medicalService/list")
@@ -106,52 +107,6 @@ public interface RetrofitService {
 
 
 //    http://192.168.1.165:8002/referralAndConsultation/detail/{id}?flag={flag}
-
-//    Observable<LoginBean> login(@Query("username") String username, @Query("pwd") String pwd);
-
-/*
-    *//**
-     * 获取上会议题详情
-     * @param issueApplyId
-     *//*
-    @GET("crm/mobile/issue/getIssueApplyDetail")
-    Observable<Response<TopicDetailViewModel>> getTopicDetails(@Query("issueApplyId") String issueApplyId);
-
-    *//**
-     * 删除上会议题
-     *
-     * @param issueApplyId
-     * @return
-     *//*
-    @GET("crm/mobile/issue/deleteIssueApply")
-    Observable<SimpleCallBack> deleteTopic(@Query("issueApplyId") String issueApplyId);
-
-    *//**
-     * 保存  提交  上会议题
-     * state 状态：1.保存；2.提交;
-     * @param
-     * @return
-     *//*
-    @FormUrlEncoded
-    @POST("crm/mobile/issue/addIssueApply")
-    Observable<SimpleCallBack> save_or_SubmitTopic(@FieldMap Map<String, String> params);
-
-    @FormUrlEncoded
-    @POST("crm/mobile/issue/updateIssueApply")
-    Observable<SimpleCallBack> updateTopic(@FieldMap Map<String, String> params);
-
-
-    //////////////////////////////////////////////
-    //市场信息与报告需求
-    //////////////////////////////////////////////
-    *//**
-     * 获取列表
-     * 市场二期迭代二
-     * @param userId
-     * @return
-     *//*
-    @GET("crm/mobile/demand/queryDemandList")
-    Observable<InfoAndReportListViewModel> getInfoReportListData(@Query("userId") String userId);*/
 
 
 }

@@ -14,6 +14,7 @@ import com.embracesource.yilianti.bean.CustomerServiceDiagnosisListBean;
 import com.embracesource.yilianti.bean.DiagnosisItemBean;
 import com.embracesource.yilianti.bean.UserType;
 import com.embracesource.yilianti.bean.enums.DiagnosisExaminationType;
+import com.embracesource.yilianti.ui.base.BaseActivity;
 import com.embracesource.yilianti.util.StringUtils;
 
 import java.util.ArrayList;
@@ -81,7 +82,8 @@ public class DiagnosisPicAdapter extends RecyclerView.Adapter {
 //                            http://192.168.1.165:8002/workbench/medicalService/op/{id}?available=10
 //                            平台随访
 //                            http://192.168.1.165:8002/workbench/medicalService/op/{id}?available=11
-                    viewModel.nextStep(bean.getId(), bean.getAvailable());
+                    ((BaseActivity)context).showDialog();
+                    viewModel.nextStep(bean.getId(), bean.getAvailable()+1);
                 }
             });
 

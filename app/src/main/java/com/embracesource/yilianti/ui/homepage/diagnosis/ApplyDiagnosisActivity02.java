@@ -65,6 +65,8 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     private ApplyDiagnosisRequestBean bean = new ApplyDiagnosisRequestBean();
     private TextView popTitle;
     private Date date;
+    public static final String consultation_type = "consultation_type";
+    public static final String priority = "priority";
 //    private int int_Is_change_disgnosis = 2;//会诊目的，转诊，positiopn == 2
 
 
@@ -188,7 +190,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
             case R.id.sp_type:
                 if (typeList.isEmpty()) {
                     showDialog();
-                    viewModel.getBaseData("consultation_type");// consultation_type 会诊类型
+                    viewModel.getBaseData(consultation_type);// consultation_type 会诊类型
                 } else {
                     adapter.setList(typeList);
                     showFragmentDialog(typeList);
@@ -207,7 +209,7 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
             case R.id.sp_emergency_degree:
                 if (emergencyDegreeList.isEmpty()) {
                     showDialog();
-                    viewModel.getBaseData("priority");//priority 紧急程度
+                    viewModel.getBaseData(priority);//priority 紧急程度
                 } else {
                     adapter.setList(emergencyDegreeList);
                     showFragmentDialog(emergencyDegreeList);
@@ -394,12 +396,12 @@ public class ApplyDiagnosisActivity02 extends AacBaseActivity<ActivityApplyDiagn
     /**
      * 会诊目的是转诊 true
      */
-    private  Boolean idChangeDiagnosis(){
+    private Boolean idChangeDiagnosis() {
         try {
-            return  goalList.get(currentSelected_goal).getId() == ConsultationObjectiveType.ChangeDiagnosis.id;
-        }catch (Exception e){
+            return goalList.get(currentSelected_goal).getId() == ConsultationObjectiveType.ChangeDiagnosis.id;
+        } catch (Exception e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 

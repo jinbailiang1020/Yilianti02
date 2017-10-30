@@ -11,6 +11,7 @@ import com.embracesource.yilianti.databinding.FragmentOtherHomeBinding;
 import com.embracesource.yilianti.ui.base.AacFragment;
 import com.embracesource.yilianti.ui.homepage.HomeViewModel;
 import com.embracesource.yilianti.ui.homepage.diagnosis.DiagnosisPictureActivity;
+import com.embracesource.yilianti.ui.homepage.needhandle.NeedHandleActivity;
 import com.embracesource.yilianti.util.BaseUtils;
 
 import java.util.ArrayList;
@@ -46,8 +47,8 @@ public class OtherHomeFragment extends AacFragment<FragmentOtherHomeBinding> {
         for (int position = 0; position < 7; position++) {
             localImages.add(BaseUtils.getResId("haibao", R.drawable.class));
         }
-        int role = myPrefrences.getInt(MyPrefrences.Key.role);
-        switch (role){
+        final int role = myPrefrences.getInt(MyPrefrences.Key.role);
+        switch (role) {
             case UserType.Medical_Service:
                 binding.tvWorkbench.setText(getString(R.string.Medical_Service_Workbench));
                 break;
@@ -58,13 +59,23 @@ public class OtherHomeFragment extends AacFragment<FragmentOtherHomeBinding> {
         new HomeViewModel().initConvenientBanner(binding.convenientBanner, localImages);
 
 
-//会诊--图文
+        //待办事项
         binding.tvWaitHandle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DiagnosisPictureActivity.class);
-                intent.putExtra("", "");
-                startActivity(intent);
+
+                switch (role) {
+                    case UserType.Medical_Service:
+                        Intent intent = new Intent(getActivity(), NeedHandleActivity.class);
+                        intent.putExtra("", "");
+                        startActivity(intent);
+                        break;
+                    case UserType.Customer_Service:
+                        Intent intent1 = new Intent(getActivity(), DiagnosisPictureActivity.class);
+                        intent1.putExtra("", "");
+                        startActivity(intent1);
+                        break;
+                }
             }
         });
     }

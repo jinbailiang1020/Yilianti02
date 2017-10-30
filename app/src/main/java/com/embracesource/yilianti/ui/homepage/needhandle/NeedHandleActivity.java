@@ -1,8 +1,7 @@
-package com.embracesource.yilianti.ui.homepage.diagnosis;
+package com.embracesource.yilianti.ui.homepage.needhandle;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -12,13 +11,13 @@ import com.embracesource.yilianti.bean.DiagnosisItemBean;
 import com.embracesource.yilianti.bean.HospitalWaitHandleListBean;
 import com.embracesource.yilianti.bean.MyLaunchListBean;
 import com.embracesource.yilianti.bean.SimpleBean;
-import com.embracesource.yilianti.bean.UserType;
 import com.embracesource.yilianti.bean.eventbus.RefreshDiagnosisListBean;
 import com.embracesource.yilianti.common.memory.MyPrefrences;
 import com.embracesource.yilianti.common.recyclerview.SwipeRecyclerView;
-import com.embracesource.yilianti.databinding.ActivityDiagnosisPictureBinding;
+import com.embracesource.yilianti.databinding.ActivityNeedHandleBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
-import com.embracesource.yilianti.viewmodel.DiagnosisPictureCallBack;
+import com.embracesource.yilianti.ui.homepage.diagnosis.ApplyDiagnosisDetailActivity;
+import com.embracesource.yilianti.viewmodel.NeedHandleCallBack;
 import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,13 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 会诊/转诊 列表
+ * 待办事项
  */
-public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisPictureBinding> implements DiagnosisPictureCallBack {
+public class NeedHandleActivity extends AacBaseActivity<ActivityNeedHandleBinding> implements NeedHandleCallBack {
 
-    //    @Inject
-    DiagnosisPictureViewModel viewModel;
-    private DiagnosisPicAdapter mAdapter;
+    NeedHandleViewModel viewModel;
+    private NeedHandleAdapter mAdapter;
     private int currentPage = 1;
     private static int pageSize = 20;
     private int currentCheckPage;//tab当前选择的页面
@@ -44,98 +42,46 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        DaggerAppComponent.builder().appModule(new AppModule()).build().inject(this); //注入
         EventBus.getDefault().register(this);
         role = myPrefrences.getInt(MyPrefrences.Key.role);
         initView();
-
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_diagnosis_picture;
+        return R.layout.activity_need_handle;
     }
 
     @Override
     protected void initView() {
-        viewModel = new DiagnosisPictureViewModel(this);
-        switch (role) {
-            case UserType.DOCTOR://医生
-                initTitleLayout(getString(R.string.diagnosis));
-                setTitleRightVisiable(getString(R.string.apply_diagnosis), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //申请会诊
-                        Intent intent = new Intent(mContext, ApplyDiagnosisActivity01.class);
-                        startActivity(intent);
-                    }
-                });
-                break;
-            case UserType.Medical_Service://医务处，上级医院
-                initTitleLayout(getString(R.string.wait_handle));
-                binding.radioGroup.setVisibility(View.GONE);
-                break;
-            case UserType.Customer_Service://客服
-                initTitleLayout(getString(R.string.medical_station));
-                binding.radioGroup.setVisibility(View.VISIBLE);
-                binding.radioGroup.getTabAt(0).setText(getString(R.string.doing));
-                binding.radioGroup.getTabAt(1).setText(getString(R.string.finished));
-//                binding.rbMyLaunch.setText(getString(R.string.doing));
-//                binding.rbMyParticipate.setText(R.string.finished);
-                break;
-        }
-
+        viewModel = new NeedHandleViewModel(this);
+        initTitleLayout(getString(R.string.wait_handle));
         initRecycler();
     }
 
     private void initRecycler() {
         //CommonAdapter
-        mAdapter = new DiagnosisPicAdapter(role, viewModel, this);
-        mAdapter.setOnItemClickListener(new DiagnosisPicAdapter.OnItemClickListener() {
+        mAdapter = new NeedHandleAdapter(role, viewModel, this);
+        mAdapter.setOnItemClickListener(new NeedHandleAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position, Object obj) {
                 DiagnosisItemBean entity = (DiagnosisItemBean) obj;
-                Intent intent = new Intent(DiagnosisPictureActivity.this, ApplyDiagnosisDetailActivity.class);
+                Intent intent = new Intent(NeedHandleActivity.this, ApplyDiagnosisDetailActivity.class);
                 intent.putExtra(ApplyDiagnosisDetailActivity.class.getName(), entity.getId());
-                intent.putExtra(ApplyDiagnosisDetailActivity.IS_participate, currentCheckPage == R.id.rb_my_participate);//判断 是我发起的，还是我参与的(还有待办事项)，（医生，我参与的 详情中需要显示审批按钮）
+                intent.putExtra(ApplyDiagnosisDetailActivity.IS_participate, true);//待办事项 ，一定需要编辑（）
                 startActivity(intent);
             }
         });
         binding.swipeRecyclerView.setAdapter(mAdapter);
         binding.swipeRecyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this));
 
-     /*   binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                currentPage = 1;
-                requestList(checkedId);
-            }
-        });*/
-        binding.radioGroup.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                currentPage = 1;
-                requestList(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        binding.radioGroup.getTabAt(0).select();
         currentPage = 1;
-        requestList(0);
+        requestList();
         binding.swipeRecyclerView.setOnLoadListener(new SwipeRecyclerView.OnLoadListener() {
             @Override
             public void onRefresh() {
                 currentPage = 1;
-                requestList(currentCheckPage);
+                requestList();
                 binding.swipeRecyclerView.setRefreshing(false);
             }
 
@@ -155,45 +101,8 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
         });
     }
 
-
-    private void requestList(int checkedId) {
-        switch (role) {
-            case UserType.DOCTOR://医生
-                currentCheckPage = checkedId;
-                switch (checkedId) {
-//                    case R.id.rb_my_launch:
-                    case 0:
-                        showDialog();
-                        viewModel.getMyLaunchList(currentPage, pageSize);
-                        break;
-//                    case R.id.rb_my_participate:
-                    case 1:
-                        showDialog();
-                        viewModel.getMyParticipateList(currentPage, pageSize);
-                        break;
-                }
-                break;
-
-            case UserType.Medical_Service://医务处，上级医院
-                showDialog();
-                viewModel.getHospitalList(currentPage, pageSize);
-                break;
-            case UserType.Customer_Service://客服
-                switch (checkedId) {
-//                    case R.id.rb_my_launch:
-                    case 0:
-                        showDialog();
-                        viewModel.getCustomerServiceList(0);
-                        break;
-//                    case R.id.rb_my_participate:
-                    case 1:
-                        showDialog();
-                        viewModel.getCustomerServiceList(1);
-                        break;
-                }
-
-                break;
-        }
+    private void requestList() {
+        viewModel.getNeedHandleList(currentPage, pageSize);
     }
 
     @Override
@@ -220,7 +129,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     }
 
     @Override
-    public void getHospitalListOK(HospitalWaitHandleListBean response, int pageNum) {
+    public void getNeedHandleListOK(HospitalWaitHandleListBean response, int pageNum) {
         if (response != null && response.getData() != null && response.getData().getList() != null) {
             refreshView(response.getData().getList(), pageNum);
         } else {
@@ -231,8 +140,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     @Override
     public void customer_Service_nextStepOK(SimpleBean response) {
         currentPage = 1;
-        showToast(response.getMessage());
-        requestList(currentCheckPage);
+        requestList();
     }
 
     @Override
@@ -278,7 +186,7 @@ public class DiagnosisPictureActivity extends AacBaseActivity<ActivityDiagnosisP
     public void onDataSynEvent(RefreshDiagnosisListBean event) {
 //        binding.rbMyLaunch.setChecked(true);
         currentPage = 1;
-        requestList(currentCheckPage);
+        requestList();
         Logger.d("eventBus:--->" + RefreshDiagnosisListBean.class.getName());
     }
 

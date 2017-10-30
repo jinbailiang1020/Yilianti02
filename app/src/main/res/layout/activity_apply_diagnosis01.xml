@@ -330,7 +330,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/common_margin_label_and_content"
-                        android:text="@string/phone_number"
+                        android:text="@string/phone_num"
                         android:textColor="@color/common_label_text_color"
                         android:textSize="@dimen/common_label_textsize" />
 

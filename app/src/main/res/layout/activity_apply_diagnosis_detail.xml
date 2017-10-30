@@ -212,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/common_margin_label_and_content"
-                        android:text="@string/phone_number"
+                        android:text="@string/phone_num"
                         android:textColor="@color/common_label_text_color"
                         android:textSize="@dimen/common_label_textsize" />
 
@@ -244,14 +244,15 @@
                         android:textSize="@dimen/common_label_textsize" />
 
                     <EditText
+                        android:id="@+id/et_medical_type"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:drawableRight="@drawable/down"
                         android:focusable="false"
-                        android:text="@{String.valueOf(bean.data.patientInfo.medicareType)}"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/common_label_textsize" />
+                    <!--android:text="@{String.valueOf(bean.data.patientInfo.medicareType)}"-->
 
                     <!--     <ImageView
                              android:layout_width="30dp"
@@ -466,9 +467,9 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:focusable="false"
-                        android:text="@{itemBean.consultationTypeName}"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/common_label_textsize" />
+                    <!--android:text="@{itemBean.consultationTypeName}"-->
                 </LinearLayout>
 
 
@@ -525,6 +526,47 @@
                         android:gravity="center"
                         android:textColor="@color/common_text_color" />
                 </LinearLayout>
+
+
+                <RadioGroup
+                    android:id="@+id/rg_change_to_diagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/common_margin_label_and_content"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:text="@string/is_change_to_diagnosis"
+                        android:textColor="@color/common_label_text_color"
+                        android:textSize="@dimen/common_label_textsize" />
+
+                    <RadioButton
+                        android:id="@+id/rb_change_to_diagnosis_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:text="@string/yes"
+                        android:theme="@style/MyCheckBox" />
+
+                    <RadioButton
+                        android:id="@+id/rb_change_to_diagnosis_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/no"
+                        android:theme="@style/MyCheckBox" />
+                </RadioGroup>
 
                 <!--///////////////////////-->
                 <LinearLayout
@@ -608,7 +650,7 @@
                             android:textSize="@dimen/common_label_textsize" />
 
                         <TextView
-                            android:id="@+id/sp_change_date"
+                            android:id="@+id/tv_change_date"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
@@ -637,7 +679,7 @@
                             android:textSize="@dimen/common_label_textsize" />
 
                         <TextView
-                            android:id="@+id/sp_start_date"
+                            android:id="@+id/tv_start_date"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
@@ -666,7 +708,7 @@
                             android:textSize="@dimen/common_label_textsize" />
 
                         <TextView
-                            android:id="@+id/sp_end_date"
+                            android:id="@+id/tv_end_date"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
@@ -699,54 +741,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:focusable="false"
                         android:gravity="start"
                         android:hint="@string/hint_diagnosis_advice"
                         android:padding="5dp"
-                        android:text="@{itemBean.illnessDescription}"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/common_label_textsize" />
                 </LinearLayout>
-
-                <RadioGroup
-                    android:id="@+id/rg_change_to_diagnosis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_padding">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/common_margin_label_and_content"
-                        android:gravity="center"
-                        android:paddingTop="10dp"
-                        android:text="@string/is_change_to_diagnosis"
-                        android:textColor="@color/common_label_text_color"
-                        android:textSize="@dimen/common_label_textsize" />
-
-                    <RadioButton
-                        android:id="@+id/rb_change_to_diagnosis_yes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:text="@string/yes"
-                        android:theme="@style/MyCheckBox" />
-
-                    <RadioButton
-                        android:id="@+id/rb_change_to_diagnosis_no"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:gravity="center"
-                        android:text="@string/no"
-                        android:theme="@style/MyCheckBox" />
-                </RadioGroup>
 
                 <LinearLayout
                     android:id="@+id/ll_examine"

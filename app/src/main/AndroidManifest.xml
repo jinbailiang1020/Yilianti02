@@ -28,7 +28,7 @@
     <application
         android:name=".app.AppContext"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/yilianti"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
@@ -60,10 +60,9 @@
         <activity android:name=".ui.loginregister.LoginActivity" />
         <activity android:name=".ui.homepage.diagnosis.ApplyDiagnosisDetailActivity" />
         <activity android:name=".ui.loginregister.UpdatePwdActivity" />
-        <activity android:name=".ui.homepage.diagnosis.DiagnosisDetailPassActivity"></activity>
-        <activity android:name=".ui.homepage.diagnosis.DiagnosisDetailUnPassActivity"></activity>
-
-
+        <activity android:name=".ui.homepage.diagnosis.DiagnosisDetailPassActivity" />
+        <activity android:name=".ui.homepage.diagnosis.DiagnosisDetailUnPassActivity" />
+        <activity android:name=".ui.homepage.needhandle.NeedHandleActivity"></activity>
     </application>
 
 </manifest>

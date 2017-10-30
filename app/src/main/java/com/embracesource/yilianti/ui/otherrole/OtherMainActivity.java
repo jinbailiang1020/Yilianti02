@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import com.embracesource.yilianti.R;
 import com.embracesource.yilianti.databinding.ActivityOtherMainBinding;
 import com.embracesource.yilianti.ui.base.AacBaseActivity;
-import com.embracesource.yilianti.ui.homepage.HomeFragment;
 import com.embracesource.yilianti.ui.personcenter.PersonCenterFragment;
 
 import java.lang.reflect.Field;
@@ -87,8 +86,8 @@ public class OtherMainActivity extends AacBaseActivity<ActivityOtherMainBinding>
         disableShiftMode(binding.navigation);//    链接：http://www.jianshu.com/p/eada0f16afd9
 
         int[][] states = new int[][]{
-                new int[]{-android.R.attr.state_checked},
-                new int[]{android.R.attr.state_checked}
+                new int[]{android.R.attr.state_checked},
+                new int[]{-android.R.attr.state_checked}
         };
 
         int[] colors = new int[]{getResources().getColor(R.color.main_color),
